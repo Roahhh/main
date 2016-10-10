@@ -2,27 +2,6 @@
     -fx-background-color: derive(#1d1d1d, 20%);
 }
 
-.label {
-    -fx-font-size: 11pt;
-    -fx-font-family: "Segoe UI Semibold";
-    -fx-text-fill: #555555;
-    -fx-opacity: 0.9;
-}
-
-.label-bright {
-    -fx-font-size: 11pt;
-    -fx-font-family: "Segoe UI Semibold";
-    -fx-text-fill: white;
-    -fx-opacity: 1;
-}
-
-.label-header {
-    -fx-font-size: 32pt;
-    -fx-font-family: "Segoe UI Light";
-    -fx-text-fill: white;
-    -fx-opacity: 1;
-}
-
 .text-field {
     -fx-font-size: 12pt;
     -fx-font-family: "Segoe UI Semibold";
@@ -63,7 +42,7 @@
     -fx-border-insets: 0 10 1 0;
 }
 
-.table-view .column-header .label {
+.table-view .column-header {
     -fx-font-size: 20pt;
     -fx-font-family: "Segoe UI Light";
     -fx-text-fill: white;
@@ -86,26 +65,6 @@
     -fx-background-color: derive(#1d1d1d, 20%);
 }
 
-.list-cell {
-    -fx-label-padding: 0 0 0 0;
-    -fx-graphic-text-gap : 0;
-    -fx-padding: 0 0 0 0;
-}
-
-.list-cell .label {
-    -fx-text-fill: #010504;
-}
-
-.cell_big_label {
-    -fx-font-size: 16px;
-    -fx-text-fill: #010504;
-}
-
-.cell_small_label {
-    -fx-font-size: 11px;
-    -fx-text-fill: #010504;
-}
-
 .anchor-pane {
      -fx-background-color: derive(#1d1d1d, 20%);
 }
@@ -125,7 +84,7 @@
     -fx-background-color: #ffffff;
 }
 
-.result-display .label {
+.result-display {
     -fx-text-fill: black !important;
 }
 
@@ -275,7 +234,7 @@
 #cardPane {
     -fx-background-color: transparent;
     -fx-border-color: #d6d6d6;
-    -fx-border-width: 1 1 1 1;
+    -fx-border-width: 0 0 0 0;
 }
 
 #commandTypeLabel {

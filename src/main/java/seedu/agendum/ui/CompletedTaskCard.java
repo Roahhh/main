@@ -6,9 +6,9 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import seedu.agendum.model.task.ReadOnlyTask;
 
-public class TaskCard extends UiPart{
-
-    private static final String FXML = "TaskListCard.fxml";
+public class CompletedTaskCard extends UiPart {
+    
+    private static final String FXML = "CompletedTaskCard.fxml";
 
     @FXML
     private HBox cardPane;
@@ -22,12 +22,12 @@ public class TaskCard extends UiPart{
     private ReadOnlyTask task;
     private int displayedIndex;
 
-    public TaskCard(){
+    public CompletedTaskCard(){
 
     }
 
-    public static TaskCard load(ReadOnlyTask task, int displayedIndex){
-        TaskCard card = new TaskCard();
+    public static CompletedTaskCard load(ReadOnlyTask task, int displayedIndex){
+        CompletedTaskCard card = new CompletedTaskCard();
         card.task = task;
         card.displayedIndex = displayedIndex;
         return UiPartLoader.loadUiPart(card);
@@ -38,11 +38,6 @@ public class TaskCard extends UiPart{
         name.setText(task.getName().fullName);
         id.setText(displayedIndex + ". ");
         tags.setText(task.tagsString());
-        if (task.isCompleted()) {
-            cardPane.setStyle("-fx-background-color: aquamarine");
-        } else {
-            cardPane.setStyle("-fx-background-color: salmon");
-        }
     }
 
     public HBox getLayout() {

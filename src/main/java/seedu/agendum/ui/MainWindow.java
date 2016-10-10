@@ -30,8 +30,9 @@ public class MainWindow extends UiPart {
 
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
-    private TaskListPanel taskListPanel;
-    private ResultDisplay resultDisplay;
+    private UpcomingTasksPanel upcomingTasksPanel;
+    private CompletedTasksPanel completedTasksPanel;
+    private ResultPopUp resultPopUp;
     private StatusBarFooter statusBarFooter;
     private CommandBox commandBox;
     private Config config;
@@ -53,14 +54,13 @@ public class MainWindow extends UiPart {
     private MenuItem helpMenuItem;
 
     @FXML
-    private AnchorPane taskListPanelPlaceholder;
-
+    private AnchorPane upcomingTasksPlaceHolder;
+    
     @FXML
-    private AnchorPane resultDisplayPlaceholder;
-
+    private AnchorPane completedTasksPlaceHolder;
+    
     @FXML
     private AnchorPane statusbarPlaceholder;
-
 
     public MainWindow() {
         super();
@@ -109,10 +109,11 @@ public class MainWindow extends UiPart {
 
     void fillInnerParts() {
         browserPanel = BrowserPanel.load(browserPlaceholder);
-        taskListPanel = TaskListPanel.load(primaryStage, getTaskListPlaceholder(), logic.getFilteredTaskList());
-        resultDisplay = ResultDisplay.load(primaryStage, getResultDisplayPlaceholder());
+        upcomingTasksPanel = UpcomingTasksPanel.load(primaryStage, getUpcomingTasksPlaceHolder(), logic.getFilteredTaskList());
+        completedTasksPanel = CompletedTasksPanel.load(primaryStage, getCompletedTasksPlaceHolder(), logic.getCompletedTaskList());
+        resultPopUp = ResultPopUp.load(primaryStage);
         statusBarFooter = StatusBarFooter.load(primaryStage, getStatusbarPlaceholder(), config.getToDoListFilePath());
-        commandBox = CommandBox.load(primaryStage, getCommandBoxPlaceholder(), resultDisplay, logic);
+        commandBox = CommandBox.load(primaryStage, getCommandBoxPlaceholder(), resultPopUp, logic);
     }
 
     private AnchorPane getCommandBoxPlaceholder() {
@@ -122,13 +123,13 @@ public class MainWindow extends UiPart {
     private AnchorPane getStatusbarPlaceholder() {
         return statusbarPlaceholder;
     }
-
-    private AnchorPane getResultDisplayPlaceholder() {
-        return resultDisplayPlaceholder;
+    
+    public AnchorPane getUpcomingTasksPlaceHolder() {
+        return upcomingTasksPlaceHolder;
     }
-
-    public AnchorPane getTaskListPlaceholder() {
-        return taskListPanelPlaceholder;
+    
+    public AnchorPane getCompletedTasksPlaceHolder() {
+        return completedTasksPlaceHolder;
     }
 
     public void hide() {
@@ -182,8 +183,12 @@ public class MainWindow extends UiPart {
         raise(new ExitAppRequestEvent());
     }
 
-    public TaskListPanel getTaskListPanel() {
-        return this.taskListPanel;
+    public UpcomingTasksPanel getUpcomingTasksPanel() {
+        return this.upcomingTasksPanel;
+    }
+    
+    public CompletedTasksPanel getCompletedTasksPanel() {
+        return this.completedTasksPanel;
     }
 
     public void loadTaskPage(ReadOnlyTask task) {
