@@ -15,8 +15,8 @@ public class Task implements ReadOnlyTask {
 
     private Name name;
     private boolean isCompleted;
-    private LocalDateTime startDateTime;
-    private LocalDateTime endDateTime;
+    private Optional<LocalDateTime> startDateTime;
+    private Optional<LocalDateTime> endDateTime;
     
     private UniqueTagList tags;
     
@@ -42,23 +42,18 @@ public class Task implements ReadOnlyTask {
         this.name = name;
         this.isCompleted = false;
         this.startDateTime = null;
-        this.endDateTime = deadline.orElse(null);
-        this.tags = new UniqueTagList(tags); // protect internal tags from changes in the arg list
-    }
-    
-    /**
-     * Constructor for a task (event) with both a start and end time
-     */
-    public Task(Name name, Optional<LocalDateTime> startDateTime,
-            Optional<LocalDateTime> endDateTime, UniqueTagList tags) {
-        assert !CollectionUtil.isAnyNull(name, tags);
-        this.name = name;
-        this.isCompleted = false;
-        this.startDateTime = startDateTime.orElse(null);
-        this.endDateTime = endDateTime.orElse(null);
+        this.endDateTime = deadline;
         this.tags = new UniqueTagList(tags); // protect internal tags from changes in the arg list
     }
 
+    public Task(Name name, Optional<LocalDateTime> startDateTime, Optional<LocalDateTime> endDateTime, UniqueTagList tags) {
+        assert !CollectionUtil.isAnyNull(name, tags);
+        this.name = name;
+        this.isCompleted = false;
+        this.startDateTime = startDateTime;
+        this.endDateTime = endDateTime;
+        this.tags = new UniqueTagList(tags); // protect internal tags from changes in the arg list
+    }
     /**
      * Copy constructor.
      */
@@ -84,12 +79,12 @@ public class Task implements ReadOnlyTask {
 
     @Override
     public Optional<LocalDateTime> getStartDateTime() {
-        return Optional.ofNullable(startDateTime);
+        return startDateTime;
     }
 
     @Override
     public Optional<LocalDateTime> getEndDateTime() {
-        return Optional.ofNullable(endDateTime);
+        return endDateTime;
     }
 
     @Override
@@ -112,11 +107,11 @@ public class Task implements ReadOnlyTask {
     }
     
     public void setStartDateTime(Optional<LocalDateTime> startDateTime) {
-        this.startDateTime = startDateTime.orElse(null);
+        this.startDateTime = startDateTime;
     }
     
     public void setEndDateTime(Optional<LocalDateTime> endDateTime) {
-        this.endDateTime = endDateTime.orElse(null);
+        this.endDateTime = endDateTime;
     }
 
     /**
