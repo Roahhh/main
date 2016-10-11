@@ -58,29 +58,4 @@ public class ConfigUtil {
 
         FileUtil.serializeObjectToJsonFile(new File(configFilePath), config);
     }
-    
-    /**
-     * Load the current Config file, change ToDoList file path then saves
-     *   Overwrites existing file.
-     * @param newToDoListFilePath cannot be null
-     * @param configFilePath cannot be null
-     * @throws IOException if there was an error during writing to Config file
-     */
-    public static void saveToDoListFilePathInConfig(String configFilePath, String newToDoListFilePath) throws IOException {
-        assert configFilePath != null;
-        assert !configFilePath.isEmpty();
-        
-        try {
-            Optional<Config> configOptional = ConfigUtil.readConfig(configFilePath);
-            Config config = configOptional.orElse(new Config());            
-            
-            config.setToDoListFilePath(newToDoListFilePath);
-            ConfigUtil.saveConfig(config, configFilePath);
-            
-            logger.info("ToDoList file path has changed to: " + newToDoListFilePath);
-        } catch (DataConversionException e) {
-            logger.warning("Config file at " + configFilePath + " was not in the correct format. " +
-                    "ToDoList file path was not changed in Config.");
-        }
-    }
 }

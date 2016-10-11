@@ -9,7 +9,12 @@ import java.nio.file.Files;
  */
 public class FileUtil {
     private static final String CHARSET = "UTF-8";
-
+    
+    public static boolean isPathWriteable(String path) {
+        File file = new File(path);
+        return file.canWrite();
+    }
+    
     public static boolean isFileExists(File file) {
         return file.exists() && file.isFile();
     }

@@ -6,7 +6,6 @@ import seedu.agendum.commons.exceptions.DataConversionException;
 import seedu.agendum.model.ReadOnlyToDoList;
 import seedu.agendum.model.UserPrefs;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Optional;
 
@@ -23,6 +22,9 @@ public interface Storage extends ToDoListStorage, UserPrefsStorage {
 
     @Override
     String getToDoListFilePath();
+    
+    @Override
+    public void setToDoListFilePath(String filePath);
 
     @Override
     Optional<ReadOnlyToDoList> readToDoList() throws DataConversionException, IOException;

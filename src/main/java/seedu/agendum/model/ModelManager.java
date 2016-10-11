@@ -71,6 +71,11 @@ public class ModelManager extends ComponentManager implements Model {
     private void indicateToDoListChanged() {
         raise(new ToDoListChangedEvent(toDoList));
     }
+    
+    /** Raises an event to indicate that save location has changed */
+    private void indicateSaveLocationChanged(String location) {
+        raise(new SaveLocationChangedEvent(location));
+    }
 
     @Override
     public synchronized void deleteTask(ReadOnlyTask target) throws TaskNotFoundException {
@@ -83,6 +88,25 @@ public class ModelManager extends ComponentManager implements Model {
         toDoList.addTask(task);
         updateFilteredListToShowAll();
         indicateToDoListChanged();
+    }
+
+    @Override
+    public synchronized void changeSaveLocation(String location) {
+        assert !location.isEmpty();
+        assert location != null;
+        assert StringUtil.isValidFilePath(location);
+        
+        config.setToDoListFilePath(location);
+        indicateSaveLocationChanged(location);
+        saveConfigFile();
+    }
+
+    private void saveConfigFile() {
+        try {
+            ConfigUtil.saveConfig(config, Config.DEFAULT_CONFIG_FILE);
+        } catch (IOException e) {
+            logger.warning("Failed to save config file : " + StringUtil.getDetails(e));
+        }        
     }
 
     //=========== Filtered Task List Accessors ===============================================================
