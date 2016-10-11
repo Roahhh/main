@@ -3,14 +3,18 @@ package seedu.agendum.model;
 import javafx.collections.transformation.FilteredList;
 import seedu.agendum.commons.core.LogsCenter;
 import seedu.agendum.commons.core.UnmodifiableObservableList;
+import seedu.agendum.commons.util.ConfigUtil;
 import seedu.agendum.commons.util.StringUtil;
 import seedu.agendum.model.task.ReadOnlyTask;
 import seedu.agendum.model.task.Task;
 import seedu.agendum.model.task.UniqueTaskList;
 import seedu.agendum.model.task.UniqueTaskList.TaskNotFoundException;
+import seedu.agendum.commons.events.model.SaveLocationChangedEvent;
 import seedu.agendum.commons.events.model.ToDoListChangedEvent;
 import seedu.agendum.commons.core.ComponentManager;
+import seedu.agendum.commons.core.Config;
 
+import java.io.IOException;
 import java.util.Set;
 import java.util.logging.Logger;
 
@@ -23,29 +27,33 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final ToDoList toDoList;
     private final FilteredList<Task> filteredTasks;
+    private final Config config;
 
     /**
      * Initializes a ModelManager with the given ToDoList
      * ToDoList and its variables should not be null
      */
-    public ModelManager(ToDoList src, UserPrefs userPrefs) {
+    public ModelManager(ToDoList src, UserPrefs userPrefs, Config config) {
         super();
         assert src != null;
         assert userPrefs != null;
+        assert config != null;
 
         logger.fine("Initializing with to do list: " + src + " and user prefs " + userPrefs);
 
         toDoList = new ToDoList(src);
         filteredTasks = new FilteredList<>(toDoList.getTasks());
+        this.config = config;
     }
 
     public ModelManager() {
-        this(new ToDoList(), new UserPrefs());
+        this(new ToDoList(), new UserPrefs(), new Config());
     }
 
-    public ModelManager(ReadOnlyToDoList initialData, UserPrefs userPrefs) {
+    public ModelManager(ReadOnlyToDoList initialData, UserPrefs userPrefs, Config config) {
         toDoList = new ToDoList(initialData);
         filteredTasks = new FilteredList<>(toDoList.getTasks());
+        this.config = config;
     }
 
     @Override

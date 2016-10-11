@@ -8,6 +8,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import org.controlsfx.control.StatusBar;
 import seedu.agendum.commons.core.LogsCenter;
+import seedu.agendum.commons.events.model.SaveLocationChangedEvent;
 import seedu.agendum.commons.events.model.ToDoListChangedEvent;
 import seedu.agendum.commons.util.FxViewUtil;
 
@@ -45,7 +46,7 @@ public class StatusBarFooter extends UiPart {
         addSyncStatus();
         setSyncStatus("Not updated yet in this session");
         addSaveLocation();
-        setSaveLocation("./" + saveLocation);
+        setSaveLocation(saveLocation);
         registerAsAnEventHandler(this);
     }
 
@@ -55,6 +56,8 @@ public class StatusBarFooter extends UiPart {
     }
 
     private void setSaveLocation(String location) {
+        // prefix ./ if it is not an absolute path 
+        location = (location.charAt(1) == ':') ? location : ("./" + location);
         this.saveLocationStatus.setText(location);
     }
 
@@ -90,9 +93,16 @@ public class StatusBarFooter extends UiPart {
     }
 
     @Subscribe
-    public void handleToDoListChangedEvent(ToDoListChangedEvent abce) {
+    public void handleToDoListChangedEvent(ToDoListChangedEvent event) {
         String lastUpdated = (new Date()).toString();
-        logger.info(LogsCenter.getEventHandlingLogMessage(abce, "Setting last updated status to " + lastUpdated));
+        logger.info(LogsCenter.getEventHandlingLogMessage(event, "Setting last updated status to " + lastUpdated));
         setSyncStatus("Last Updated: " + lastUpdated);
+    }
+    
+    @Subscribe
+    public void handleSaveLocationChangedEvent(SaveLocationChangedEvent event) {
+        String saveLocation = event.saveLocation;
+        logger.info(LogsCenter.getEventHandlingLogMessage(event, "Setting save location to: " + saveLocation));
+        setSaveLocation(saveLocation);
     }
 }
