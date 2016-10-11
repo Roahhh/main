@@ -4,6 +4,7 @@ import seedu.agendum.logic.commands.*;
 import seedu.agendum.commons.util.StringUtil;
 import seedu.agendum.commons.exceptions.IllegalValueException;
 
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -31,6 +32,8 @@ public class Parser {
                     + "(?<tagArguments>(?: t/[^/]+)*)"); // variable number of tags
 
     private static final Pattern RENAME_ARGS_FORMAT = Pattern.compile("(?<targetIndex>\\d+)\\s+(?<name>[^/]+)");
+
+    private static final Pattern ADD_ARGS_FORMAT = Pattern.compile("(?<name>[^/]+)(\\/from\\s)(?<fromAdd>\\b.+?(?=\\/|$)){1}(\\/to\\s)(?<toAdd>\\b.+?(?=\\/|$)){1}(\\/by\\s)(?<byAdd>\\b.+?(?=\\/|$)){1}");
 
     public Parser() {}
 
@@ -95,16 +98,35 @@ public class Parser {
      * @return the prepared command
      */
     private Command prepareAdd(String args){
-        final Matcher matcher = TASK_DATA_ARGS_FORMAT.matcher(args.trim());
+        final Matcher matcher = ADD_ARGS_FORMAT.matcher(args.trim());
         // Validate arg string format
-        if (!matcher.matches()) {
+        if (!matcher.find()) {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
+
         try {
-            return new AddCommand(
-                    matcher.group("name"),
-                    getTagsFromArgs(matcher.group("tagArguments"))
-            );
+            String name = matcher.group("name");
+            Optional<LocalDateTime> byDateTime = DateTimeParser.parseString(matcher.group("byAdd"));
+            Optional<LocalDateTime> fromDateTime = DateTimeParser.parseString(matcher.group("fromAdd"));
+            Optional<LocalDateTime> toDateTime = DateTimeParser.parseString(matcher.group("toAdd"));
+
+            if (byDateTime.isPresent()) {
+                return new AddCommand(
+                        name,
+                        byDateTime,
+                        getTagsFromArgs("test")
+                );
+            } else if (fromDateTime.isPresent() && toDateTime.isPresent()) {
+                return new AddCommand(
+                        name,
+                        fromDateTime,
+                        toDateTime,
+                        getTagsFromArgs("test")
+                );
+            } else {
+                return new IncorrectCommand(
+                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+            }
         } catch (IllegalValueException ive) {
             return new IncorrectCommand(ive.getMessage());
         }
