@@ -139,7 +139,13 @@ public class Parser {
                         dateTimeMap.get(ADD_ARGS_TO),
                         getTagsFromArgs("test")
                 );
-            } else {
+            } else if (!dateTimeMap.containsKey(ADD_ARGS_FROM) && !dateTimeMap.containsKey(ADD_ARGS_TO) && !dateTimeMap.containsKey(ADD_ARGS_BY)) {
+                return new AddCommand(
+                        taskTitle,
+                        getTagsFromArgs("test")
+                );
+            }
+            else {
                 return new IncorrectCommand(
                         String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
             }
