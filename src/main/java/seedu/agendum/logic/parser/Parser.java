@@ -27,10 +27,6 @@ public class Parser {
     private static final Pattern KEYWORDS_ARGS_FORMAT =
             Pattern.compile("(?<keywords>\\S+(?:\\s+\\S+)*)"); // one or more keywords separated by whitespace
 
-    private static final Pattern TASK_DATA_ARGS_FORMAT = // '/' forward slashes are reserved for delimiter prefixes
-            Pattern.compile("(?<name>[^/]+)"
-                    + "(?<tagArguments>(?: t/[^/]+)*)"); // variable number of tags
-
     private static final Pattern RENAME_ARGS_FORMAT = Pattern.compile("(?<targetIndex>\\d+)\\s+(?<name>[^/]+)");
 
     private static final Pattern ADD_ARGS_FORMAT = Pattern.compile("(?<name>[^/]+)(\\/from\\s)(?<fromArg>\\b.+?(?=\\/|$)){0,1}(\\/to\\s)(?<toArg>\\b.+?(?=\\/|$)){0,1}");
@@ -100,7 +96,7 @@ public class Parser {
     private Command prepareAdd(String args){
         final Matcher matcher = ADD_ARGS_FORMAT.matcher(args.trim());
         // Validate arg string format
-        if (!matcher.find()) {
+        if (!matcher.matches()) {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
 
