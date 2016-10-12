@@ -3,7 +3,10 @@ package seedu.agendum.ui;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
@@ -104,7 +107,7 @@ public class MainWindow extends UiPart {
     }
 
     private void setAccelerators() {
-        helpMenuItem.setAccelerator(KeyCombination.valueOf("F1"));
+        helpMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.H, KeyCombination.ALT_DOWN));
     }
 
     void fillInnerParts() {
