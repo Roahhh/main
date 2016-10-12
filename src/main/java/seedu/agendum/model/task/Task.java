@@ -15,8 +15,8 @@ public class Task implements ReadOnlyTask {
 
     private Name name;
     private boolean isCompleted;
-    private Optional<LocalDateTime> startDateTime;
-    private Optional<LocalDateTime> endDateTime;
+    private LocalDateTime startDateTime;
+    private LocalDateTime endDateTime;
     
     private UniqueTagList tags;
     
@@ -42,16 +42,17 @@ public class Task implements ReadOnlyTask {
         this.name = name;
         this.isCompleted = false;
         this.startDateTime = null;
-        this.endDateTime = deadline;
+        this.endDateTime = deadline.orElse(null);
         this.tags = new UniqueTagList(tags); // protect internal tags from changes in the arg list
     }
 
-    public Task(Name name, Optional<LocalDateTime> startDateTime, Optional<LocalDateTime> endDateTime, UniqueTagList tags) {
+    public Task(Name name, Optional<LocalDateTime> startDateTime,
+             Optional<LocalDateTime> endDateTime, UniqueTagList tags) {
         assert !CollectionUtil.isAnyNull(name, tags);
         this.name = name;
         this.isCompleted = false;
-        this.startDateTime = startDateTime;
-        this.endDateTime = endDateTime;
+        this.startDateTime = startDateTime.orElse(null);
+        this.endDateTime = endDateTime.orElse(null);
         this.tags = new UniqueTagList(tags); // protect internal tags from changes in the arg list
     }
     /**
@@ -79,12 +80,12 @@ public class Task implements ReadOnlyTask {
 
     @Override
     public Optional<LocalDateTime> getStartDateTime() {
-        return startDateTime;
+        return Optional.ofNullable(startDateTime);
     }
 
     @Override
     public Optional<LocalDateTime> getEndDateTime() {
-        return endDateTime;
+        return Optional.ofNullable(endDateTime);
     }
 
     @Override
@@ -107,11 +108,11 @@ public class Task implements ReadOnlyTask {
     }
     
     public void setStartDateTime(Optional<LocalDateTime> startDateTime) {
-        this.startDateTime = startDateTime;
+        this.startDateTime = startDateTime.orElse(null);
     }
     
     public void setEndDateTime(Optional<LocalDateTime> endDateTime) {
-        this.endDateTime = endDateTime;
+        this.endDateTime = endDateTime.orElse(null);
     }
 
     /**
