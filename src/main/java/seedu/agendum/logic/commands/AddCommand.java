@@ -5,9 +5,7 @@ import seedu.agendum.model.tag.Tag;
 import seedu.agendum.model.tag.UniqueTagList;
 import seedu.agendum.model.task.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -30,7 +28,7 @@ public class AddCommand extends Command {
     private final Task toAdd;
 
     /**
-     * Convenience constructor using raw values.
+     * Convenience constructor using name and set of tags
      *
      * @throws IllegalValueException if any of the raw values are invalid
      */
@@ -47,7 +45,7 @@ public class AddCommand extends Command {
     }
 
     /**
-     * Convenience constructor using raw values.
+     * Convenience constructor using name, end datetime and set of tags
      *
      * @throws IllegalValueException if any of the raw values are invalid
      */
@@ -65,7 +63,7 @@ public class AddCommand extends Command {
     }
 
     /**
-     * Convenience constructor using raw values.
+     * Convenience constructor using name, start datetime, end datetime and set of tags
      *
      * @throws IllegalValueException if any of the raw values are invalid
      */

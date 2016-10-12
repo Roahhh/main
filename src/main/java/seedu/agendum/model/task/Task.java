@@ -46,6 +46,9 @@ public class Task implements ReadOnlyTask {
         this.tags = new UniqueTagList(tags); // protect internal tags from changes in the arg list
     }
 
+    /**
+     * Constructor for a task with start and end datetime
+     */
     public Task(Name name, Optional<LocalDateTime> startDateTime,
                  Optional<LocalDateTime> endDateTime, UniqueTagList tags) {
         assert !CollectionUtil.isAnyNull(name, tags);
