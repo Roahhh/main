@@ -41,6 +41,9 @@ public class UpcomingTaskCard extends UiPart {
 
     @FXML
     public void initialize() {
+        if(task.isCompleted()) {
+            name.setUnderline(true);
+        }
         name.setText(task.getName().fullName);
         id.setText(displayedIndex + ". ");
         time.setText(formatTime());
