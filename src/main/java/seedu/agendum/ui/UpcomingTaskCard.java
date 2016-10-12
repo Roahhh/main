@@ -50,19 +50,17 @@ public class UpcomingTaskCard extends UiPart {
     public String formatTime() {
         StringBuilder sb = new StringBuilder();
         Optional<LocalDateTime> start = task.getStartDateTime();
-        Optional<LocalDateTime> end = task.getStartDateTime();
+        Optional<LocalDateTime> end = task.getEndDateTime();
         
         DateTimeFormatter startFormat = DateTimeFormatter.ofPattern("EEE, dd MMM");
         
-        if(start.isPresent() && end.isPresent()) { // Have both start time and end time
-            sb.append("from ").append(start.get().format(startFormat)).append(" to ").append(end.get().format(startFormat));
-        } else if (end.isPresent()) { // No start time
-            sb.append("by ").append(end.get().format(startFormat));
-        } else if (start.isPresent()) { // No end time
-            sb.append("from ").append(start.get().format(startFormat));
-        } else { // Both are null
-            sb.append("");
-        }
+		if(start.isPresent()) {
+			sb.append("from ").append(start.get().format(startFormat));
+		}
+		if(end.isPresent()) {
+			sb.append(sb.length()>0 ? " to " : "by ");
+			sb.append(end.get().format(startFormat));
+		}
         
         return sb.toString();
     }
