@@ -29,7 +29,11 @@ public class Parser {
 
     private static final Pattern RENAME_ARGS_FORMAT = Pattern.compile("(?<targetIndex>\\d+)\\s+(?<name>[^/]+)");
 
-    private static final Pattern ADD_ARGS_FORMAT = Pattern.compile("(?<name>[^/]+)(\\/from\\s)(?<fromArg>\\b.+?(?=\\/|$)){0,1}(\\/to\\s)(?<toArg>\\b.+?(?=\\/|$)){0,1}");
+    private static final Pattern ADD_ARGS_FORMAT = Pattern.compile("(?:.+?(?=(?:(?:by|from|to)\\s|$)))+?");
+
+    private static final String ADD_ARGS_FROM = "from";
+    private static final String ADD_ARGS_BY = "by";
+    private static final String ADD_ARGS_TO = "to";
 
     public Parser() {}
 
@@ -94,29 +98,45 @@ public class Parser {
      * @return the prepared command
      */
     private Command prepareAdd(String args){
-        final Matcher matcher = ADD_ARGS_FORMAT.matcher(args.trim());
-        // Validate arg string format
+        Matcher matcher = ADD_ARGS_FORMAT.matcher(args.trim());
         if (!matcher.matches()) {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
 
         try {
-            String name = matcher.group("name");
-            Optional<LocalDateTime> byDateTime = DateTimeParser.parseString("");
-            Optional<LocalDateTime> fromDateTime = DateTimeParser.parseString(matcher.group("fromArg"));
-            Optional<LocalDateTime> toDateTime = DateTimeParser.parseString(matcher.group("toArg"));
+            matcher = ADD_ARGS_FORMAT.matcher(args.trim());
 
-            if (byDateTime.isPresent()) {
+            String taskTitle = null;
+            HashMap<String, Optional<LocalDateTime>> dateTimeMap = new HashMap<>();
+            final String[] tokens = new String[]{ADD_ARGS_FROM, ADD_ARGS_TO, ADD_ARGS_BY};
+
+            while (matcher.find()) {
+                boolean matchedWithPrefix = false;
+
+                for (String token:tokens) {
+                    String s = matcher.group(0).toLowerCase();
+                    if (s.startsWith(token)) {
+                        s = s.substring(token.length(), s.length());
+                        dateTimeMap.put(token, DateTimeParser.parseString(s));
+                        matchedWithPrefix = true;
+                    }
+                }
+                if (!matchedWithPrefix) {
+                    taskTitle = matcher.group(0);
+                }
+            }
+
+            if (dateTimeMap.containsKey(ADD_ARGS_BY)) {
                 return new AddCommand(
-                        name,
-                        byDateTime,
+                        taskTitle,
+                        dateTimeMap.get(ADD_ARGS_BY),
                         getTagsFromArgs("test")
                 );
-            } else if (fromDateTime.isPresent() && toDateTime.isPresent()) {
+            } else if (dateTimeMap.containsKey(ADD_ARGS_FROM) && dateTimeMap.containsKey(ADD_ARGS_TO)) {
                 return new AddCommand(
-                        name,
-                        fromDateTime,
-                        toDateTime,
+                        taskTitle,
+                        dateTimeMap.get(ADD_ARGS_FROM),
+                        dateTimeMap.get(ADD_ARGS_TO),
                         getTagsFromArgs("test")
                 );
             } else {
