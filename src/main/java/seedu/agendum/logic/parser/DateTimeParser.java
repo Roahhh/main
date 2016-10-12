@@ -11,7 +11,7 @@ import java.util.Optional;
 public class DateTimeParser {
 
     public static Optional<LocalDateTime> parseString(String input) {
-        if (input.length() <= 0) {
+        if(input == null || input.isEmpty()) {
             return Optional.empty();
         }
         // Referring to natty's Parser Class using its full path because of the namespace collision with our Parser class.
