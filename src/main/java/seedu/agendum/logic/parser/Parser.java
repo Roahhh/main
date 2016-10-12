@@ -33,7 +33,7 @@ public class Parser {
 
     private static final Pattern RENAME_ARGS_FORMAT = Pattern.compile("(?<targetIndex>\\d+)\\s+(?<name>[^/]+)");
 
-    private static final Pattern ADD_ARGS_FORMAT = Pattern.compile("(?<name>[^/]+)(\\/from\\s)(?<fromAdd>\\b.+?(?=\\/|$)){1}(\\/to\\s)(?<toAdd>\\b.+?(?=\\/|$)){1}(\\/by\\s)(?<byAdd>\\b.+?(?=\\/|$)){1}");
+    private static final Pattern ADD_ARGS_FORMAT = Pattern.compile("(?<name>[^/]+)(\\/from\\s)(?<fromArg>\\b.+?(?=\\/|$)){0,1}(\\/to\\s)(?<toArg>\\b.+?(?=\\/|$)){0,1}");
 
     public Parser() {}
 
@@ -106,9 +106,9 @@ public class Parser {
 
         try {
             String name = matcher.group("name");
-            Optional<LocalDateTime> byDateTime = DateTimeParser.parseString(matcher.group("byAdd"));
-            Optional<LocalDateTime> fromDateTime = DateTimeParser.parseString(matcher.group("fromAdd"));
-            Optional<LocalDateTime> toDateTime = DateTimeParser.parseString(matcher.group("toAdd"));
+            Optional<LocalDateTime> byDateTime = DateTimeParser.parseString("");
+            Optional<LocalDateTime> fromDateTime = DateTimeParser.parseString(matcher.group("fromArg"));
+            Optional<LocalDateTime> toDateTime = DateTimeParser.parseString(matcher.group("toArg"));
 
             if (byDateTime.isPresent()) {
                 return new AddCommand(
