@@ -47,7 +47,7 @@ public class Task implements ReadOnlyTask {
     }
 
     public Task(Name name, Optional<LocalDateTime> startDateTime,
-             Optional<LocalDateTime> endDateTime, UniqueTagList tags) {
+                 Optional<LocalDateTime> endDateTime, UniqueTagList tags) {
         assert !CollectionUtil.isAnyNull(name, tags);
         this.name = name;
         this.isCompleted = false;
@@ -55,6 +55,7 @@ public class Task implements ReadOnlyTask {
         this.endDateTime = endDateTime.orElse(null);
         this.tags = new UniqueTagList(tags); // protect internal tags from changes in the arg list
     }
+
     /**
      * Copy constructor.
      */
