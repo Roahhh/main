@@ -42,6 +42,8 @@ public interface ReadOnlyTask {
         builder.append(getName())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
+        builder.append("\nStart time: ").append(this.getStartDateTime());
+        builder.append("\nEnd time: ").append(this.getEndDateTime());
         return builder.toString();
     }
 
