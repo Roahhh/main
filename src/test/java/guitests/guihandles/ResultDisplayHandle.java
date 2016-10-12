@@ -10,7 +10,7 @@ import seedu.agendum.TestApp;
  */
 public class ResultDisplayHandle extends GuiHandle {
 
-    public static final String RESULT_DISPLAY_ID = "#resultDisplay";
+    public static final String RESULT_DISPLAY_ID = "#resultTextArea";
 
     public ResultDisplayHandle(GuiRobot guiRobot, Stage primaryStage) {
         super(guiRobot, primaryStage, TestApp.APP_TITLE);
