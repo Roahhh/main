@@ -77,11 +77,17 @@ public class StringUtilTest {
         assertFalse(StringUtil.isValidFilePath("C:/ data/valid.xml"));
         assertFalse(StringUtil.isValidFilePath("C:/data.xml/data.xml"));
         assertFalse(StringUtil.isValidFilePath("1:/data.xml"));
+        assertFalse(StringUtil.isValidFilePath("/usr/.xml"));
+        assertFalse(StringUtil.isValidFilePath("/ usr/data.xml"));
+        assertFalse(StringUtil.isValidFilePath("/usr /data.xml"));
 
         assertTrue(StringUtil.isValidFilePath("C:/a/a.xml"));
         assertTrue(StringUtil.isValidFilePath("C:/Program Files/data.xml"));
         assertTrue(StringUtil.isValidFilePath("Z:/folder/some-other-folder/data.dat"));
         assertTrue(StringUtil.isValidFilePath("a:/folder/some-other-folder/data.dat"));
+        assertTrue(StringUtil.isValidFilePath("/usr/bin/data.xml"));
+        assertTrue(StringUtil.isValidFilePath("/home/data.xml"));
+        assertTrue(StringUtil.isValidFilePath("/Users/test/Desktop/data.xml"));
         
     }
     
