@@ -19,12 +19,23 @@ public class FileUtil {
         }
     }
     
-    /**
-     * Checks if a file at path is writeable
+    /** SEven though a path is valid, it might not exist or the user has insufficient privileges.<br>
+     * i.e. J drive is a valid location, but it does not exist.
+     * 
+     * Creates and deletes a file at the path.
+     * 
+     * @return true if the file can be created and deleted at the path.
      */
-    public static boolean isPathWriteable(String path) {
+    public static boolean isPathAvailable(String path) {
         File file = new File(path);
-        return file.canWrite();
+        try {
+            file.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+        file.delete();
+        return true;
     }
     
     public static boolean isFileExists(File file) {
