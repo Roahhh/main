@@ -1,6 +1,7 @@
 package seedu.agendum.model;
 
 import seedu.agendum.commons.core.UnmodifiableObservableList;
+import seedu.agendum.commons.exceptions.FileDeletionException;
 import seedu.agendum.model.task.Name;
 import seedu.agendum.model.task.ReadOnlyTask;
 import seedu.agendum.model.task.Task;
@@ -51,6 +52,6 @@ public interface Model {
     void updateFilteredTaskList(Set<String> keywords);
     
     /** Change the storage location of the todolist.xml */
-    void changeSaveLocation(String location);
+    void changeSaveLocation(String location) throws FileDeletionException;
 
 }

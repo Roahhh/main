@@ -4,6 +4,7 @@ import javafx.collections.transformation.FilteredList;
 import seedu.agendum.commons.core.LogsCenter;
 import seedu.agendum.commons.core.UnmodifiableObservableList;
 import seedu.agendum.commons.util.ConfigUtil;
+import seedu.agendum.commons.util.FileUtil;
 import seedu.agendum.commons.util.StringUtil;
 import seedu.agendum.model.task.Name;
 import seedu.agendum.model.task.ReadOnlyTask;
@@ -12,6 +13,7 @@ import seedu.agendum.model.task.UniqueTaskList;
 import seedu.agendum.model.task.UniqueTaskList.TaskNotFoundException;
 import seedu.agendum.commons.events.model.SaveLocationChangedEvent;
 import seedu.agendum.commons.events.model.ToDoListChangedEvent;
+import seedu.agendum.commons.exceptions.FileDeletionException;
 import seedu.agendum.commons.core.ComponentManager;
 import seedu.agendum.commons.core.Config;
 
@@ -94,14 +96,20 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public synchronized void changeSaveLocation(String location) {
+    public synchronized void changeSaveLocation(String location) throws FileDeletionException {
         assert !location.isEmpty();
         assert location != null;
         assert StringUtil.isValidFilePath(location);
-        
+
+        deletePreviousToDoListData(config.getToDoListFilePath());
         config.setToDoListFilePath(location);
         indicateSaveLocationChanged(location);
+        indicateToDoListChanged();
         saveConfigFile();
+    }
+
+    private void deletePreviousToDoListData(String filePath) throws FileDeletionException {
+        FileUtil.deleteFileAtPath(filePath);
     }
 
     private void saveConfigFile() {
