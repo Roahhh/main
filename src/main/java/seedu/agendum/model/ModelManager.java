@@ -96,7 +96,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public synchronized void changeSaveLocation(String location) throws FileDeletionException {
+    public synchronized void changeSaveLocation(String location){
         assert !location.isEmpty();
         assert location != null;
         assert StringUtil.isValidFilePath(location);
@@ -108,8 +108,12 @@ public class ModelManager extends ComponentManager implements Model {
         saveConfigFile();
     }
 
-    private void deletePreviousToDoListData(String filePath) throws FileDeletionException {
-        FileUtil.deleteFileAtPath(filePath);
+    private void deletePreviousToDoListData(String filePath) {
+        try {
+            FileUtil.deleteFileAtPath(filePath);
+        } catch (FileDeletionException e) {
+            logger.warning("Failed to delete previous todolist data: " + StringUtil.getDetails(e));
+        }
     }
 
     private void saveConfigFile() {

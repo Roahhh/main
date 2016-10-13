@@ -52,6 +52,6 @@ public interface Model {
     void updateFilteredTaskList(Set<String> keywords);
     
     /** Change the storage location of the todolist.xml */
-    void changeSaveLocation(String location) throws FileDeletionException;
+    void changeSaveLocation(String location);
 
 }

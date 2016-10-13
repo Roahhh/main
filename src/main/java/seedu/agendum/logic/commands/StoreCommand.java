@@ -13,7 +13,7 @@ public class StoreCommand extends Command {
     public static final String COMMAND_WORD = "store";
     public static final String MESSAGE_SUCCESS = "New save location: %1$s";
     public static final String MESSAGE_LOCATION_INVALID = "The specified location is invalid.";
-    public static final String MESSAGE_FAIL_DELETE_FILE = "Failed to delete previous data file.";
+    public static final String MESSAGE_LOCATION_DEFAULT = "Save location set to default: %1$s";
     
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Specify a save location. \n"
             + "Parameters: FILE_PATH\n" 
@@ -30,18 +30,18 @@ public class StoreCommand extends Command {
         assert newSaveLocation != null;
         
         if(newSaveLocation.equalsIgnoreCase("default")) {
-            newSaveLocation = Config.DEFAULT_SAVE_LOCATION;
-        } else if(!isNewSaveLocationValid()) {
+            String defaultLocation = Config.DEFAULT_SAVE_LOCATION;
+            model.changeSaveLocation(defaultLocation);
+            return new CommandResult(String.format(MESSAGE_SUCCESS, defaultLocation));
+        }
+
+        if(!isNewSaveLocationValid()) {
             indicateAttemptToExecuteIncorrectCommand();
             return new CommandResult(MESSAGE_LOCATION_INVALID);
         }
 
-        try {
-            model.changeSaveLocation(newSaveLocation);
-            return new CommandResult(String.format(MESSAGE_SUCCESS, newSaveLocation));
-        } catch (FileDeletionException e) {
-            return new CommandResult(String.format(MESSAGE_FAIL_DELETE_FILE));
-        }
+        model.changeSaveLocation(newSaveLocation);
+        return new CommandResult(String.format(MESSAGE_SUCCESS, newSaveLocation));
     }
     
     private boolean isNewSaveLocationValid() {
