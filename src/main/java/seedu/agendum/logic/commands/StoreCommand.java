@@ -45,6 +45,9 @@ public class StoreCommand extends Command {
     
     private boolean isNewSaveLocationValid() {
         boolean stringValid = StringUtil.isValidFilePath(newSaveLocation);
+        if(!stringValid) {// Don't do the more expensive check if this one fails
+            return false;
+        }
         boolean locationValid = FileUtil.isPathAvailable(newSaveLocation);
         
         return stringValid && locationValid;
