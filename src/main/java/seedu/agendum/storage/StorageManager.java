@@ -95,6 +95,7 @@ public class StorageManager extends ComponentManager implements Storage {
         }
     }
 
+    @Override
     @Subscribe
     public void handleSaveLocationChangedEvent(SaveLocationChangedEvent event) {
         String saveLocation = event.saveLocation;

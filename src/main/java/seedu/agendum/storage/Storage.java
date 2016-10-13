@@ -1,5 +1,6 @@
 package seedu.agendum.storage;
 
+import seedu.agendum.commons.events.model.SaveLocationChangedEvent;
 import seedu.agendum.commons.events.model.ToDoListChangedEvent;
 import seedu.agendum.commons.events.storage.DataSavingExceptionEvent;
 import seedu.agendum.commons.exceptions.DataConversionException;
@@ -37,5 +38,10 @@ public interface Storage extends ToDoListStorage, UserPrefsStorage {
      *   Creates the data file if it is missing.
      * Raises {@link DataSavingExceptionEvent} if there was an error during saving.
      */
-    void handleToDoListChangedEvent(ToDoListChangedEvent abce);
+    void handleToDoListChangedEvent(ToDoListChangedEvent event);
+    
+    /**
+     * Sets the save location 
+     */
+    public void handleSaveLocationChangedEvent(SaveLocationChangedEvent event);
 }
