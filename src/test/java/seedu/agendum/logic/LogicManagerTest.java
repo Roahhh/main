@@ -6,6 +6,8 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
+
+import seedu.agendum.commons.core.Config;
 import seedu.agendum.commons.core.EventsCenter;
 import seedu.agendum.logic.commands.*;
 import seedu.agendum.commons.events.ui.JumpToListRequestEvent;
@@ -331,6 +333,25 @@ public class LogicManagerTest {
                 expectedTDL.getTaskList());
     }
 
+    @Test
+    public void execute_store_successful() throws Exception {
+        // setup expectations
+        TestDataHelper helper = new TestDataHelper();
+        ToDoList expectedTDL = new ToDoList();
+        String location = "data/test.xml";
+
+        // execute command and verify result
+        assertCommandBehavior("store " + location,
+                String.format(StoreCommand.MESSAGE_SUCCESS, location),
+                expectedTDL,
+                expectedTDL.getTaskList());
+
+        // execute command and verify result
+        assertCommandBehavior("store default",
+                String.format(StoreCommand.MESSAGE_LOCATION_DEFAULT, Config.DEFAULT_SAVE_LOCATION),
+                expectedTDL,
+                expectedTDL.getTaskList());
+    }
 
     @Test
     public void execute_markInvalidArgsFormat_errorMessageShown() throws Exception {
