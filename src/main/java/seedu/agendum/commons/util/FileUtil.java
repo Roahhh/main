@@ -19,22 +19,27 @@ public class FileUtil {
         }
     }
     
-    /** SEven though a path is valid, it might not exist or the user has insufficient privileges.<br>
+    /** Even though a path is valid, it might not exist or the user has insufficient privileges.<br>
      * i.e. J drive is a valid location, but it does not exist.
      * 
-     * Creates and deletes a file at the path.
+     * Creates and deletes an empty file at the path.
      * 
-     * @return true if the file can be created and deleted at the path.
+     * @return true if the path is exists and user has sufficient privileges.
      */
     public static boolean isPathAvailable(String path) {
         File file = new File(path);
+        boolean exists = file.exists();
+        
         try {
             file.createNewFile();
         } catch (IOException e) {
             e.printStackTrace();
             return false;
         }
-        file.delete();
+        
+        if(!exists) { // prevent deleting an existing file
+            file.delete();
+        }
         return true;
     }
     
