@@ -1,7 +1,6 @@
 package seedu.agendum.logic.commands;
 
 import seedu.agendum.commons.core.Config;
-import seedu.agendum.commons.exceptions.FileDeletionException;
 import seedu.agendum.commons.util.FileUtil;
 import seedu.agendum.commons.util.StringUtil;
 
@@ -32,7 +31,7 @@ public class StoreCommand extends Command {
         if(newSaveLocation.equalsIgnoreCase("default")) {
             String defaultLocation = Config.DEFAULT_SAVE_LOCATION;
             model.changeSaveLocation(defaultLocation);
-            return new CommandResult(String.format(MESSAGE_SUCCESS, defaultLocation));
+            return new CommandResult(String.format(MESSAGE_LOCATION_DEFAULT, defaultLocation));
         }
 
         if(!isNewSaveLocationValid()) {
