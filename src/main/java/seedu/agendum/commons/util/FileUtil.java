@@ -4,12 +4,24 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 
+import seedu.agendum.commons.exceptions.FileDeletionException;
+
 /**
  * Writes and reads file
  */
 public class FileUtil {
     private static final String CHARSET = "UTF-8";
     
+    public static void deleteFileAtPath(String filePath) throws FileDeletionException {
+        File file = new File(filePath);
+        if (!file.delete()) {
+            throw new FileDeletionException("Unable to delete file at: " + filePath);
+        }
+    }
+    
+    /**
+     * Checks if a file at path is writeable
+     */
     public static boolean isPathWriteable(String path) {
         File file = new File(path);
         return file.canWrite();
