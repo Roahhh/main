@@ -336,7 +336,6 @@ public class LogicManagerTest {
     @Test
     public void execute_store_successful() throws Exception {
         // setup expectations
-        TestDataHelper helper = new TestDataHelper();
         ToDoList expectedTDL = new ToDoList();
         String location = "data/test.xml";
 
