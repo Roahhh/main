@@ -97,23 +97,12 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public synchronized void changeSaveLocation(String location){
-        assert !location.isEmpty();
-        assert location != null;
         assert StringUtil.isValidFilePath(location);
 
-        deletePreviousToDoListData(config.getToDoListFilePath());
         config.setToDoListFilePath(location);
         indicateSaveLocationChanged(location);
         indicateToDoListChanged();
         saveConfigFile();
-    }
-
-    private void deletePreviousToDoListData(String filePath) {
-        try {
-            FileUtil.deleteFileAtPath(filePath);
-        } catch (FileDeletionException e) {
-            logger.warning("Failed to delete previous todolist data: " + StringUtil.getDetails(e));
-        }
     }
 
     private void saveConfigFile() {
