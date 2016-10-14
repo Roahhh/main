@@ -209,26 +209,33 @@
     -fx-text-fill: white;
 }
 
+.scroll-pane {
+  -fx-background-color: transparent;
+}
+
+.scroll-bar .increment-button {
+  -fx-opacity: 0;
+}
+
+.scroll-bar .decrement-button {
+  -fx-opacity: 0;
+}
+
+.scroll-bar {
+  -fx-background-color: transparent;
+}
+
+.scroll-bar .track-background {
+  -fx-opacity: 0;
+}
+
+.scroll-bar .track {
+  -fx-opacity: 0;
+}
+
 .scroll-bar .thumb {
-    -fx-background-color: derive(#1d1d1d, 50%);
-    -fx-background-insets: 3;
-}
-
-.scroll-bar .increment-button, .scroll-bar .decrement-button {
-    -fx-background-color: transparent;
-    -fx-padding: 0 0 0 0;
-}
-
-.scroll-bar .increment-arrow, .scroll-bar .decrement-arrow {
-    -fx-shape: " ";
-}
-
-.scroll-bar:vertical .increment-arrow, .scroll-bar:vertical .decrement-arrow {
-    -fx-padding: 1 8 1 8;
-}
-
-.scroll-bar:horizontal .increment-arrow, .scroll-bar:horizontal .decrement-arrow {
-    -fx-padding: 8 1 8 1;
+  -fx-background-color: rgba(255,255,255,0.5);
+  -fx-background-radius: 2em;
 }
 
 #cardPane {
