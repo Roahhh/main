@@ -16,18 +16,18 @@ import seedu.agendum.model.task.ReadOnlyTask;
 import seedu.agendum.commons.core.LogsCenter;
 
 /**
- * Panel contains the list of upcoming tasks
+ * Panel contains the list of all tasks
  */
-public class UpcomingTasksPanel extends UiPart {
-    private final Logger logger = LogsCenter.getLogger(UpcomingTasksPanel.class);
-    private static final String FXML = "UpcomingTasksPanel.fxml";
+public class AllTasksPanel extends UiPart {
+    private final Logger logger = LogsCenter.getLogger(AllTasksPanel.class);
+    private static final String FXML = "AllTasksPanel.fxml";
     private AnchorPane panel;
     private AnchorPane placeHolderPane;
 
     @FXML
-    private ListView<ReadOnlyTask> upcomingTasksListView;
+    private ListView<ReadOnlyTask> allTasksListView;
 
-    public UpcomingTasksPanel() {
+    public AllTasksPanel() {
         super();
     }
 
@@ -46,21 +46,21 @@ public class UpcomingTasksPanel extends UiPart {
         this.placeHolderPane = pane;
     }
 
-    public static UpcomingTasksPanel load(Stage primaryStage, AnchorPane UpcomingTasksPlaceholder,
+    public static AllTasksPanel load(Stage primaryStage, AnchorPane AllTasksPlaceholder,
             ObservableList<ReadOnlyTask> taskList) {
-        UpcomingTasksPanel upcomingTasksPanel = UiPartLoader.loadUiPart(primaryStage, UpcomingTasksPlaceholder, new UpcomingTasksPanel());
-        upcomingTasksPanel.configure(taskList);
-        return upcomingTasksPanel;
+        AllTasksPanel allTasksPanel = UiPartLoader.loadUiPart(primaryStage, AllTasksPlaceholder, new AllTasksPanel());
+        allTasksPanel.configure(taskList);
+        return allTasksPanel;
     }
 
-    private void configure(ObservableList<ReadOnlyTask> upcomingTasks) {
-        setConnections(upcomingTasks);
+    private void configure(ObservableList<ReadOnlyTask> allTasks) {
+        setConnections(allTasks);
         addToPlaceholder();
     }
 
-    private void setConnections(ObservableList<ReadOnlyTask> upcomingTasks) {
-        upcomingTasksListView.setItems(upcomingTasks);
-        upcomingTasksListView.setCellFactory(listView -> new upcomingTasksListViewCell());
+    private void setConnections(ObservableList<ReadOnlyTask> allTasks) {
+        allTasksListView.setItems(allTasks);
+        allTasksListView.setCellFactory(listView -> new allTasksListViewCell());
         setEventHandlerForSelectionChangeEvent();
     }
 
@@ -70,7 +70,7 @@ public class UpcomingTasksPanel extends UiPart {
     }
 
     private void setEventHandlerForSelectionChangeEvent() {
-        upcomingTasksListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+        allTasksListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 logger.fine("Selection in task list panel changed to : '" + newValue + "'");
                 raise(new TaskPanelSelectionChangedEvent(newValue));
@@ -80,14 +80,14 @@ public class UpcomingTasksPanel extends UiPart {
 
     public void scrollTo(int index) {
         Platform.runLater(() -> {
-            upcomingTasksListView.scrollTo(index);
-            upcomingTasksListView.getSelectionModel().clearAndSelect(index);
+            allTasksListView.scrollTo(index);
+            allTasksListView.getSelectionModel().clearAndSelect(index);
         });
     }
 
-    class upcomingTasksListViewCell extends ListCell<ReadOnlyTask> {
+    class allTasksListViewCell extends ListCell<ReadOnlyTask> {
 
-        public upcomingTasksListViewCell() {
+        public allTasksListViewCell() {
         }
 
         @Override
@@ -98,7 +98,7 @@ public class UpcomingTasksPanel extends UiPart {
                 setGraphic(null);
                 setText(null);
             } else {
-                setGraphic(UpcomingTaskCard.load(task, getIndex() + 1).getLayout());
+                setGraphic(TaskCard.load(task, getIndex() + 1).getLayout());
             }
         }
     }
