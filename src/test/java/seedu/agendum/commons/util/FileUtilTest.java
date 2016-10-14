@@ -74,7 +74,7 @@ public class FileUtilTest {
     
     @Test
     public void isPathAvailable() throws IOException {
-        String availablePath = "data/test/test.txt";
+        String availablePath = "testpath/test.txt";
         String badPath = "C:/Windows/System32/test.xml";
         File file = new File(availablePath);
         
