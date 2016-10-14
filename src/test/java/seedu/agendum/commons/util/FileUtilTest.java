@@ -24,6 +24,36 @@ public class FileUtilTest {
     public ExpectedException thrown = ExpectedException.none();
 
     
+    @Test 
+    public void createFile() throws IOException {
+        File validFile = new File("test.file");
+        File validFileWithParentDirectories = new File("test/test1/test2/test.file");
+
+        // File does not exist
+        assertTrue(FileUtil.createFile(validFile));
+        
+        // File exists
+        assertFalse(FileUtil.createFile(validFile));
+        
+        // File with many parent directories that do not exist
+        assertTrue(FileUtil.createFile(validFileWithParentDirectories));
+        
+        // File with many parent directories that exist
+        assertFalse(FileUtil.createFile(validFileWithParentDirectories));
+        
+        // cleanup the files
+        validFile.delete();
+        validFileWithParentDirectories.delete();
+    }
+    
+    @Test
+    public void createDirs_invalidPath() throws IOException {
+        File invalidDirFile = new File("1:/test.xml");
+        
+        thrown.expect(IOException.class);
+        FileUtil.createDirs(invalidDirFile);
+    }
+    
     @Test
     public void deleteFileAtPath() throws FileDeletionException, IOException {
         
