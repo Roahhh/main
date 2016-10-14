@@ -55,7 +55,7 @@ public class UpcomingTaskCard extends UiPart {
         Optional<LocalDateTime> start = task.getStartDateTime();
         Optional<LocalDateTime> end = task.getEndDateTime();
         
-        DateTimeFormatter startFormat = DateTimeFormatter.ofPattern("EEE, dd MMM");
+        DateTimeFormatter startFormat = DateTimeFormatter.ofPattern("hh a EEE, dd MMM");
         
 		if(start.isPresent()) {
 			sb.append("from ").append(start.get().format(startFormat));
@@ -64,8 +64,8 @@ public class UpcomingTaskCard extends UiPart {
 			sb.append(sb.length()>0 ? " to " : "by ");
 			sb.append(end.get().format(startFormat));
 		}
-        
-        return sb.toString();
+		
+        return sb.toString().replace("AM", "am").replace("PM","pm");
     }
 
     public HBox getLayout() {
