@@ -35,6 +35,7 @@ public class MainWindow extends UiPart {
     private BrowserPanel browserPanel;
     private AllTasksPanel allTasksPanel;
     private CompletedTasksPanel completedTasksPanel;
+    private OtherTasksPanel otherTasksPanel;
     private ResultPopUp resultPopUp;
     private StatusBarFooter statusBarFooter;
     private CommandBox commandBox;
@@ -61,6 +62,9 @@ public class MainWindow extends UiPart {
     
     @FXML
     private AnchorPane completedTasksPlaceHolder;
+    
+    @FXML
+    private AnchorPane otherTasksPlaceHolder;
     
     @FXML
     private AnchorPane statusbarPlaceholder;
@@ -115,6 +119,7 @@ public class MainWindow extends UiPart {
 //        browserPanel = BrowserPanel.load(browserPlaceholder);
         allTasksPanel = AllTasksPanel.load(primaryStage, getAllTasksPlaceHolder(), logic.getFilteredTaskList());
         completedTasksPanel = CompletedTasksPanel.load(primaryStage, getCompletedTasksPlaceHolder(), logic.getFilteredTaskList());
+        otherTasksPanel = OtherTasksPanel.load(primaryStage, getOtherTasksPlaceHolder(), logic.getFilteredTaskList());
         resultPopUp = ResultPopUp.load(primaryStage);
         statusBarFooter = StatusBarFooter.load(primaryStage, getStatusbarPlaceholder(), config.getToDoListFilePath());
         commandBox = CommandBox.load(primaryStage, getCommandBoxPlaceholder(), resultPopUp, logic);
@@ -134,6 +139,10 @@ public class MainWindow extends UiPart {
     
     public AnchorPane getCompletedTasksPlaceHolder() {
         return completedTasksPlaceHolder;
+    }
+    
+    public AnchorPane getOtherTasksPlaceHolder() {
+        return otherTasksPlaceHolder;
     }
 
     public void hide() {

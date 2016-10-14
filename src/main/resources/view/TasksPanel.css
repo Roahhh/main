@@ -8,6 +8,11 @@
 	-fx-background-radius: 10;
 }
 
+.other-pane {
+	-fx-background-color:  #3498DB;
+	-fx-background-radius: 10;
+}
+
 .list-view {
 	-fx-background-color: transparent;
 	-fx-background-radius: 10;
