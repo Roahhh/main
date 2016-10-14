@@ -25,35 +25,34 @@ public class FileUtilTest {
 
     
     @Test
-    public void deleteFileAtPath() throws FileDeletionException {
+    public void deleteFileAtPath() throws FileDeletionException, IOException {
         
-        // unable to delete
-        thrown.expect(FileDeletionException.class);
+        // invalid filepath
+        thrown.expect(AssertionError.class);
         FileUtil.deleteFileAtPath(null);
         
         // able to delete
         File file = new File("test.file");
-        try {
-            FileUtil.createFile(file);
-            FileUtil.deleteFileAtPath(file.getPath());
-        } catch (IOException e) {
-        }
+        FileUtil.createFile(file);
+        FileUtil.deleteFileAtPath(file.getPath());
+        assertTrue(FileUtil.isFileExists(file));
+        
+        // unable to delete file
+        thrown.expect(FileDeletionException.class);
+        FileUtil.deleteFileAtPath(file.getPath());
     }
     
     @Test
-    public void isPathAvailable() {
+    public void isPathAvailable() throws IOException {
         String availablePath = "data/test/test.txt";
-        String badPath = "1:/test.xml";
+        String badPath = "C:/Windows/System32/test.xml";
+        File file = new File(availablePath);
         
         // Path available
         // file does not exist
         assertTrue(FileUtil.isPathAvailable(availablePath));
         // file exists
-        File file = new File(availablePath);
-        try {
-            FileUtil.createFile(file);
-        } catch (IOException e) {
-        }
+        FileUtil.createFile(file);
         assertTrue(FileUtil.isPathAvailable(availablePath));
         
         // Path not available

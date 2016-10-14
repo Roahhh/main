@@ -13,6 +13,8 @@ public class FileUtil {
     private static final String CHARSET = "UTF-8";
     
     public static void deleteFileAtPath(String filePath) throws FileDeletionException {
+        assert StringUtil.isValidFilePath(filePath);
+        
         File file = new File(filePath);
         if (!file.delete()) {
             throw new FileDeletionException("Unable to delete file at: " + filePath);
@@ -24,13 +26,17 @@ public class FileUtil {
      * 
      * Creates and deletes an empty file at the path.
      * 
+     * @param path must be a valid file path
      * @return true if the path is exists and user has sufficient privileges.
      */
     public static boolean isPathAvailable(String path) {
+        assert StringUtil.isValidFilePath(path);
+        
         File file = new File(path);
         boolean exists = file.exists();
         
         try {
+            createParentDirsOfFile(file);
             file.createNewFile();
         } catch (IOException e) {
             e.printStackTrace();
