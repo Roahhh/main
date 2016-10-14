@@ -73,7 +73,7 @@ public class FileUtilTest {
     }
     
     @Test
-    public void isPathAvailable() throws IOException {
+    public void isPathAvailable() throws IOException, FileDeletionException {
         String availablePath = "testpath/test.txt";
         String badPath = "C:/Windows/System32/test.xml";
         File file = new File(availablePath);
@@ -84,6 +84,9 @@ public class FileUtilTest {
         // file exists
         FileUtil.createFile(file);
         assertTrue(FileUtil.isPathAvailable(availablePath));
+        
+        // delete the file
+        FileUtil.deleteFileAtPath(availablePath);
         
         // Path not available
         assertFalse(FileUtil.isPathAvailable(badPath));
