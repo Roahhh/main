@@ -33,8 +33,7 @@
 }
 
 .list-cell:filled:hover {
-    -fx-background-color: #00BCD4;
-    -fx-text-fill: white;
+    -fx-background-color: rgba(255,255,255,0.9);
 }
 
 .cell_big_label {
