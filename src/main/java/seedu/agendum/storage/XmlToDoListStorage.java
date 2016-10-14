@@ -74,10 +74,7 @@ public class XmlToDoListStorage implements ToDoListStorage {
 
     @Override
     public void setToDoListFilePath(String filePath) {
-        assert filePath != null;
-        assert !filePath.isEmpty();
-        assert StringUtil.isValidFilePath(filePath);
-        
+        assert StringUtil.isValidFilePath(filePath);        
         this.filePath = filePath;
     }
 }
