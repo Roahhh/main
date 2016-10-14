@@ -47,14 +47,6 @@ public class FileUtilTest {
     }
     
     @Test
-    public void createDirs_invalidPath() throws IOException {
-        File invalidDirFile = new File("1:/test.xml");
-        
-        thrown.expect(IOException.class);
-        FileUtil.createDirs(invalidDirFile);
-    }
-    
-    @Test
     public void deleteFileAtPath() throws FileDeletionException, IOException {
         
         // invalid filepath
@@ -73,9 +65,8 @@ public class FileUtilTest {
     }
     
     @Test
-    public void isPathAvailable() throws IOException, FileDeletionException {
+    public void isPathAvailable_pathAvailable() throws IOException, FileDeletionException {
         String availablePath = "testpath/test.txt";
-        String badPath = "C:/Windows/System32/test.xml";
         File file = new File(availablePath);
         
         // Path available
@@ -87,9 +78,6 @@ public class FileUtilTest {
         
         // delete the file
         FileUtil.deleteFileAtPath(availablePath);
-        
-        // Path not available
-        assertFalse(FileUtil.isPathAvailable(badPath));
     }
     
     @Test
