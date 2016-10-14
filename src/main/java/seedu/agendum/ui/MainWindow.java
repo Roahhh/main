@@ -33,7 +33,7 @@ public class MainWindow extends UiPart {
 
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
-    private UpcomingTasksPanel upcomingTasksPanel;
+    private AllTasksPanel allTasksPanel;
     private CompletedTasksPanel completedTasksPanel;
     private ResultPopUp resultPopUp;
     private StatusBarFooter statusBarFooter;
@@ -57,7 +57,7 @@ public class MainWindow extends UiPart {
     private MenuItem helpMenuItem;
 
     @FXML
-    private AnchorPane upcomingTasksPlaceHolder;
+    private AnchorPane allTasksPlaceHolder;
     
     @FXML
     private AnchorPane completedTasksPlaceHolder;
@@ -111,8 +111,9 @@ public class MainWindow extends UiPart {
     }
 
     void fillInnerParts() {
-        browserPanel = BrowserPanel.load(browserPlaceholder);
-        upcomingTasksPanel = UpcomingTasksPanel.load(primaryStage, getUpcomingTasksPlaceHolder(), logic.getFilteredTaskList());
+        
+//        browserPanel = BrowserPanel.load(browserPlaceholder);
+        allTasksPanel = AllTasksPanel.load(primaryStage, getAllTasksPlaceHolder(), logic.getFilteredTaskList());
         completedTasksPanel = CompletedTasksPanel.load(primaryStage, getCompletedTasksPlaceHolder(), logic.getFilteredTaskList());
         resultPopUp = ResultPopUp.load(primaryStage);
         statusBarFooter = StatusBarFooter.load(primaryStage, getStatusbarPlaceholder(), config.getToDoListFilePath());
@@ -127,8 +128,8 @@ public class MainWindow extends UiPart {
         return statusbarPlaceholder;
     }
     
-    public AnchorPane getUpcomingTasksPlaceHolder() {
-        return upcomingTasksPlaceHolder;
+    public AnchorPane getAllTasksPlaceHolder() {
+        return allTasksPlaceHolder;
     }
     
     public AnchorPane getCompletedTasksPlaceHolder() {
@@ -186,8 +187,8 @@ public class MainWindow extends UiPart {
         raise(new ExitAppRequestEvent());
     }
 
-    public UpcomingTasksPanel getUpcomingTasksPanel() {
-        return this.upcomingTasksPanel;
+    public AllTasksPanel getAllTasksPanel() {
+        return this.allTasksPanel;
     }
     
     public CompletedTasksPanel getCompletedTasksPanel() {
@@ -198,7 +199,4 @@ public class MainWindow extends UiPart {
         browserPanel.loadTaskPage(task);
     }
 
-    public void releaseResources() {
-        browserPanel.freeResources();
-    }
 }
