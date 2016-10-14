@@ -26,16 +26,23 @@ public class UpcomingTaskCard extends UiPart {
     private Label time;
 
     private ReadOnlyTask task;
-    private int displayedIndex;
+    private String displayedIndex;
 
     public UpcomingTaskCard(){
 
     }
 
-    public static UpcomingTaskCard load(ReadOnlyTask task, int displayedIndex){
+    public static UpcomingTaskCard load(ReadOnlyTask task, int Index){
         UpcomingTaskCard card = new UpcomingTaskCard();
         card.task = task;
-        card.displayedIndex = displayedIndex;
+        card.displayedIndex = String.valueOf(Index) + ".";
+        return UiPartLoader.loadUiPart(card);
+    }
+    
+    public static UpcomingTaskCard load(ReadOnlyTask task){
+        UpcomingTaskCard card = new UpcomingTaskCard();
+        card.task = task;
+        card.displayedIndex = "";
         return UiPartLoader.loadUiPart(card);
     }
 
@@ -45,7 +52,7 @@ public class UpcomingTaskCard extends UiPart {
             name.setUnderline(true);
         }
         name.setText(task.getName().fullName);
-        id.setText(displayedIndex + ". ");
+        id.setText(displayedIndex);
         time.setText(formatTime());
         tags.setText(task.tagsString());
     }

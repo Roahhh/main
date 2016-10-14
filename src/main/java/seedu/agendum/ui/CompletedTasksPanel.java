@@ -99,7 +99,7 @@ public class CompletedTasksPanel extends UiPart {
                 setGraphic(null);
                 setText(null);
             } else {
-                setGraphic(UpcomingTaskCard.load(task, getIndex() + 1).getLayout());
+                setGraphic(UpcomingTaskCard.load(task).getLayout());
             }
         }
     }
