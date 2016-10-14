@@ -3,6 +3,7 @@ package seedu.agendum.ui;
 import java.util.logging.Logger;
 
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -52,14 +53,14 @@ public class CompletedTasksPanel extends UiPart {
         completedTasksPanel.configure(taskList);
         return completedTasksPanel;
     }
-
-    private void configure(ObservableList<ReadOnlyTask> completedTasks) {
-        setConnections(completedTasks);
+    
+    private void configure(ObservableList<ReadOnlyTask> taskList) {
+        setConnections(taskList);
         addToPlaceholder();
     }
 
-    private void setConnections(ObservableList<ReadOnlyTask> completedTasks) {
-        completedTasksListView.setItems(completedTasks);
+    private void setConnections(ObservableList<ReadOnlyTask> taskList) {
+        completedTasksListView.setItems(taskList.filtered(task -> task.isCompleted()));
         completedTasksListView.setCellFactory(listView -> new completedTasksListViewCell());
         setEventHandlerForSelectionChangeEvent();
     }
@@ -98,7 +99,7 @@ public class CompletedTasksPanel extends UiPart {
                 setGraphic(null);
                 setText(null);
             } else {
-                setGraphic(CompletedTaskCard.load(task, getIndex() + 1).getLayout());
+                setGraphic(UpcomingTaskCard.load(task, getIndex() + 1).getLayout());
             }
         }
     }
