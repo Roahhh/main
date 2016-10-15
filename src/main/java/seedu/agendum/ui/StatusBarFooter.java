@@ -56,8 +56,6 @@ public class StatusBarFooter extends UiPart {
     }
 
     private void setSaveLocation(String location) {
-        // prefix ./ if it is not an absolute path 
-        location = (location.charAt(1) == ':') ? location : ("./" + location);
         this.saveLocationStatus.setText(location);
     }
 
