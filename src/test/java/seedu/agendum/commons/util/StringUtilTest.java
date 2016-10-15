@@ -51,35 +51,35 @@ public class StringUtilTest {
     public void isValidFilePath(){
         // non-absolute file paths
         assertFalse(StringUtil.isValidFilePath(null));
-        assertFalse(StringUtil.isValidFilePath(""));
-        assertFalse(StringUtil.isValidFilePath("a"));
-        assertFalse(StringUtil.isValidFilePath("data/xml"));
-        assertFalse(StringUtil.isValidFilePath("data/.xml"));
-        assertFalse(StringUtil.isValidFilePath("data/ .xml"));
-        assertFalse(StringUtil.isValidFilePath("data /valid.xml"));
-        assertFalse(StringUtil.isValidFilePath(" data/valid.xml"));
-        assertFalse(StringUtil.isValidFilePath("data.xml/data.xml"));
+        assertFalse(StringUtil.isValidFilePath("")); // empty path
+        assertFalse(StringUtil.isValidFilePath("a")); // missing file type
+        assertFalse(StringUtil.isValidFilePath("data/xml")); // missing file name/type
+        assertFalse(StringUtil.isValidFilePath("data/.xml")); // missing file name
+        assertFalse(StringUtil.isValidFilePath("data/ .xml")); // invalid file name
+        assertFalse(StringUtil.isValidFilePath("data /valid.xml")); // invalid folder name with spaces after
+        assertFalse(StringUtil.isValidFilePath(" data/valid.xml")); // invalid folder name with spaces before
+        assertFalse(StringUtil.isValidFilePath("data.xml/data.xml")); // invalid folder name
 
         assertTrue(StringUtil.isValidFilePath("a/a.xml"));
         assertTrue(StringUtil.isValidFilePath("Program Files/data.xml"));
         assertTrue(StringUtil.isValidFilePath("folder/some-other-folder/data.dat"));
         
         // absolute file paths
-        assertFalse(StringUtil.isValidFilePath("CC:/valid.xml"));
-        assertFalse(StringUtil.isValidFilePath("asd:/valid.xml"));
-        assertFalse(StringUtil.isValidFilePath("C:/"));
-        assertFalse(StringUtil.isValidFilePath("C:/Program Files"));
-        assertFalse(StringUtil.isValidFilePath("C:/a"));
-        assertFalse(StringUtil.isValidFilePath("C:/data/xml"));
-        assertFalse(StringUtil.isValidFilePath("C:/data/.xml"));
-        assertFalse(StringUtil.isValidFilePath("C:/data/ .xml"));
-        assertFalse(StringUtil.isValidFilePath("C:/data /valid.xml"));
-        assertFalse(StringUtil.isValidFilePath("C:/ data/valid.xml"));
-        assertFalse(StringUtil.isValidFilePath("C:/data.xml/data.xml"));
-        assertFalse(StringUtil.isValidFilePath("1:/data.xml"));
-        assertFalse(StringUtil.isValidFilePath("/usr/.xml"));
-        assertFalse(StringUtil.isValidFilePath("/ usr/data.xml"));
-        assertFalse(StringUtil.isValidFilePath("/usr /data.xml"));
+        assertFalse(StringUtil.isValidFilePath("CC:/valid.xml")); // invalid drive
+        assertFalse(StringUtil.isValidFilePath("asd:/valid.xml")); // invalid drive
+        assertFalse(StringUtil.isValidFilePath("C:/")); // missing file name
+        assertFalse(StringUtil.isValidFilePath("C:/Program Files")); // missing file name
+        assertFalse(StringUtil.isValidFilePath("C:/a")); // file name missing type
+        assertFalse(StringUtil.isValidFilePath("C:/data/xml")); // file missing name/type
+        assertFalse(StringUtil.isValidFilePath("C:/data/.xml")); // file missing name
+        assertFalse(StringUtil.isValidFilePath("C:/data/ .xml")); // invalid file name
+        assertFalse(StringUtil.isValidFilePath("C:/data /valid.xml")); // invalid folder name with spaces after
+        assertFalse(StringUtil.isValidFilePath("C:/ data/valid.xml")); // invalid folder name with spaces before
+        assertFalse(StringUtil.isValidFilePath("C:/data.xml/data.xml")); // invalid folder name
+        assertFalse(StringUtil.isValidFilePath("1:/data.xml")); // invalid drive
+        assertFalse(StringUtil.isValidFilePath("/usr/.xml")); // invalid file name - no file name
+        assertFalse(StringUtil.isValidFilePath("/ usr/data.xml")); // invalid folder with spaces before
+        assertFalse(StringUtil.isValidFilePath("/usr /data.xml")); // invalid folder with spaces after
 
         assertTrue(StringUtil.isValidFilePath("C:/a/a.xml"));
         assertTrue(StringUtil.isValidFilePath("C:/Program Files/data.xml"));
