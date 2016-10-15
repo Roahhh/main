@@ -170,13 +170,34 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
 
     @Override
     public int compareTo(Task other) {
+//        int compareCompletionStatus = compareCompletionStatus(other);
+//        if (compareCompletionStatus != 0) {
+//            return compareCompletionStatus;
+//        }
+        int compareTime = compareTime(other);
+        if (compareTime != 0) {
+            return compareTime;
+        }
+        int compareName = compareName(other);
+        return compareName;
+    }
+    
+    public int compareTime(Task other) {
         if (this.getTaskTime().isPresent() && other.getTaskTime().isPresent()) {
-            this.getTaskTime().get().compareTo(other.getTaskTime().get());
+           return this.getTaskTime().get().compareTo(other.getTaskTime().get());
         } else if (this.getTaskTime().isPresent()) {
             return 1;
         } else if (other.getTaskTime().isPresent()) {
             return -1;
         }
+        return 0;     
+    }
+    
+    public int compareCompletionStatus(Task other) {
+        return Boolean.compare(this.isCompleted, other.isCompleted);
+    }
+
+    public int compareName(Task other) {
         return this.getName().toString().compareTo(other.getName().toString());
     }
 
