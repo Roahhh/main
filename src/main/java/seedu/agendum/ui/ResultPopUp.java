@@ -74,7 +74,7 @@ public class ResultPopUp extends UiPart {
         show();
         
         PauseTransition delay = new PauseTransition(Duration.seconds(2));
-        delay.setOnFinished( event -> reFocusRoot());
+        delay.setOnFinished(event -> reFocusRoot());
         delay.play();
     }
 
