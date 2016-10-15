@@ -12,7 +12,6 @@ import seedu.agendum.commons.core.Config;
 import seedu.agendum.commons.core.LogsCenter;
 import seedu.agendum.commons.events.storage.DataSavingExceptionEvent;
 import seedu.agendum.commons.events.ui.JumpToListRequestEvent;
-import seedu.agendum.commons.events.ui.TaskPanelSelectionChangedEvent;
 import seedu.agendum.commons.events.ui.ShowHelpRequestEvent;
 import seedu.agendum.commons.util.StringUtil;
 import seedu.agendum.logic.Logic;

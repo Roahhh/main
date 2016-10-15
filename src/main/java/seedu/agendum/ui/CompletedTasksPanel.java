@@ -12,7 +12,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import seedu.agendum.commons.events.ui.TaskPanelSelectionChangedEvent;
 import seedu.agendum.model.task.ReadOnlyTask;
 import seedu.agendum.commons.core.LogsCenter;
 
@@ -62,21 +61,11 @@ public class CompletedTasksPanel extends UiPart {
     private void setConnections(ObservableList<ReadOnlyTask> taskList) {
         completedTasksListView.setItems(taskList.filtered(task -> task.isCompleted()));
         completedTasksListView.setCellFactory(listView -> new completedTasksListViewCell());
-        setEventHandlerForSelectionChangeEvent();
     }
 
     private void addToPlaceholder() {
         SplitPane.setResizableWithParent(placeHolderPane, false);
         placeHolderPane.getChildren().add(panel);
-    }
-
-    private void setEventHandlerForSelectionChangeEvent() {
-        completedTasksListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null) {
-                logger.fine("Selection in task list panel changed to : '" + newValue + "'");
-                raise(new TaskPanelSelectionChangedEvent(newValue));
-            }
-        });
     }
 
     public void scrollTo(int index) {
