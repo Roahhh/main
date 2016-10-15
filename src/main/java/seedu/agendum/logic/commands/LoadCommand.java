@@ -9,8 +9,9 @@ import seedu.agendum.commons.util.XmlUtil;
 public class LoadCommand extends Command {
     
     public static final String COMMAND_WORD = "load";
-    public static final String MESSAGE_SUCCESS = "Data successfully loaded from:: %1$s";
-    public static final String MESSAGE_LOCATION_INVALID = "The specified file path is invalid.";
+    public static final String MESSAGE_SUCCESS = "Data successfully loaded from: %1$s";
+    public static final String MESSAGE_LOCATION_INVALID = "The specified file path is invalid: %1$s";
+    public static final String MESSAGE_FILE_WRONG_FORMAT = "The specified file is in the wrong format: %1$s";
     
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Specify a file to load from. \n"
             + "Parameters: FILE_PATH\n" 
@@ -26,9 +27,14 @@ public class LoadCommand extends Command {
     public CommandResult execute() {
         assert loadLocation != null;
 
-        if(!isLoadLocationValid() || !isFileCorrectFormat()) {
+        if(!isLocationValid()) {
             indicateAttemptToExecuteIncorrectCommand();
-            return new CommandResult(MESSAGE_LOCATION_INVALID);
+            return new CommandResult(String.format(MESSAGE_LOCATION_INVALID, loadLocation));
+        }
+        
+        if(!isFileCorrectFormat()) {
+            indicateAttemptToExecuteIncorrectCommand();
+            return new CommandResult(String.format(MESSAGE_FILE_WRONG_FORMAT, loadLocation));            
         }
 
         model.loadFromLocation(loadLocation);
@@ -39,7 +45,7 @@ public class LoadCommand extends Command {
         return XmlUtil.isFileCorrectFormat(loadLocation);
     }
 
-    private boolean isLoadLocationValid() {
+    private boolean isLocationValid() {
         return StringUtil.isValidFilePath(loadLocation);
     }
     
