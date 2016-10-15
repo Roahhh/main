@@ -4,7 +4,9 @@ import javafx.collections.transformation.FilteredList;
 import seedu.agendum.commons.core.LogsCenter;
 import seedu.agendum.commons.core.UnmodifiableObservableList;
 import seedu.agendum.commons.util.ConfigUtil;
+import seedu.agendum.commons.util.FileUtil;
 import seedu.agendum.commons.util.StringUtil;
+import seedu.agendum.commons.util.XmlUtil;
 import seedu.agendum.model.task.ReadOnlyTask;
 import seedu.agendum.model.task.Task;
 import seedu.agendum.model.task.UniqueTaskList;
@@ -99,6 +101,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void loadFromLocation(String location) {
         assert StringUtil.isValidFilePath(location);
+        assert XmlUtil.isFileCorrectFormat(location);
         
         config.setToDoListFilePath(location);
         indicateSaveLocationChanged(location);

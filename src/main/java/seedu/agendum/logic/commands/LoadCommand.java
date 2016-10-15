@@ -1,8 +1,7 @@
 package seedu.agendum.logic.commands;
 
-import seedu.agendum.commons.core.Config;
-import seedu.agendum.commons.util.FileUtil;
 import seedu.agendum.commons.util.StringUtil;
+import seedu.agendum.commons.util.XmlUtil;
 
 /**
  * Allow the user to specify a folder as the data storage location
@@ -27,7 +26,7 @@ public class LoadCommand extends Command {
     public CommandResult execute() {
         assert loadLocation != null;
 
-        if(!isLoadLocationValid()) {
+        if(!isLoadLocationValid() || !isFileCorrectFormat()) {
             indicateAttemptToExecuteIncorrectCommand();
             return new CommandResult(MESSAGE_LOCATION_INVALID);
         }
@@ -36,8 +35,13 @@ public class LoadCommand extends Command {
         return new CommandResult(String.format(MESSAGE_SUCCESS, loadLocation));
     }
     
+    private boolean isFileCorrectFormat() {
+        return XmlUtil.isFileCorrectFormat(loadLocation);
+    }
+
     private boolean isLoadLocationValid() {
-       return StringUtil.isValidFilePath(loadLocation);
+        return StringUtil.isValidFilePath(loadLocation);
     }
     
+
 }

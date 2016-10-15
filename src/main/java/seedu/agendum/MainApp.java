@@ -21,7 +21,6 @@ import seedu.agendum.storage.StorageManager;
 import seedu.agendum.ui.Ui;
 import seedu.agendum.ui.UiManager;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Optional;
@@ -184,8 +183,20 @@ public class MainApp extends Application {
     }
     
     @Subscribe
-    public void handleLoadDataRequestEvent(LoadDataRequestEvent event) {
-        model = initModelManager(storage, userPrefs);
+    public void handleLoadDataRequestEvent(LoadDataRequestEvent event) {        
+        Optional<ReadOnlyToDoList> toDoListOptional;
+        ReadOnlyToDoList loadedData;
+        try {
+            toDoListOptional = storage.readToDoList();
+            loadedData = toDoListOptional.get();
+        } catch (DataConversionException e) {
+            logger.warning("Data file not in the correct format. Loading empty ToDoList");
+            loadedData = new ToDoList();
+        } catch (IOException e) {
+            logger.warning("Problem while reading from the file. Loading empty ToDoList");
+            loadedData = new ToDoList();
+        }        
+        model.resetData(loadedData);
     }
 
     public static void main(String[] args) {
