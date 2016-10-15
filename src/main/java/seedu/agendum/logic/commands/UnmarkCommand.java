@@ -11,7 +11,8 @@ import seedu.agendum.model.task.UniqueTaskList.TaskNotFoundException;
 public class UnmarkCommand extends Command {
 
     public static final String COMMAND_WORD = "unmark";
-
+    public static String COMMAND_FORMAT = "unmark <index> \nunmark <index> <more-indexes>";
+    public static String COMMAND_DESCRIPTION = "mark task(s) as uncomplete";
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Unmarks the task identified by the index number used in the last task listing.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
@@ -19,8 +20,9 @@ public class UnmarkCommand extends Command {
 
     public static final String MESSAGE_UNMARK_TASK_SUCCESS = "Unmarked Task: %1$s";
 
-    public final int targetIndex;
-
+    public int targetIndex = -1;
+    
+    public UnmarkCommand() {};
     public UnmarkCommand(int targetIndex) {
         this.targetIndex = targetIndex;
     }
@@ -45,6 +47,21 @@ public class UnmarkCommand extends Command {
         }
 
         return new CommandResult(String.format(MESSAGE_UNMARK_TASK_SUCCESS, taskToUnmark));
+    }
+
+    @Override
+    public String getName() {
+        return COMMAND_WORD;
+    }
+
+    @Override
+    public String getFormat() {
+        return COMMAND_FORMAT;
+    }
+
+    @Override
+    public String getDescription() {
+        return COMMAND_DESCRIPTION;
     }
 
 }
