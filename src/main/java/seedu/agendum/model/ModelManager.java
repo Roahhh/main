@@ -4,22 +4,17 @@ import javafx.collections.transformation.FilteredList;
 import seedu.agendum.commons.core.LogsCenter;
 import seedu.agendum.commons.core.UnmodifiableObservableList;
 import seedu.agendum.commons.util.ConfigUtil;
-import seedu.agendum.commons.util.FileUtil;
 import seedu.agendum.commons.util.StringUtil;
-import seedu.agendum.model.task.Name;
 import seedu.agendum.model.task.ReadOnlyTask;
 import seedu.agendum.model.task.Task;
 import seedu.agendum.model.task.UniqueTaskList;
 import seedu.agendum.model.task.UniqueTaskList.TaskNotFoundException;
 import seedu.agendum.commons.events.model.SaveLocationChangedEvent;
 import seedu.agendum.commons.events.model.ToDoListChangedEvent;
-import seedu.agendum.commons.exceptions.FileDeletionException;
 import seedu.agendum.commons.core.ComponentManager;
 import seedu.agendum.commons.core.Config;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Logger;
 
@@ -93,6 +88,14 @@ public class ModelManager extends ComponentManager implements Model {
         toDoList.addTask(task);
         updateFilteredListToShowAll();
         indicateToDoListChanged();
+    }
+
+    @Override
+    public synchronized void loadFromLocation(String location) {
+        assert StringUtil.isValidFilePath(location);
+        
+        indicateToDoListChanged();
+        toDoList.resetData(new ToDoList());
     }
 
     @Override
