@@ -11,7 +11,7 @@ import java.util.Optional;
  * Represents a Task in the to do list.
  * Only the task name is compulsory and it cannot be an empty string.
  */
-public class Task implements ReadOnlyTask {
+public class Task implements ReadOnlyTask, Comparable<Task> {
 
     private static final int UPCOMING_DAYS_THRESHOLD = 7;
 
@@ -97,7 +97,7 @@ public class Task implements ReadOnlyTask {
         if (!getTaskTime().isPresent()) {
             return false;
         }
-        return !isCompleted() && getTaskTime().get().isBefore(
+        return !isCompleted() && !isOverdue() && getTaskTime().get().isBefore(
                 LocalDateTime.now().plusDays(UPCOMING_DAYS_THRESHOLD));
     }
 
@@ -166,6 +166,18 @@ public class Task implements ReadOnlyTask {
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
         return Objects.hash(name, tags);
+    }
+
+    @Override
+    public int compareTo(Task other) {
+        if (this.getTaskTime().isPresent() && other.getTaskTime().isPresent()) {
+            this.getTaskTime().get().compareTo(other.getTaskTime().get());
+        } else if (this.getTaskTime().isPresent()) {
+            return 1;
+        } else if (other.getTaskTime().isPresent()) {
+            return -1;
+        }
+        return this.getName().toString().compareTo(other.getName().toString());
     }
 
     @Override
