@@ -117,10 +117,4 @@ public class UiManager extends ComponentManager implements Ui {
         mainWindow.getAllTasksPanel().scrollTo(event.targetIndex);
     }
 
-    @Subscribe
-    private void handleTaskPanelSelectionChangedEvent(TaskPanelSelectionChangedEvent event){
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        mainWindow.loadTaskPage(event.getNewSelection());
-    }
-
 }

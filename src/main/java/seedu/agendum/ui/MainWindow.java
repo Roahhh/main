@@ -32,7 +32,6 @@ public class MainWindow extends UiPart {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
-    private BrowserPanel browserPanel;
     private AllTasksPanel allTasksPanel;
     private CompletedTasksPanel completedTasksPanel;
     private OtherTasksPanel otherTasksPanel;
@@ -203,9 +202,4 @@ public class MainWindow extends UiPart {
     public CompletedTasksPanel getCompletedTasksPanel() {
         return this.completedTasksPanel;
     }
-
-    public void loadTaskPage(ReadOnlyTask task) {
-        browserPanel.loadTaskPage(task);
-    }
-
 }
