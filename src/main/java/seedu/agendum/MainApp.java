@@ -8,6 +8,7 @@ import seedu.agendum.commons.core.Config;
 import seedu.agendum.commons.core.EventsCenter;
 import seedu.agendum.commons.core.LogsCenter;
 import seedu.agendum.commons.core.Version;
+import seedu.agendum.commons.events.model.LoadDataRequestEvent;
 import seedu.agendum.commons.events.ui.ExitAppRequestEvent;
 import seedu.agendum.commons.exceptions.DataConversionException;
 import seedu.agendum.commons.util.StringUtil;
@@ -180,6 +181,11 @@ public class MainApp extends Application {
     public void handleExitAppRequestEvent(ExitAppRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         this.stop();
+    }
+    
+    @Subscribe
+    public void handleLoadDataRequestEvent(LoadDataRequestEvent event) {
+        model = initModelManager(storage, userPrefs);
     }
 
     public static void main(String[] args) {
