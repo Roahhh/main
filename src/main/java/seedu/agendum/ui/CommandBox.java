@@ -76,7 +76,9 @@ public class CommandBox extends UiPart {
          */
         setStyleToIndicateCorrectCommand();
         mostRecentResult = logic.execute(previousCommandTest);
-        resultPopUp.postMessage(mostRecentResult.feedbackToUser);
+        if(!previousCommandTest.toLowerCase().equals("help")) {
+            resultPopUp.postMessage(mostRecentResult.feedbackToUser);
+        }
         logger.info("Result: " + mostRecentResult.feedbackToUser);
     }
 
