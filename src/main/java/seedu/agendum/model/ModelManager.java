@@ -15,6 +15,7 @@ import seedu.agendum.commons.core.ComponentManager;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.Set;
+import java.util.Stack;
 import java.util.logging.Logger;
 
 /**
@@ -25,6 +26,7 @@ public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
     private final ToDoList toDoList;
+    private final Stack<ToDoList> previousLists;
     private final FilteredList<Task> filteredTasks;
 
     /**
@@ -40,6 +42,8 @@ public class ModelManager extends ComponentManager implements Model {
 
         toDoList = new ToDoList(src);
         filteredTasks = new FilteredList<>(toDoList.getTasks());
+        previousLists = new Stack<ToDoList>();
+        backupNewToDoList();
     }
 
     public ModelManager() {
@@ -49,12 +53,15 @@ public class ModelManager extends ComponentManager implements Model {
     public ModelManager(ReadOnlyToDoList initialData, UserPrefs userPrefs) {
         toDoList = new ToDoList(initialData);
         filteredTasks = new FilteredList<>(toDoList.getTasks());
+        previousLists = new Stack<ToDoList>();
+        backupNewToDoList();
     }
 
     @Override
     public void resetData(ReadOnlyToDoList newData) {
         toDoList.resetData(newData);
         indicateToDoListChanged();
+        backupNewToDoList();
     }
 
     @Override
@@ -71,6 +78,7 @@ public class ModelManager extends ComponentManager implements Model {
     public synchronized void deleteTask(ReadOnlyTask target) throws TaskNotFoundException {
         toDoList.removeTask(target);
         indicateToDoListChanged();
+        backupNewToDoList();
     }
 
     @Override
@@ -78,6 +86,7 @@ public class ModelManager extends ComponentManager implements Model {
         toDoList.addTask(task);
         updateFilteredListToShowAll();
         indicateToDoListChanged();
+        backupNewToDoList();
     }
 
     @Override
@@ -86,18 +95,38 @@ public class ModelManager extends ComponentManager implements Model {
         toDoList.updateTask(target, updatedTask);
         updateFilteredListToShowAll();
         indicateToDoListChanged();
+        backupNewToDoList();
     }
 
     @Override
     public synchronized void markTask(ReadOnlyTask target) throws TaskNotFoundException {
         toDoList.markTask(target);
         indicateToDoListChanged();
+        backupNewToDoList();
     }
     
     @Override
     public synchronized void unmarkTask(ReadOnlyTask target) throws TaskNotFoundException {
         toDoList.unmarkTask(target);
         indicateToDoListChanged();
+        backupNewToDoList();
+    }
+
+    @Override
+    public synchronized boolean restorePreviousToDoList() {
+        assert !previousLists.empty();
+        if (previousLists.size() == 1) {
+            return false;
+        } else {
+            previousLists.pop();
+            toDoList.resetData(previousLists.peek());
+            indicateToDoListChanged();
+            return true;
+        }
+    }
+ 
+    private void backupNewToDoList() {
+        previousLists.push(new ToDoList(this.getToDoList()));
     }
 
     //=========== Filtered Task List Accessors ===============================================================
