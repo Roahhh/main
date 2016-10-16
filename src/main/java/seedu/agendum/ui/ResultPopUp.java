@@ -6,6 +6,7 @@ import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
@@ -22,9 +23,6 @@ import java.util.logging.Logger;
 public class ResultPopUp extends UiPart {
     private static final Logger logger = LogsCenter.getLogger(ResultPopUp.class);
     private static final String FXML = "ResultPopUp.fxml";
-    public static final int HEIGHT = 150;
-    public static final int WIDTH = 200;
-    private final StringProperty displayed = new SimpleStringProperty("");
     
     private AnchorPane mainPane;
 
@@ -32,7 +30,7 @@ public class ResultPopUp extends UiPart {
     private static Stage root;
     
     @FXML
-    private TextArea resultTextArea;
+    private Label resultDisplay;
     
     public static ResultPopUp load(Stage primaryStage) {
         logger.fine("Showing command execution result.");
@@ -40,11 +38,6 @@ public class ResultPopUp extends UiPart {
         ResultPopUp resultPopUp = UiPartLoader.loadUiPart(primaryStage, new ResultPopUp());
         resultPopUp.configure();
         return resultPopUp;
-    }
-    
-    private void setWindowMinSize() {
-        dialogStage.setHeight(HEIGHT);
-        dialogStage.setWidth(WIDTH);
     }
     
     @Override
@@ -61,16 +54,14 @@ public class ResultPopUp extends UiPart {
         
         Scene scene = new Scene(mainPane);
         dialogStage = createDialogStage(null, null, scene);
-        dialogStage.setMaximized(false); 
-        setWindowMinSize();
         
         scene.setFill(Color.TRANSPARENT);
         dialogStage.initStyle(StageStyle.TRANSPARENT);
     }
     
     public void postMessage(String message) {
-        displayed.setValue(message);
-        resultTextArea.setText(message);
+        resultDisplay.setWrapText(true);
+        resultDisplay.setText(message);
         show();
         
         PauseTransition delay = new PauseTransition(Duration.seconds(2));
@@ -86,6 +77,9 @@ public class ResultPopUp extends UiPart {
     public void show() {
         dialogStage.requestFocus();
         dialogStage.setOpacity(1.0);
+        dialogStage.sizeToScene();
         dialogStage.show();
+        dialogStage.setX(root.getX() + root.getWidth() / 2 - dialogStage.getWidth() / 2);
+        dialogStage.setY(root.getY() + root.getHeight() / 2 - dialogStage.getHeight() / 2);
     }
 }
