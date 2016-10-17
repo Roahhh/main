@@ -52,8 +52,8 @@ public class OtherTasksPanel extends UiPart {
         return otherTasksPanel;
     }
 
-    private void configure(ObservableList<ReadOnlyTask> otherTasks) {
-        setConnections(otherTasks);
+    private void configure(ObservableList<ReadOnlyTask> taskList) {
+        setConnections(taskList.filtered(task -> !task.isCompleted()));
         addToPlaceholder();
     }
 

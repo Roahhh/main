@@ -53,7 +53,11 @@ public class TaskCard extends UiPart {
         }
         name.setText(task.getName().fullName);
         id.setText(displayedIndex);
-        time.setText(formatTime());
+        if(task.isOverdue()) {
+            time.setText("Overdue");
+        } else {
+            time.setText(formatTime());
+        }
         tags.setText(task.tagsString());
     }
     
