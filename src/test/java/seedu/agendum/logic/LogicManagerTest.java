@@ -1,12 +1,17 @@
 package seedu.agendum.logic;
 
 import com.google.common.eventbus.Subscribe;
+
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import seedu.agendum.commons.core.EventsCenter;
+import seedu.agendum.commons.core.UnmodifiableObservableList;
 import seedu.agendum.logic.commands.*;
 import seedu.agendum.commons.events.ui.JumpToListRequestEvent;
 import seedu.agendum.commons.events.ui.ShowHelpRequestEvent;
@@ -417,13 +422,10 @@ public class LogicManagerTest {
         TestDataHelper helper = new TestDataHelper();
         Task toBeDuplicated = helper.adam();
         Task toBeRenamed = helper.generateTask(1);
-        ToDoList expectedTDL = new ToDoList();
-        expectedTDL.addTask(toBeDuplicated);
-        expectedTDL.addTask(toBeRenamed);
+        List<Task> twoTasks = helper.generateTaskList(toBeDuplicated, toBeRenamed);
+        ToDoList expectedTDL = helper.generateToDoList(twoTasks);
 
-        model.resetData(new ToDoList());
-        model.addTask(toBeDuplicated); // task already in internal to do list
-        model.addTask(toBeRenamed);
+        model.resetData(expectedTDL);
 
         // execute command and verify result
         assertCommandBehavior(
@@ -439,25 +441,20 @@ public class LogicManagerTest {
         List<Task> threeTasks = helper.generateTaskList(2);
         Task taskToRename = helper.generateCompletedTask(3);
         //TODO: replace taskToRename with a task with deadlines etc. Check if other attributes are preserved
-        String originalTaskName = taskToRename.getName().toString();
-        String newTaskName = "a brand new task name";
-        
         threeTasks.add(taskToRename);
 
         ToDoList expectedTDL = helper.generateToDoList(threeTasks);
-        expectedTDL.renameTask(taskToRename, new Name(newTaskName));
+        Task renamedTask = new Task(taskToRename);
+        String newTaskName = "a brand new task name";
+        renamedTask.setName(new Name(newTaskName));
+        expectedTDL.updateTask(taskToRename, renamedTask);
         model.resetData(new ToDoList());
         helper.addToModel(model, threeTasks);
 
-        assertCommandBehavior("rename 3 a brand new task name",
+        assertCommandBehavior("rename 3 " + newTaskName,
                 String.format(RenameCommand.MESSAGE_SUCCESS, "3", newTaskName),
                 expectedTDL,
                 expectedTDL.getTaskList());
-        
-        //Check if attributes are preserved
-        //rename task back to original name
-        expectedTDL.renameTask(expectedTDL.getTaskList().get(2), new Name(originalTaskName));
-        assertTrue(expectedTDL.getTasks().contains(taskToRename));
     }
 
 
@@ -478,12 +475,21 @@ public class LogicManagerTest {
         List<Task> fourTasks = helper.generateTaskList(p1, pTarget1, p2, pTarget2);
         ToDoList expectedTDL = helper.generateToDoList(fourTasks);
         List<Task> expectedList = helper.generateTaskList(pTarget1, pTarget2);
+        ToDoList generatedTDL = helper.generateToDoList(expectedList);
         helper.addToModel(model, fourTasks);
+        
+        ToDoList toDoList = new ToDoList(generatedTDL);
+        FilteredList<Task> filteredTasks = new FilteredList<>(toDoList.getTasks());
+        SortedList<Task> sortedTasks = filteredTasks.sorted();
+        UnmodifiableObservableList<Task> expectedUOList = new UnmodifiableObservableList<>(sortedTasks);
+        
+        String inputCommand = "find KEY";
+        String expectedMessage = Command.getMessageForTaskListShownSummary(expectedList.size());
 
-        assertCommandBehavior("find KEY",
-                Command.getMessageForTaskListShownSummary(expectedList.size()),
+        assertCommandBehavior(inputCommand,
+                expectedMessage,
                 expectedTDL,
-                expectedList);
+                expectedUOList);
     }
 
     @Test
@@ -496,11 +502,18 @@ public class LogicManagerTest {
 
         List<Task> fourTasks = helper.generateTaskList(p3, p1, p4, p2);
         ToDoList expectedTDL = helper.generateToDoList(fourTasks);
-        List<Task> expectedList = fourTasks;
         helper.addToModel(model, fourTasks);
+        
+        ToDoList toDoList = new ToDoList(expectedTDL);
+        FilteredList<Task> filteredTasks = new FilteredList<>(toDoList.getTasks());
+        SortedList<Task> sortedTasks = filteredTasks.sorted();
+        UnmodifiableObservableList<Task> expectedList = new UnmodifiableObservableList<>(sortedTasks);
+        
+        String inputCommand = "find KEY";
+        String expectedMessage = Command.getMessageForTaskListShownSummary(expectedList.size());
 
-        assertCommandBehavior("find KEY",
-                Command.getMessageForTaskListShownSummary(expectedList.size()),
+        assertCommandBehavior(inputCommand,
+                expectedMessage,
                 expectedTDL,
                 expectedList);
     }

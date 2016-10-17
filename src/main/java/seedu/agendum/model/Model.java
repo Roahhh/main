@@ -27,13 +27,9 @@ public interface Model {
     /** Adds the given task */
     void addTask(Task task) throws UniqueTaskList.DuplicateTaskException;
     
-    /** Rename the given task */
-    void renameTask(ReadOnlyTask target, Name newTaskName)
+    /** Updates the given task */
+    void updateTask(ReadOnlyTask target, Task updatedTask)
             throws UniqueTaskList.TaskNotFoundException, UniqueTaskList.DuplicateTaskException;
-    
-    /**Schedules the given task */
-    void scheduleTask(ReadOnlyTask target, Optional<LocalDateTime> startDateTime,
-            Optional<LocalDateTime> endDateTime) throws UniqueTaskList.TaskNotFoundException;
        
     /** Marks the given task as completed */
     void markTask(ReadOnlyTask target) throws UniqueTaskList.TaskNotFoundException;
@@ -47,7 +43,28 @@ public interface Model {
     /** Updates the filter of the filtered task list to show all tasks */
     void updateFilteredListToShowAll();
 
+    /** Updates the filter of the filtered task list to show all uncompleted tasks */
+    void updateFilteredListToShowUncompleted();
+
+    /** Updates the filter of the filtered task list to show all completed tasks */
+    void updateFilteredListToShowCompleted();
+
+    /** Updates the filter of the filtered task list to show all overdue tasks */
+    void updateFilteredListToShowOverdue();
+
+    /** Updates the filter of the filtered task list to show all upcoming tasks */
+    void updateFilteredListToShowUpcoming();
+
     /** Updates the filter of the filtered task list to filter by the given keywords*/
     void updateFilteredTaskList(Set<String> keywords);
+
+    /** Returns the completed task list as an {@code UnmodifiableObservableList<ReadOnlyTask>} */
+    UnmodifiableObservableList<ReadOnlyTask> getCompletedTaskList();
+
+    /** Returns the upcoming task list as an {@code UnmodifiableObservableList<ReadOnlyTask>} */
+    UnmodifiableObservableList<ReadOnlyTask> getUpcomingTaskList();
+
+    /** Returns the overdue task list as an {@code UnmodifiableObservableList<ReadOnlyTask>} */
+    UnmodifiableObservableList<ReadOnlyTask> getOverdueTaskList();
 
 }
