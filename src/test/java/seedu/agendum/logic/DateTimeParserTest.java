@@ -9,7 +9,7 @@ import java.util.Optional;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-public class DateTimerParserTest {
+public class DateTimeParserTest {
 
     private void assertAbsoluteDates(LocalDateTime dateTime1, LocalDateTime dateTime2) {
         assertEquals(dateTime1, dateTime2);
