@@ -49,21 +49,24 @@ public class TaskCard extends UiPart {
 
     @FXML
     public void initialize() {
-        if(task.isCompleted()) {
-            name.setUnderline(true);
-        }
+        
         if(task.isOverdue()) {
             name.setTextFill(Color.web("#ff0a0a"));
+        } else if(task.isUpcoming()) {
+            name.setTextFill(Color.web("#6407c6"));
         } else {
             name.setTextFill(Color.web("#555555"));
         }
+        
         name.setText(task.getName().fullName);
         id.setText(displayedIndex);
+        
         if(task.isOverdue()) {
-            time.setText("Overdue");
+            time.setText("Overdue\nScheduled: "+ formatTime());
         } else {
             time.setText(formatTime());
         }
+        
         tags.setText(task.tagsString());
     }
     
