@@ -13,6 +13,7 @@ import java.util.Set;
  */
 public class AddCommand extends Command {
 
+    // COMMAND_WORD, COMMAND_FORMAT, COMMAND_DESCRIPTION are for display in help window
     public static final String COMMAND_WORD = "add";
     public static String COMMAND_FORMAT = "add <name> \nadd <name> by <deadline> \nadd <name> from <start-time> to <end-time>";
     public static String COMMAND_DESCRIPTION = "adds a task to Agendum";

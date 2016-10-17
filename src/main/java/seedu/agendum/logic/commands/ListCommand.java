@@ -6,6 +6,7 @@ package seedu.agendum.logic.commands;
  */
 public class ListCommand extends Command {
 
+ // COMMAND_WORD, COMMAND_FORMAT, COMMAND_DESCRIPTION are for display in help window
     public static final String COMMAND_WORD = "list";
     public static String COMMAND_FORMAT = "list \nlist overdue \nlist near \nlist done \nlist all";
     public static String COMMAND_DESCRIPTION = "list a category of tasks \n(Incomplete tasks as default)";

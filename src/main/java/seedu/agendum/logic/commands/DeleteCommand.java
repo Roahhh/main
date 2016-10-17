@@ -10,6 +10,7 @@ import seedu.agendum.model.task.UniqueTaskList.TaskNotFoundException;
  */
 public class DeleteCommand extends Command {
 
+    // COMMAND_WORD, COMMAND_FORMAT, COMMAND_DESCRIPTION are for display in help window
     public static final String COMMAND_WORD = "delete";
     public static String COMMAND_FORMAT = "delete <index> \ndelete <index> <more-indexes>";
     public static String COMMAND_DESCRIPTION = "delete task(s) from Agendum";

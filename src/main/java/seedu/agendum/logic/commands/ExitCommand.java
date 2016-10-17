@@ -8,6 +8,7 @@ import seedu.agendum.commons.events.ui.ExitAppRequestEvent;
  */
 public class ExitCommand extends Command {
 
+    // COMMAND_WORD, COMMAND_FORMAT, COMMAND_DESCRIPTION are for display in help window
     public static final String COMMAND_WORD = "exit";
     public static String COMMAND_FORMAT = "exit";
     public static String COMMAND_DESCRIPTION = "exit Agendum";

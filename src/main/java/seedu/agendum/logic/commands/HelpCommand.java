@@ -9,6 +9,7 @@ import seedu.agendum.commons.events.ui.ShowHelpRequestEvent;
  */
 public class HelpCommand extends Command {
 
+ // COMMAND_WORD, COMMAND_FORMAT, COMMAND_DESCRIPTION are for display in help window
     public static final String COMMAND_WORD = "help";
     public static String COMMAND_FORMAT = "help";
     public static String COMMAND_DESCRIPTION = "view Agendum’s command summary";
