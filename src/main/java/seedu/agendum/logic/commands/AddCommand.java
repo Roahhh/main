@@ -5,7 +5,9 @@ import seedu.agendum.model.tag.Tag;
 import seedu.agendum.model.tag.UniqueTagList;
 import seedu.agendum.model.task.*;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -31,7 +33,7 @@ public class AddCommand extends Command {
     public AddCommand() {}
     
     /**
-     * Convenience constructor using raw values.
+     * Convenience constructor using name and set of tags
      *
      * @throws IllegalValueException if any of the raw values are invalid
      */
@@ -43,6 +45,43 @@ public class AddCommand extends Command {
         }
         this.toAdd = new Task(
                 new Name(name),
+                new UniqueTagList(tagSet)
+        );
+    }
+
+    /**
+     * Convenience constructor using name, end datetime and set of tags
+     *
+     * @throws IllegalValueException if any of the raw values are invalid
+     */
+    public AddCommand(String name, Optional<LocalDateTime> deadlineDate, Set<String> tags)
+            throws IllegalValueException {
+        final Set<Tag> tagSet = new HashSet<>();
+        for (String tagName : tags) {
+            tagSet.add(new Tag(tagName));
+        }
+        this.toAdd = new Task(
+                new Name(name),
+                deadlineDate,
+                new UniqueTagList(tagSet)
+        );
+    }
+
+    /**
+     * Convenience constructor using name, start datetime, end datetime and set of tags
+     *
+     * @throws IllegalValueException if any of the raw values are invalid
+     */
+    public AddCommand(String name, Optional<LocalDateTime> startDateTime, Optional<LocalDateTime> endDateTime, Set<String> tags)
+            throws IllegalValueException {
+        final Set<Tag> tagSet = new HashSet<>();
+        for (String tagName : tags) {
+            tagSet.add(new Tag(tagName));
+        }
+        this.toAdd = new Task(
+                new Name(name),
+                startDateTime,
+                endDateTime,
                 new UniqueTagList(tagSet)
         );
     }

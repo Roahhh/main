@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
 import seedu.agendum.model.task.ReadOnlyTask;
 
 public class TaskCard extends UiPart {
@@ -51,6 +52,11 @@ public class TaskCard extends UiPart {
         if(task.isCompleted()) {
             name.setUnderline(true);
         }
+        if(task.isOverdue()) {
+            name.setTextFill(Color.web("#ff0a0a"));
+        } else {
+            name.setTextFill(Color.web("#555555"));
+        }
         name.setText(task.getName().fullName);
         id.setText(displayedIndex);
         if(task.isOverdue()) {
@@ -66,7 +72,7 @@ public class TaskCard extends UiPart {
         Optional<LocalDateTime> start = task.getStartDateTime();
         Optional<LocalDateTime> end = task.getEndDateTime();
         
-        DateTimeFormatter startFormat = DateTimeFormatter.ofPattern("hh a EEE, dd MMM");
+        DateTimeFormatter startFormat = DateTimeFormatter.ofPattern("HH:mm EEE, dd MMM");
         
 		if(start.isPresent()) {
 			sb.append("from ").append(start.get().format(startFormat));

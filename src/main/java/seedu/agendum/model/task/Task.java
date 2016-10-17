@@ -47,12 +47,12 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
         this.endDateTime = deadline.orElse(null);
         this.tags = new UniqueTagList(tags); // protect internal tags from changes in the arg list
     }
-    
+
     /**
-     * Constructor for a task (event) with both a start and end time
+     * Constructor for a task with start and end datetime
      */
     public Task(Name name, Optional<LocalDateTime> startDateTime,
-            Optional<LocalDateTime> endDateTime, UniqueTagList tags) {
+                 Optional<LocalDateTime> endDateTime, UniqueTagList tags) {
         assert !CollectionUtil.isAnyNull(name, tags);
         this.name = name;
         this.isCompleted = false;
