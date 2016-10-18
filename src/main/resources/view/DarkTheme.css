@@ -40,7 +40,7 @@
 
 .status-bar {
     -fx-background-color: derive(#1d1d1d, 20%);
-    -fx-text-fill: black;
+    -fx-text-fill: white;
 }
 
 .result-display {
@@ -52,6 +52,7 @@
 }
 
 .status-bar .label {
+	-fx-background-color: transparent;
     -fx-text-fill: white;
 }
 
@@ -72,7 +73,7 @@
 }
 
 .grid-pane .anchor-pane {
-    -fx-background-color: derive(#1d1d1d, 30%);
+    -fx-background-color: derive(#1d1d1d, 20%);
 }
 
 .context-menu {
@@ -223,8 +224,6 @@
 
 #cardPane {
     -fx-background-color: transparent;
-    -fx-border-color: #d6d6d6;
-    -fx-border-width: 0 0 0 0;
 }
 
 #commandTypeLabel {
