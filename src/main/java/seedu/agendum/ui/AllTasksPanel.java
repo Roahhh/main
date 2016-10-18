@@ -22,6 +22,7 @@ public class AllTasksPanel extends UiPart {
     private static final String FXML = "AllTasksPanel.fxml";
     private AnchorPane panel;
     private AnchorPane placeHolderPane;
+    private static ObservableList<ReadOnlyTask> mainTaskList;
 
     @FXML
     private ListView<ReadOnlyTask> allTasksListView;
@@ -47,6 +48,7 @@ public class AllTasksPanel extends UiPart {
 
     public static AllTasksPanel load(Stage primaryStage, AnchorPane AllTasksPlaceholder,
             ObservableList<ReadOnlyTask> taskList) {
+        mainTaskList = taskList;
         AllTasksPanel allTasksPanel = UiPartLoader.loadUiPart(primaryStage, AllTasksPlaceholder, new AllTasksPanel());
         allTasksPanel.configure(taskList);
         return allTasksPanel;
@@ -58,7 +60,7 @@ public class AllTasksPanel extends UiPart {
     }
 
     private void setConnections(ObservableList<ReadOnlyTask> allTasks) {
-        allTasksListView.setItems(allTasks);
+        allTasksListView.setItems(allTasks.filtered(task -> task.hasTime()));
         allTasksListView.setCellFactory(listView -> new allTasksListViewCell());
     }
 
@@ -87,7 +89,7 @@ public class AllTasksPanel extends UiPart {
                 setGraphic(null);
                 setText(null);
             } else {
-                setGraphic(TaskCard.load(task, getIndex() + 1).getLayout());
+                setGraphic(TaskCard.load(task, mainTaskList.indexOf(task) + 1).getLayout());
             }
         }
     }
