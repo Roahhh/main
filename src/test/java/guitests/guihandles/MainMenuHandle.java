@@ -23,17 +23,28 @@ public class MainMenuHandle extends GuiHandle {
     }
 
     public HelpWindowHandle openHelpWindowUsingMenu() {
-        clickOn("Help", "⌥H");
+        clickOn("Help", "F5");
         return new HelpWindowHandle(guiRobot, primaryStage);
     }
 
     public HelpWindowHandle openHelpWindowUsingAccelerator() {
-        useAccelerator();
+        useAcceleratorToOpenHelpWindow();
         return new HelpWindowHandle(guiRobot, primaryStage);
     }
+    
+    public MainGuiHandle closeHelpWindowUsingAccelerator() {
+        useAcceleratorToCloseHelpWindow();
+        return new MainGuiHandle(guiRobot, primaryStage);
+    }
 
-    private void useAccelerator() {
-        guiRobot.push(new KeyCodeCombination(KeyCode.H, KeyCombination.ALT_DOWN));
+    private void useAcceleratorToOpenHelpWindow() {
+        guiRobot.push(new KeyCodeCombination(KeyCode.F5));
         guiRobot.sleep(500);
     }
+    
+    private void useAcceleratorToCloseHelpWindow() {
+        guiRobot.push(new KeyCodeCombination(KeyCode.ESCAPE));
+        guiRobot.sleep(500);
+    }
+
 }

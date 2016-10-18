@@ -110,7 +110,7 @@ public class MainWindow extends UiPart {
     }
 
     private void setAccelerators() {
-        helpMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.H, KeyCombination.ALT_DOWN));
+        helpMenuItem.setAccelerator(KeyCombination.valueOf("F5"));
     }
 
     void fillInnerParts() {
