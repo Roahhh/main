@@ -22,8 +22,6 @@ public class TaskCard extends UiPart {
     @FXML
     private Label id;
     @FXML
-    private Label tags;
-    @FXML
     private Label time;
 
     private ReadOnlyTask task;
@@ -67,7 +65,6 @@ public class TaskCard extends UiPart {
             time.setText(formatTime());
         }
         
-        tags.setText(task.tagsString());
     }
     
     public String formatTime() {
