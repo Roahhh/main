@@ -129,20 +129,17 @@ public class Parser {
             if (dateTimeMap.containsKey(ADD_ARGS_BY)) {
                 return new AddCommand(
                         taskTitle,
-                        dateTimeMap.get(ADD_ARGS_BY),
-                        getTagsFromArgs("test")
+                        dateTimeMap.get(ADD_ARGS_BY)
                 );
             } else if (dateTimeMap.containsKey(ADD_ARGS_FROM) && dateTimeMap.containsKey(ADD_ARGS_TO)) {
                 return new AddCommand(
                         taskTitle,
                         dateTimeMap.get(ADD_ARGS_FROM),
-                        dateTimeMap.get(ADD_ARGS_TO),
-                        getTagsFromArgs("test")
+                        dateTimeMap.get(ADD_ARGS_TO)
                 );
             } else if (!dateTimeMap.containsKey(ADD_ARGS_FROM) && !dateTimeMap.containsKey(ADD_ARGS_TO) && !dateTimeMap.containsKey(ADD_ARGS_BY)) {
                 return new AddCommand(
-                        taskTitle,
-                        getTagsFromArgs("test")
+                        taskTitle
                 );
             }
             else {
@@ -153,21 +150,7 @@ public class Parser {
             return new IncorrectCommand(ive.getMessage());
         }
     }
-
-    /**
-     * Extracts the new task's tags from the add command's tag arguments string.
-     * Merges duplicate tag strings.
-     */
-    private static Set<String> getTagsFromArgs(String tagArguments) throws IllegalValueException {
-        // no tags
-        if (tagArguments.isEmpty()) {
-            return Collections.emptySet();
-        }
-        // replace first delimiter prefix, then split
-        final Collection<String> tagStrings = Arrays.asList(tagArguments.replaceFirst(" t/", "").split(" t/"));
-        return new HashSet<>(tagStrings);
-    }
-
+	
     /**
      * Parses arguments in the context of the delete task command.
      *

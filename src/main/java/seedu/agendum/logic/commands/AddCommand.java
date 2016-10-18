@@ -1,8 +1,6 @@
 package seedu.agendum.logic.commands;
 
 import seedu.agendum.commons.exceptions.IllegalValueException;
-import seedu.agendum.model.tag.Tag;
-import seedu.agendum.model.tag.UniqueTagList;
 import seedu.agendum.model.task.*;
 
 import java.time.LocalDateTime;
@@ -18,7 +16,7 @@ public class AddCommand extends Command {
     public static final String COMMAND_WORD = "add";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a task with no time and date. "
-            + "Parameters: NAME [t/TAG]...\n"
+            + "Parameters: NAME\n"
             + "Example: " + COMMAND_WORD
             + " Watch Star Wars t/movies";
 
@@ -28,56 +26,41 @@ public class AddCommand extends Command {
     private final Task toAdd;
 
     /**
-     * Convenience constructor using name and set of tags
+     * Convenience constructor using name
      *
      * @throws IllegalValueException if any of the raw values are invalid
      */
-    public AddCommand(String name, Set<String> tags)
+    public AddCommand(String name)
             throws IllegalValueException {
-        final Set<Tag> tagSet = new HashSet<>();
-        for (String tagName : tags) {
-            tagSet.add(new Tag(tagName));
-        }
         this.toAdd = new Task(
-                new Name(name),
-                new UniqueTagList(tagSet)
+                new Name(name)
         );
     }
 
     /**
-     * Convenience constructor using name, end datetime and set of tags
+     * Convenience constructor using name, end datetime
      *
      * @throws IllegalValueException if any of the raw values are invalid
      */
-    public AddCommand(String name, Optional<LocalDateTime> deadlineDate, Set<String> tags)
+    public AddCommand(String name, Optional<LocalDateTime> deadlineDate)
             throws IllegalValueException {
-        final Set<Tag> tagSet = new HashSet<>();
-        for (String tagName : tags) {
-            tagSet.add(new Tag(tagName));
-        }
         this.toAdd = new Task(
                 new Name(name),
-                deadlineDate,
-                new UniqueTagList(tagSet)
+                deadlineDate
         );
     }
 
     /**
-     * Convenience constructor using name, start datetime, end datetime and set of tags
+     * Convenience constructor using name, start datetime, end datetime
      *
      * @throws IllegalValueException if any of the raw values are invalid
      */
-    public AddCommand(String name, Optional<LocalDateTime> startDateTime, Optional<LocalDateTime> endDateTime, Set<String> tags)
+    public AddCommand(String name, Optional<LocalDateTime> startDateTime, Optional<LocalDateTime> endDateTime)
             throws IllegalValueException {
-        final Set<Tag> tagSet = new HashSet<>();
-        for (String tagName : tags) {
-            tagSet.add(new Tag(tagName));
-        }
         this.toAdd = new Task(
                 new Name(name),
                 startDateTime,
-                endDateTime,
-                new UniqueTagList(tagSet)
+                endDateTime
         );
     }
 
