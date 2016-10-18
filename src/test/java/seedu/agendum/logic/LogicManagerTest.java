@@ -410,12 +410,12 @@ public class LogicManagerTest {
         ToDoList expectedTDL = helper.generateToDoList(threeTasks);
         expectedTDL.markTask(threeTasks.get(0));
         helper.addToModel(model, threeTasks);
-        ArrayList<Integer> markedTaskVisibleIndices = new ArrayList<Integer>();
-        markedTaskVisibleIndices.add(1);
+        ArrayList<Task> markedTasks = new ArrayList<Task>();
+        markedTasks.add(threeTasks.get(0));
 
         // test boundary value (first task in the list)
         assertCommandBehavior("mark 1",
-                String.format(MarkCommand.MESSAGE_MARK_TASK_SUCCESS, markedTaskVisibleIndices),
+                String.format(MarkCommand.MESSAGE_MARK_TASK_SUCCESS, markedTasks),
                 expectedTDL,
                 expectedTDL.getTaskList());
     }
@@ -431,13 +431,13 @@ public class LogicManagerTest {
         expectedTDL.markTask(fourTasks.get(3));
         expectedTDL.markTask(fourTasks.get(2));
         helper.addToModel(model, fourTasks);
-        ArrayList<Integer> markedTaskVisibleIndices = new ArrayList<Integer>();
-        markedTaskVisibleIndices.add(3);
-        markedTaskVisibleIndices.add(4);
+        ArrayList<Task> markedTasks = new ArrayList<Task>();
+        markedTasks.add(fourTasks.get(2));
+        markedTasks.add(fourTasks.get(3));
 
         // test boundary value (up to last task in the list)
         assertCommandBehavior("mark 3-4",
-                String.format(MarkCommand.MESSAGE_MARK_TASK_SUCCESS, markedTaskVisibleIndices),
+                String.format(MarkCommand.MESSAGE_MARK_TASK_SUCCESS, markedTasks),
                 expectedTDL,
                 expectedTDL.getTaskList());
     }
@@ -453,11 +453,11 @@ public class LogicManagerTest {
         expectedTDL.markTask(fourTasks.get(2));
         expectedTDL.markTask(fourTasks.get(1));
         helper.addToModel(model, fourTasks);
-        ArrayList<Integer> markedTaskVisibleIndices = new ArrayList<Integer>();
-        markedTaskVisibleIndices.addAll(Arrays.asList(2,3,4));
+        ArrayList<Task> markedTasks = new ArrayList<Task>();
+        markedTasks.addAll(Arrays.asList(fourTasks.get(1), fourTasks.get(2), fourTasks.get(3)));
 
         assertCommandBehavior("mark 2,3 4",
-                String.format(MarkCommand.MESSAGE_MARK_TASK_SUCCESS, markedTaskVisibleIndices),
+                String.format(MarkCommand.MESSAGE_MARK_TASK_SUCCESS, markedTasks),
                 expectedTDL,
                 expectedTDL.getTaskList());
     }
@@ -485,12 +485,12 @@ public class LogicManagerTest {
         ToDoList expectedTDL = helper.generateToDoList(threeTasks);
         expectedTDL.unmarkTask(threeTasks.get(2));
         helper.addToModel(model, threeTasks);
-        ArrayList<Integer> unmarkedTaskVisibleIndices = new ArrayList<Integer>();
-        unmarkedTaskVisibleIndices.add(3);
+        ArrayList<Task> unmarkedTasks = new ArrayList<Task>();
+        unmarkedTasks.add(threeTasks.get(2));
 
         // test boundary value - last task in the list
         assertCommandBehavior("unmark 3",
-                String.format(UnmarkCommand.MESSAGE_UNMARK_TASK_SUCCESS, unmarkedTaskVisibleIndices),
+                String.format(UnmarkCommand.MESSAGE_UNMARK_TASK_SUCCESS, unmarkedTasks),
                 expectedTDL,
                 expectedTDL.getTaskList());
     }
@@ -509,12 +509,12 @@ public class LogicManagerTest {
         expectedTDL.unmarkTask(fourTasks.get(2));
         expectedTDL.unmarkTask(fourTasks.get(3));
         helper.addToModel(model, fourTasks);
-        ArrayList<Integer> unmarkedTaskVisibleIndices = new ArrayList<Integer>();
-        unmarkedTaskVisibleIndices.add(3);
-        unmarkedTaskVisibleIndices.add(4);
+        ArrayList<Task> unmarkedTasks = new ArrayList<Task>();
+        unmarkedTasks.add(fourTasks.get(2));
+        unmarkedTasks.add(fourTasks.get(3));
 
         assertCommandBehavior("unmark 3-4",
-                String.format(UnmarkCommand.MESSAGE_UNMARK_TASK_SUCCESS, unmarkedTaskVisibleIndices),
+                String.format(UnmarkCommand.MESSAGE_UNMARK_TASK_SUCCESS, unmarkedTasks),
                 expectedTDL,
                 expectedTDL.getTaskList());
     }
@@ -532,11 +532,11 @@ public class LogicManagerTest {
         expectedTDL.unmarkTask(fourTasks.get(2));
         expectedTDL.unmarkTask(fourTasks.get(1));
         helper.addToModel(model, fourTasks);
-        ArrayList<Integer> unmarkedTaskVisibleIndices = new ArrayList<Integer>();
-        unmarkedTaskVisibleIndices.addAll(Arrays.asList(2,3,4));
+        ArrayList<Task> unmarkedTasks = new ArrayList<Task>();
+        unmarkedTasks.addAll(Arrays.asList(fourTasks.get(1), fourTasks.get(2), fourTasks.get(3)));
 
         assertCommandBehavior("unmark 2,3 4",
-                String.format(UnmarkCommand.MESSAGE_UNMARK_TASK_SUCCESS, unmarkedTaskVisibleIndices),
+                String.format(UnmarkCommand.MESSAGE_UNMARK_TASK_SUCCESS, unmarkedTasks),
                 expectedTDL,
                 expectedTDL.getTaskList());
     }

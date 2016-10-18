@@ -57,7 +57,7 @@ public class MarkCommand extends Command {
             assert false : "The target task cannot be missing";
         }
 
-        return new CommandResult(String.format(MESSAGE_MARK_TASK_SUCCESS, targetIndexes.toString()));
+        return new CommandResult(String.format(MESSAGE_MARK_TASK_SUCCESS, tasksToMark));
     }
 
     private boolean isAnyIndexInvalid(UnmodifiableObservableList<ReadOnlyTask> lastShownList) {

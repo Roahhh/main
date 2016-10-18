@@ -57,7 +57,7 @@ public class UnmarkCommand extends Command {
             assert false : "The target task cannot be missing";
         }
 
-        return new CommandResult(String.format(MESSAGE_UNMARK_TASK_SUCCESS, targetIndexes.toString()));
+        return new CommandResult(String.format(MESSAGE_UNMARK_TASK_SUCCESS, tasksToUnmark));
     }
 
     private boolean isAnyIndexInvalid(UnmodifiableObservableList<ReadOnlyTask> lastShownList) {

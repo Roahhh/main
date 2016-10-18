@@ -41,7 +41,6 @@ public interface ReadOnlyTask {
         if (getEndDateTime().isPresent()) {
             builder.append("\nEnd time: ").append(this.getEndDateTime().get());
         }
-        builder.append("\n");
         return builder.toString();
     }
 }
