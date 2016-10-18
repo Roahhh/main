@@ -7,6 +7,8 @@ package seedu.agendum.logic.commands;
 public class UndoCommand extends Command {
 
     public static final String COMMAND_WORD = "undo";
+    public static String COMMAND_FORMAT = "undo";
+    public static String COMMAND_DESCRIPTION = "undo the previous command(s) that has changed the task list";
     public static final String MESSAGE_SUCCESS = "Previous command undone!";
     public static final String MESSAGE_FAILURE = "Nothing to undo!";
 
@@ -21,5 +23,23 @@ public class UndoCommand extends Command {
         } else {
             return new CommandResult(MESSAGE_FAILURE);
         }
+    }
+
+
+    @Override
+    public String getName() {
+        return COMMAND_WORD;
+    }
+
+
+    @Override
+    public String getFormat() {
+        return COMMAND_FORMAT;
+    }
+
+
+    @Override
+    public String getDescription() {
+        return COMMAND_DESCRIPTION;
     }
 }

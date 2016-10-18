@@ -34,6 +34,7 @@ import seedu.agendum.logic.commands.HelpCommand;
 import seedu.agendum.logic.commands.ListCommand;
 import seedu.agendum.logic.commands.MarkCommand;
 import seedu.agendum.logic.commands.RenameCommand;
+import seedu.agendum.logic.commands.UndoCommand;
 import seedu.agendum.logic.commands.UnmarkCommand;
 import seedu.agendum.commons.core.LogsCenter;
 
@@ -142,6 +143,7 @@ public class HelpWindow extends UiPart {
        commandList.add(new MarkCommand(new HashSet<Integer>()));
        commandList.add(new UnmarkCommand(new HashSet<Integer>()));
        commandList.add(new DeleteCommand(new HashSet<Integer>()));
+       commandList.add(new UndoCommand());
        commandList.add(new ListCommand());
        commandList.add(new FindCommand());
        commandList.add(new ClearCommand());
