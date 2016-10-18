@@ -64,13 +64,13 @@ public class TestTask implements ReadOnlyTask {
     }
 
     public boolean isUpcoming() {
-        return hasTime() && getTaskTime().isBefore(
+        return  !isCompleted() && hasTime() && getTaskTime().isBefore(
                 LocalDateTime.now().plusDays(UPCOMING_DAYS_THRESHOLD));
     }
 
     @Override
     public boolean isOverdue() {
-        return hasTime() && getTaskTime().isBefore(LocalDateTime.now());
+        return !isCompleted() && hasTime() && getTaskTime().isBefore(LocalDateTime.now());
     }
 
     @Override

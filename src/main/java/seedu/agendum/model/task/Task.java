@@ -80,13 +80,13 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
 
     @Override
     public boolean isUpcoming() {
-        return hasTime() && getTaskTime().isBefore(
+        return !isCompleted() && hasTime() && getTaskTime().isBefore(
                 LocalDateTime.now().plusDays(UPCOMING_DAYS_THRESHOLD));
     }
 
     @Override
     public boolean isOverdue() {
-        return hasTime() && getTaskTime().isBefore(LocalDateTime.now());
+        return !isCompleted() && hasTime() && getTaskTime().isBefore(LocalDateTime.now());
     }
 
     @Override
@@ -150,7 +150,11 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
         if (comparedCompletionStatus != 0) {
             return comparedCompletionStatus;
         }
-        return compareTime(other);
+        int comparedTime = compareTime(other);
+        if (comparedTime != 0) {
+            return comparedTime;
+        }
+        return compareName(other);
     }
 
     public int compareCompletionStatus(Task other) {
@@ -167,6 +171,10 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
         } else {
             return 0;
         }
+    }
+
+    public int compareName(Task other) {
+        return this.getName().toString().compareTo(other.getName().toString());
     }
 
     @Override
