@@ -49,13 +49,15 @@ public class TaskCard extends UiPart {
     public void initialize() {
         
         if(task.isOverdue()) {
-            name.setTextFill(Color.web("#ff0a0a"));
+            cardPane.setStyle("-fx-background-color: rgb(255, 169, 147)");
         } else if(task.isUpcoming()) {
-            name.setTextFill(Color.web("#6407c6"));
+            cardPane.setStyle("-fx-background-color: rgb(255, 229, 86)");
         } else {
-            name.setTextFill(Color.web("#555555"));
+            cardPane.setStyle("-fx-background-color: rgba(255,255,255,0.6)");
         }
         
+        name.setTextFill(Color.web("#555555"));
+
         name.setText(task.getName().fullName);
         id.setText(displayedIndex);
         
