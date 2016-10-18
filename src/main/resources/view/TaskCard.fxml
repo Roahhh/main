@@ -37,14 +37,6 @@
                               <Insets right="20.0" />
                            </padding>
                         </Label>
-                        <Label fx:id="tags" styleClass="cell_small_label" text="\$Tags">
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
-                           <padding>
-                              <Insets left="20.0" right="20.0" />
-                           </padding>
-                        </Label>
                      </children>
                   </HBox>
                   <HBox alignment="CENTER_LEFT">
