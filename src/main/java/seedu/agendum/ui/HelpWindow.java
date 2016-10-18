@@ -3,6 +3,8 @@ package seedu.agendum.ui;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -12,6 +14,10 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -114,8 +120,21 @@ public class HelpWindow extends UiPart {
         
         setIcon(dialogStage, ICON);
         loadHelpList();
+        
+        handleEscape(scene);
     }
-    
+
+    private void handleEscape(Scene scene) {
+        scene.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent evt) {
+                if (evt.getCode().equals(KeyCode.ESCAPE)) {
+                    dialogStage.close();
+                }
+            }
+        });
+    }
+
     private void loadHelpList() {
        commandList.add(new AddCommand());
        commandList.add(new RenameCommand());
