@@ -2,9 +2,6 @@ package seedu.agendum.logic;
 
 import com.google.common.eventbus.Subscribe;
 
-import javafx.collections.transformation.FilteredList;
-import javafx.collections.transformation.SortedList;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -113,7 +110,8 @@ public class LogicManagerTest {
 
         //Confirm the ui display elements should contain the right data
         assertEquals(expectedMessage, result.feedbackToUser);
-        assertEquals(expectedShownList, model.getFilteredTaskList());
+        TestDataHelper helper = new TestDataHelper();
+        assertEquals(helper.generateSortedList(expectedShownList), model.getFilteredTaskList());
 
         //Confirm the state of data (saved and in-memory) is as expected
         assertEquals(expectedToDoList, model.getToDoList());
@@ -235,14 +233,19 @@ public class LogicManagerTest {
     }
     
     /**
-     *  Confirms the 'incorrect index format behaviour' for the given command
-     * targeting a single task in the shown list, using visible index.
-     * @param commandWord to test assuming it targets a single task in the last shown list based on visible index.
+     * Confirms the 'incorrect index format behaviour' for the given command
+     * targeting a single/multiple task(s) in the shown list, using visible indices.
+     * @param commandWord to test assuming it targets a single/multiple task(s) in the shown list, using visible indices.
      * 
      * This (overloaded) method is created for delete/mark/unmark.
      */
     private void assertIncorrectIndexFormatBehaviorForCommand(String commandWord, String expectedMessage) throws Exception {
         assertIncorrectIndexFormatBehaviorForCommand(commandWord, expectedMessage, " ");
+        
+        // multiple indices
+        assertCommandBehavior(commandWord + " 1 2 +3", expectedMessage); //index should be unsigned
+        assertCommandBehavior(commandWord + " 1 2 -3", expectedMessage); //index should be unsigned
+        assertCommandBehavior(commandWord + " 1 not_a_number 3", expectedMessage); //index cannot be a string
     }
 
     /**
@@ -263,30 +266,45 @@ public class LogicManagerTest {
         for (Task p : taskList) {
             model.addTask(p);
         }
-
+        // test boundary value (one-based index is 3 when list is of size 2)
         assertCommandBehavior(commandWord + " 3 " + wordsAfterIndex, expectedMessage, model.getToDoList(), taskList);
     }
     
     /**
      * Confirms the 'invalid argument index number behaviour' for the given command
-     * targeting a single task in the shown list, using visible index.
-     * @param commandWord to test assuming it targets a single task in the last shown list based on visible index.
+     * targeting a single/multiple task(s) in the shown list, using visible indices.
+     * @param commandWord to test assuming it targets tasks in the last shown list based on visible indices.
      * 
      * This (overloaded) method is created for delete/mark/unmark.
      */
     private void assertIndexNotFoundBehaviorForCommand(String commandWord) throws Exception {
         assertIndexNotFoundBehaviorForCommand(commandWord, "");
+
+        // multiple indices
+        String expectedMessage = MESSAGE_INVALID_TASK_DISPLAYED_INDEX;
+        TestDataHelper helper = new TestDataHelper();
+        List<Task> taskList = helper.generateTaskList(5);
+
+        // set AB state to 5 tasks
+        model.resetData(new ToDoList());
+        for (Task p : taskList) {
+            model.addTask(p);
+        }
+        // test boundary value (one-based index is 6 when list is of size 5)
+        assertCommandBehavior(commandWord + " 1 6", expectedMessage, model.getToDoList(), taskList); //invalid index is the last index given
+        assertCommandBehavior(commandWord + " 1 6 2", expectedMessage, model.getToDoList(), taskList); //invalid index is not the first index
+        assertCommandBehavior(commandWord + " 1-6", expectedMessage, model.getToDoList(), taskList); //invalid index is part of range
     }
 
     @Test
     public void execute_selectInvalidArgsFormat_errorMessageShown() throws Exception {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE);
-        assertIncorrectIndexFormatBehaviorForCommand("select", expectedMessage);
+        assertIncorrectIndexFormatBehaviorForCommand("select", expectedMessage, " ");
     }
 
     @Test
     public void execute_selectIndexNotFound_errorMessageShown() throws Exception {
-        assertIndexNotFoundBehaviorForCommand("select");
+        assertIndexNotFoundBehaviorForCommand("select", " ");
     }
 
     @Test
@@ -318,20 +336,60 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void execute_delete_removesCorrectTask() throws Exception {
+    public void execute_delete_removesCorrectSingleTask() throws Exception {
         TestDataHelper helper = new TestDataHelper();
         List<Task> threeTasks = helper.generateTaskList(3);
 
         ToDoList expectedTDL = helper.generateToDoList(threeTasks);
-        expectedTDL.removeTask(threeTasks.get(1));
+        expectedTDL.removeTask(threeTasks.get(2));
         helper.addToModel(model, threeTasks);
+        List<Task> deletedTasks = helper.generateTaskList(threeTasks.get(2));
 
-        assertCommandBehavior("delete 2",
-                String.format(DeleteCommand.MESSAGE_DELETE_TASK_SUCCESS, threeTasks.get(1)),
+        // test boundary value (last task in the list)
+        assertCommandBehavior("delete 3",
+                String.format(DeleteCommand.MESSAGE_DELETE_TASK_SUCCESS, deletedTasks),
                 expectedTDL,
                 expectedTDL.getTaskList());
     }
 
+    @Test
+    public void execute_delete_removesCorrectRangeOfTasks() throws Exception {
+        // indexes provided are startIndex-endIndex.
+        // Tasks with visible index in range [startIndex, endIndex] are deleted
+        TestDataHelper helper = new TestDataHelper();
+        List<Task> fourTasks = helper.generateTaskList(4);
+
+        ToDoList expectedTDL = helper.generateToDoList(fourTasks);
+        expectedTDL.removeTask(fourTasks.get(2));
+        expectedTDL.removeTask(fourTasks.get(1));
+        helper.addToModel(model, fourTasks);
+        List<Task> deletedTasks = helper.generateTaskList(fourTasks.get(1), fourTasks.get(2));
+
+        // Checks if the new to do list contains Task 1 and Task 4 from the original list
+        assertCommandBehavior("delete 2-3",
+                String.format(DeleteCommand.MESSAGE_DELETE_TASK_SUCCESS, deletedTasks),
+                expectedTDL,
+                expectedTDL.getTaskList());
+    }
+
+    @Test
+    public void execute_delete_removesCorrectMultipleTasks() throws Exception {
+        // delete multiple indices specified (separated by space/comma)
+        TestDataHelper helper = new TestDataHelper();
+        List<Task> fourTasks = helper.generateTaskList(4);
+
+        ToDoList expectedTDL = helper.generateToDoList(fourTasks);
+        expectedTDL.removeTask(fourTasks.get(3));
+        expectedTDL.removeTask(fourTasks.get(2));
+        expectedTDL.removeTask(fourTasks.get(1));
+        helper.addToModel(model, fourTasks);
+        List<Task> deletedTasks = helper.generateTaskList(fourTasks.get(1), fourTasks.get(2), fourTasks.get(3));
+
+        assertCommandBehavior("delete 2,3 4",
+                String.format(DeleteCommand.MESSAGE_DELETE_TASK_SUCCESS, deletedTasks),
+                expectedTDL,
+                expectedTDL.getTaskList());
+    }
 
     @Test
     public void execute_markInvalidArgsFormat_errorMessageShown() throws Exception {
@@ -345,16 +403,61 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void execute_mark_marksCorrectTaskAsCompleted() throws Exception {
+    public void execute_mark_marksCorrectSingleTaskAsCompleted() throws Exception {
         TestDataHelper helper = new TestDataHelper();
         List<Task> threeTasks = helper.generateTaskList(3);
 
         ToDoList expectedTDL = helper.generateToDoList(threeTasks);
-        expectedTDL.markTask(threeTasks.get(1));
+        expectedTDL.markTask(threeTasks.get(0));
         helper.addToModel(model, threeTasks);
+        ArrayList<Integer> markedTaskVisibleIndices = new ArrayList<Integer>();
+        markedTaskVisibleIndices.add(1);
 
-        assertCommandBehavior("mark 2",
-                String.format(MarkCommand.MESSAGE_MARK_TASK_SUCCESS, threeTasks.get(1)),
+        // test boundary value (first task in the list)
+        assertCommandBehavior("mark 1",
+                String.format(MarkCommand.MESSAGE_MARK_TASK_SUCCESS, markedTaskVisibleIndices),
+                expectedTDL,
+                expectedTDL.getTaskList());
+    }
+    
+    @Test
+    public void execute_mark_marksCorrectRangeOfTasks() throws Exception {
+        // indexes provided are startIndex-endIndex.
+        // Tasks with visible index in range [startIndex, endIndex] are marked
+        TestDataHelper helper = new TestDataHelper();
+        List<Task> fourTasks = helper.generateTaskList(4);
+
+        ToDoList expectedTDL = helper.generateToDoList(fourTasks);
+        expectedTDL.markTask(fourTasks.get(3));
+        expectedTDL.markTask(fourTasks.get(2));
+        helper.addToModel(model, fourTasks);
+        ArrayList<Integer> markedTaskVisibleIndices = new ArrayList<Integer>();
+        markedTaskVisibleIndices.add(3);
+        markedTaskVisibleIndices.add(4);
+
+        // test boundary value (up to last task in the list)
+        assertCommandBehavior("mark 3-4",
+                String.format(MarkCommand.MESSAGE_MARK_TASK_SUCCESS, markedTaskVisibleIndices),
+                expectedTDL,
+                expectedTDL.getTaskList());
+    }
+
+    @Test
+    public void execute_mark_marksCorrectMultipleTasks() throws Exception {
+        // mark multiple indices specified (separated by space/comma)
+        TestDataHelper helper = new TestDataHelper();
+        List<Task> fourTasks = helper.generateTaskList(4);
+
+        ToDoList expectedTDL = helper.generateToDoList(fourTasks);
+        expectedTDL.markTask(fourTasks.get(3));
+        expectedTDL.markTask(fourTasks.get(2));
+        expectedTDL.markTask(fourTasks.get(1));
+        helper.addToModel(model, fourTasks);
+        ArrayList<Integer> markedTaskVisibleIndices = new ArrayList<Integer>();
+        markedTaskVisibleIndices.addAll(Arrays.asList(2,3,4));
+
+        assertCommandBehavior("mark 2,3 4",
+                String.format(MarkCommand.MESSAGE_MARK_TASK_SUCCESS, markedTaskVisibleIndices),
                 expectedTDL,
                 expectedTDL.getTaskList());
     }
@@ -372,18 +475,68 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void execute_unmark_UnmarksCorrectTaskAsCompleted() throws Exception {
+    public void execute_unmark_UnmarksCorrectSingleTaskFromCompleted() throws Exception {
         TestDataHelper helper = new TestDataHelper();
         List<Task> threeTasks = helper.generateTaskList(2);
+        //completed task is usually at the end of the list
         threeTasks.add(helper.generateCompletedTask(3));
 
-        //expectedTDL does not have any tasks marked as completed
+        // expectedTDL does not have any tasks marked as completed
         ToDoList expectedTDL = helper.generateToDoList(threeTasks);
         expectedTDL.unmarkTask(threeTasks.get(2));
         helper.addToModel(model, threeTasks);
+        ArrayList<Integer> unmarkedTaskVisibleIndices = new ArrayList<Integer>();
+        unmarkedTaskVisibleIndices.add(3);
 
+        // test boundary value - last task in the list
         assertCommandBehavior("unmark 3",
-                String.format(UnmarkCommand.MESSAGE_UNMARK_TASK_SUCCESS, threeTasks.get(2)),
+                String.format(UnmarkCommand.MESSAGE_UNMARK_TASK_SUCCESS, unmarkedTaskVisibleIndices),
+                expectedTDL,
+                expectedTDL.getTaskList());
+    }
+
+    @Test
+    public void execute_unmark_unmarksCorrectRangeOfTasks() throws Exception {
+        // indexes provided are startIndex-endIndex.
+        // Tasks with visible index in range [startIndex, endIndex] are marked
+        TestDataHelper helper = new TestDataHelper();
+        List<Task> fourTasks = helper.generateTaskList(helper.generateTask(1), helper.generateTask(2),
+                helper.generateCompletedTask(3), helper.generateCompletedTask(4));
+
+        // expectedTDL does not have any tasks marked as completed
+        ToDoList expectedTDL = helper.generateToDoList(fourTasks);
+        // Completed tasks will be at the bottom of the list
+        expectedTDL.unmarkTask(fourTasks.get(2));
+        expectedTDL.unmarkTask(fourTasks.get(3));
+        helper.addToModel(model, fourTasks);
+        ArrayList<Integer> unmarkedTaskVisibleIndices = new ArrayList<Integer>();
+        unmarkedTaskVisibleIndices.add(3);
+        unmarkedTaskVisibleIndices.add(4);
+
+        assertCommandBehavior("unmark 3-4",
+                String.format(UnmarkCommand.MESSAGE_UNMARK_TASK_SUCCESS, unmarkedTaskVisibleIndices),
+                expectedTDL,
+                expectedTDL.getTaskList());
+    }
+
+    @Test
+    public void execute_unmark_unmarksCorrectMultipleTasks() throws Exception {
+        // unmark multiple indices specified (separated by space/comma)
+        TestDataHelper helper = new TestDataHelper();
+        List<Task> fourTasks = helper.generateTaskList(helper.generateTask(1), helper.generateCompletedTask(2),
+                helper.generateCompletedTask(3), helper.generateCompletedTask(4));
+
+        // expectedTDL does not have any tasks marked as completed
+        ToDoList expectedTDL = helper.generateToDoList(fourTasks);
+        expectedTDL.unmarkTask(fourTasks.get(3));
+        expectedTDL.unmarkTask(fourTasks.get(2));
+        expectedTDL.unmarkTask(fourTasks.get(1));
+        helper.addToModel(model, fourTasks);
+        ArrayList<Integer> unmarkedTaskVisibleIndices = new ArrayList<Integer>();
+        unmarkedTaskVisibleIndices.addAll(Arrays.asList(2,3,4));
+
+        assertCommandBehavior("unmark 2,3 4",
+                String.format(UnmarkCommand.MESSAGE_UNMARK_TASK_SUCCESS, unmarkedTaskVisibleIndices),
                 expectedTDL,
                 expectedTDL.getTaskList());
     }
@@ -391,11 +544,12 @@ public class LogicManagerTest {
 
     @Test
     public void execute_renameInvalidArgsFormat_errorMessageShown() throws Exception {
-        //invalid index format
+        // invalid index format
+        // a valid name is provided since invalid input values must be tested one at a time
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, RenameCommand.MESSAGE_USAGE);
         assertIncorrectIndexFormatBehaviorForCommand("rename", expectedMessage, "new task name");
         
-        //invalid new task name format e.g. task name is not provided
+        // invalid new task name format e.g. task name is not provided
         TestDataHelper helper = new TestDataHelper();
         List<Task> taskList = helper.generateTaskList(2);
 
@@ -404,12 +558,14 @@ public class LogicManagerTest {
         for (Task p : taskList) {
             model.addTask(p);
         }
+        // a valid index is provided since we are testing for invalid name (empty string) here
         assertCommandBehavior("rename 1 ", expectedMessage, model.getToDoList(), taskList);
         
     }
 
     @Test
     public void execute_renameIndexNotFound_errorMessageShown() throws Exception {
+        // a valid name is provided to only test for invalid index
         assertIndexNotFoundBehaviorForCommand("rename", "new task name");
     }
 
@@ -424,6 +580,7 @@ public class LogicManagerTest {
         model.resetData(expectedTDL);
 
         // execute command and verify result
+        // a valid index must be provided to check if the name is invalid (due to a duplicate)
         assertCommandBehavior(
                 "rename 2 " + toBeDuplicated.getName().toString(),
                 RenameCommand.MESSAGE_DUPLICATE_TASK,
@@ -447,6 +604,7 @@ public class LogicManagerTest {
         model.resetData(new ToDoList());
         helper.addToModel(model, threeTasks);
 
+        //boundary value: use the last task
         assertCommandBehavior("rename 3 " + newTaskName,
                 String.format(RenameCommand.MESSAGE_SUCCESS, "3", newTaskName),
                 expectedTDL,
@@ -471,21 +629,12 @@ public class LogicManagerTest {
         List<Task> fourTasks = helper.generateTaskList(p1, pTarget1, p2, pTarget2);
         ToDoList expectedTDL = helper.generateToDoList(fourTasks);
         List<Task> expectedList = helper.generateTaskList(pTarget1, pTarget2);
-        ToDoList generatedTDL = helper.generateToDoList(expectedList);
         helper.addToModel(model, fourTasks);
-        
-        ToDoList toDoList = new ToDoList(generatedTDL);
-        FilteredList<Task> filteredTasks = new FilteredList<>(toDoList.getTasks());
-        SortedList<Task> sortedTasks = filteredTasks.sorted();
-        UnmodifiableObservableList<Task> expectedUOList = new UnmodifiableObservableList<>(sortedTasks);
-        
-        String inputCommand = "find KEY";
-        String expectedMessage = Command.getMessageForTaskListShownSummary(expectedList.size());
 
-        assertCommandBehavior(inputCommand,
-                expectedMessage,
+        assertCommandBehavior("find KEY",
+                Command.getMessageForTaskListShownSummary(expectedList.size()),
                 expectedTDL,
-                expectedUOList);
+                expectedList);
     }
 
     @Test
@@ -498,18 +647,11 @@ public class LogicManagerTest {
 
         List<Task> fourTasks = helper.generateTaskList(p3, p1, p4, p2);
         ToDoList expectedTDL = helper.generateToDoList(fourTasks);
+        List<Task> expectedList = fourTasks;
         helper.addToModel(model, fourTasks);
-        
-        ToDoList toDoList = new ToDoList(expectedTDL);
-        FilteredList<Task> filteredTasks = new FilteredList<>(toDoList.getTasks());
-        SortedList<Task> sortedTasks = filteredTasks.sorted();
-        UnmodifiableObservableList<Task> expectedList = new UnmodifiableObservableList<>(sortedTasks);
-        
-        String inputCommand = "find KEY";
-        String expectedMessage = Command.getMessageForTaskListShownSummary(expectedList.size());
 
-        assertCommandBehavior(inputCommand,
-                expectedMessage,
+        assertCommandBehavior("find KEY",
+                Command.getMessageForTaskListShownSummary(expectedList.size()),
                 expectedTDL,
                 expectedList);
     }
@@ -564,6 +706,15 @@ public class LogicManagerTest {
             Task newTask = generateTask(seed);
             newTask.markAsCompleted();
             return newTask;
+        }
+
+        /**
+         * Generates a Task object with given name. Other fields will have some dummy values.
+         */
+        Task generateTaskWithName(String name) throws Exception {
+            return new Task(
+                    new Name(name)
+            );
         }
 
         /** Generates the correct add command based on the task given */
@@ -644,13 +795,14 @@ public class LogicManagerTest {
             return Arrays.asList(tasks);
         }
 
-        /**
-         * Generates a Task object with given name. Other fields will have some dummy values.
-         */
-        Task generateTaskWithName(String name) throws Exception {
-            return new Task(
-                    new Name(name)
-            );
+        UnmodifiableObservableList<Task> generateSortedList(List<? extends ReadOnlyTask> expectedShownList) throws Exception {
+            List<Task> taskList = new ArrayList<Task>();
+            for (int i = 0; i < expectedShownList.size(); i++) {
+                taskList.add(new Task(expectedShownList.get(i)));
+            }
+            ToDoList toDoList = generateToDoList(taskList); 
+            return new UnmodifiableObservableList<>(toDoList.getTasks().sorted());
         }
+
     }
 }

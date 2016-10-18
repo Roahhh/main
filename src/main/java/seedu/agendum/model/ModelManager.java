@@ -5,7 +5,6 @@ import javafx.collections.transformation.SortedList;
 import seedu.agendum.commons.core.LogsCenter;
 import seedu.agendum.commons.core.UnmodifiableObservableList;
 import seedu.agendum.commons.util.StringUtil;
-import seedu.agendum.model.task.Name;
 import seedu.agendum.model.task.ReadOnlyTask;
 import seedu.agendum.model.task.Task;
 import seedu.agendum.model.task.UniqueTaskList;
@@ -13,8 +12,7 @@ import seedu.agendum.model.task.UniqueTaskList.TaskNotFoundException;
 import seedu.agendum.commons.events.model.ToDoListChangedEvent;
 import seedu.agendum.commons.core.ComponentManager;
 
-import java.time.LocalDateTime;
-import java.util.Optional;
+import java.util.ArrayList;
 import java.util.Set;
 import java.util.logging.Logger;
 
@@ -27,12 +25,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final ToDoList toDoList;
     private final FilteredList<Task> filteredTasks;
-    private final FilteredList<Task> completedTasks;
     private final SortedList<Task> sortedTasks;
-    private final FilteredList<Task> uncompletedUpcomingTasks;
-    private final FilteredList<Task> uncompletedOverdueTasks;
-    private final SortedList<Task> upcomingTasks;
-    private final SortedList<Task> overdueTasks;
 
     /**
      * Initializes a ModelManager with the given ToDoList
@@ -48,14 +41,6 @@ public class ModelManager extends ComponentManager implements Model {
         toDoList = new ToDoList(src);
         filteredTasks = new FilteredList<>(toDoList.getTasks());
         sortedTasks = filteredTasks.sorted();
-        completedTasks = new FilteredList<>(toDoList.getTasks());
-        completedTasks.setPredicate(task -> task.isCompleted());
-        uncompletedUpcomingTasks = new FilteredList<>(toDoList.getTasks());
-        uncompletedOverdueTasks = new FilteredList<>(toDoList.getTasks());
-        uncompletedUpcomingTasks.setPredicate(task -> task.isUpcoming());
-        uncompletedOverdueTasks.setPredicate(task -> task.isOverdue());
-        upcomingTasks = uncompletedUpcomingTasks.sorted();
-        overdueTasks = uncompletedOverdueTasks.sorted();
     }
 
     public ModelManager() {
@@ -66,14 +51,6 @@ public class ModelManager extends ComponentManager implements Model {
         toDoList = new ToDoList(initialData);
         filteredTasks = new FilteredList<>(toDoList.getTasks());
         sortedTasks = filteredTasks.sorted();
-        completedTasks = new FilteredList<>(toDoList.getTasks());
-        completedTasks.setPredicate(task -> task.isCompleted());
-        uncompletedUpcomingTasks = new FilteredList<>(toDoList.getTasks());
-        uncompletedOverdueTasks = new FilteredList<>(toDoList.getTasks());
-        uncompletedUpcomingTasks.setPredicate(task -> task.isUpcoming());
-        uncompletedOverdueTasks.setPredicate(task -> task.isOverdue());
-        upcomingTasks = uncompletedUpcomingTasks.sorted();
-        overdueTasks = uncompletedOverdueTasks.sorted();
     }
 
     @Override
@@ -93,8 +70,10 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public synchronized void deleteTask(ReadOnlyTask target) throws TaskNotFoundException {
-        toDoList.removeTask(target);
+    public synchronized void deleteTasks(ArrayList<ReadOnlyTask> targets) throws TaskNotFoundException {
+        for (ReadOnlyTask target: targets) {
+            toDoList.removeTask(target);
+        }
         indicateToDoListChanged();
     }
 
@@ -114,14 +93,18 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public synchronized void markTask(ReadOnlyTask target) throws TaskNotFoundException {
-        toDoList.markTask(target);
+    public synchronized void markTasks(ArrayList<ReadOnlyTask> targets) throws TaskNotFoundException {
+        for (ReadOnlyTask target: targets) {
+            toDoList.markTask(target);
+        }
         indicateToDoListChanged();
     }
     
     @Override
-    public synchronized void unmarkTask(ReadOnlyTask target) throws TaskNotFoundException {
-        toDoList.unmarkTask(target);
+    public synchronized void unmarkTasks(ArrayList<ReadOnlyTask> targets) throws TaskNotFoundException {
+        for (ReadOnlyTask target: targets) {
+            toDoList.unmarkTask(target);
+        }
         indicateToDoListChanged();
     }
 
@@ -165,23 +148,7 @@ public class ModelManager extends ComponentManager implements Model {
     private void updateFilteredTaskList(Expression expression) {
         filteredTasks.setPredicate(expression::satisfies);
     }
-    
-    //=========== Other Task List Accessors ===================================================================
 
-    @Override
-    public UnmodifiableObservableList<ReadOnlyTask> getCompletedTaskList() {
-        return new UnmodifiableObservableList<>(completedTasks);
-    }
-
-    @Override
-    public UnmodifiableObservableList<ReadOnlyTask> getUpcomingTaskList() {
-        return new UnmodifiableObservableList<>(upcomingTasks);
-    }
-
-    @Override
-    public UnmodifiableObservableList<ReadOnlyTask> getOverdueTaskList() {
-        return new UnmodifiableObservableList<>(overdueTasks);
-    }
 
     //========== Inner classes/interfaces used for filtering ==================================================
 
