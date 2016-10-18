@@ -15,8 +15,6 @@ import seedu.agendum.model.ToDoList;
 import seedu.agendum.model.Model;
 import seedu.agendum.model.ModelManager;
 import seedu.agendum.model.ReadOnlyToDoList;
-import seedu.agendum.model.tag.Tag;
-import seedu.agendum.model.tag.UniqueTagList;
 import seedu.agendum.model.task.*;
 import seedu.agendum.storage.StorageManager;
 
@@ -157,8 +155,6 @@ public class LogicManagerTest {
     public void execute_add_invalidTaskData() throws Exception {
         assertCommandBehavior(
                 "add []\\[;]", Name.MESSAGE_NAME_CONSTRAINTS);
-        assertCommandBehavior(
-                "add Valid Name t/invalid_-[.tag", Tag.MESSAGE_TAG_CONSTRAINTS);
 
     }
 
@@ -571,10 +567,7 @@ public class LogicManagerTest {
 
         Task adam() throws Exception {
             Name name = new Name("Adam Brown");
-            Tag tag1 = new Tag("tag1");
-            Tag tag2 = new Tag("tag2");
-            UniqueTagList tags = new UniqueTagList(tag1, tag2);
-            return new Task(name, tags);
+            return new Task(name);
         }
 
         /**
@@ -586,8 +579,7 @@ public class LogicManagerTest {
          */
         Task generateTask(int seed) throws Exception {
             return new Task(
-                    new Name("Task " + seed),
-                    new UniqueTagList(new Tag("tag" + Math.abs(seed)), new Tag("tag" + Math.abs(seed + 1)))
+                    new Name("Task " + seed)
             );
         }
         
@@ -607,11 +599,6 @@ public class LogicManagerTest {
             cmd.append("add ");
 
             cmd.append(p.getName().toString());
-
-            UniqueTagList tags = p.getTags();
-            for(Tag t: tags){
-                cmd.append(" t/").append(t.tagName);
-            }
 
             return cmd.toString();
         }
@@ -688,8 +675,7 @@ public class LogicManagerTest {
          */
         Task generateTaskWithName(String name) throws Exception {
             return new Task(
-                    new Name(name),
-                    new UniqueTagList(new Tag("tag"))
+                    new Name(name)
             );
         }
     }
