@@ -15,7 +15,7 @@ public class AddCommand extends Command {
 
     public static final String COMMAND_WORD = "add";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a task with no time and date. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a task. Deadline/Event time is optional "
             + "Parameters: NAME\n"
             + "Example: " + COMMAND_WORD
             + " Watch Star Wars t/movies";
