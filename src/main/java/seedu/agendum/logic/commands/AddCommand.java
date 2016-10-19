@@ -18,7 +18,8 @@ public class AddCommand extends Command {
     public static String COMMAND_FORMAT = "add <name> \nadd <name> by <deadline> \nadd <name> from <start-time> to <end-time>";
     public static String COMMAND_DESCRIPTION = "adds a task to Agendum";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a task with no time and date. \n"
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a task. Deadline/Event time is optional "
             + "Parameters: NAME\n"
             + "Example: " + COMMAND_WORD
             + " Watch Star Wars t/movies";

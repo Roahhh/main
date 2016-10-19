@@ -35,9 +35,11 @@ public class Parser {
 
     private static final Pattern ADD_ARGS_FORMAT = Pattern.compile("(?:.+?(?=(?:(?:by|from|to)\\s|$)))+?");
 
-    private static final String ADD_ARGS_FROM = "from";
-    private static final String ADD_ARGS_BY = "by";
-    private static final String ADD_ARGS_TO = "to";
+    private static final Pattern SCHEDULE_ARGS_FORMAT = Pattern.compile("(?:.+?(?=(?:(?:by|from|to)\\s|$)))+?");
+
+    private static final String ARGS_FROM = "from";
+    private static final String ARGS_BY = "by";
+    private static final String ARGS_TO = "to";
 
     public Parser() {}
 
@@ -78,6 +80,9 @@ public class Parser {
         case RenameCommand.COMMAND_WORD:
             return prepareRename(arguments);
 
+        case ScheduleCommand.COMMAND_WORD:
+            return prepareSchedule(arguments);
+
         case MarkCommand.COMMAND_WORD:
             return prepareMark(arguments);
 
@@ -115,7 +120,7 @@ public class Parser {
 
             String taskTitle = null;
             HashMap<String, Optional<LocalDateTime>> dateTimeMap = new HashMap<>();
-            final String[] tokens = new String[]{ADD_ARGS_FROM, ADD_ARGS_TO, ADD_ARGS_BY};
+            final String[] tokens = new String[]{ARGS_FROM, ARGS_TO, ARGS_BY};
 
             while (matcher.find()) {
                 boolean matchedWithPrefix = false;
@@ -133,18 +138,18 @@ public class Parser {
                 }
             }
 
-            if (dateTimeMap.containsKey(ADD_ARGS_BY)) {
+            if (dateTimeMap.containsKey(ARGS_BY)) {
                 return new AddCommand(
                         taskTitle,
-                        dateTimeMap.get(ADD_ARGS_BY)
+                        dateTimeMap.get(ARGS_BY)
                 );
-            } else if (dateTimeMap.containsKey(ADD_ARGS_FROM) && dateTimeMap.containsKey(ADD_ARGS_TO)) {
+            } else if (dateTimeMap.containsKey(ARGS_FROM) && dateTimeMap.containsKey(ARGS_TO)) {
                 return new AddCommand(
                         taskTitle,
-                        dateTimeMap.get(ADD_ARGS_FROM),
-                        dateTimeMap.get(ADD_ARGS_TO)
+                        dateTimeMap.get(ARGS_FROM),
+                        dateTimeMap.get(ARGS_TO)
                 );
-            } else if (!dateTimeMap.containsKey(ADD_ARGS_FROM) && !dateTimeMap.containsKey(ADD_ARGS_TO) && !dateTimeMap.containsKey(ADD_ARGS_BY)) {
+            } else if (!dateTimeMap.containsKey(ARGS_FROM) && !dateTimeMap.containsKey(ARGS_TO) && !dateTimeMap.containsKey(ARGS_BY)) {
                 return new AddCommand(
                         taskTitle
                 );
@@ -157,7 +162,70 @@ public class Parser {
             return new IncorrectCommand(ive.getMessage());
         }
     }
-	
+
+    /**
+     * Parses arguments in the context of the reschedule task command.
+     *
+     * @param args full command args string
+     * @return the prepared command
+     */
+    private Command prepareSchedule(String args){
+        Matcher matcher = SCHEDULE_ARGS_FORMAT.matcher(args.trim());
+        if (!matcher.matches()) {
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ScheduleCommand.MESSAGE_USAGE));
+        }
+
+        HashMap<String, Optional<LocalDateTime>> dateTimeMap = new HashMap<>();
+        final String[] tokens = new String[]{ARGS_FROM, ARGS_TO, ARGS_BY};
+
+        int index = 0;
+        matcher = SCHEDULE_ARGS_FORMAT.matcher(args.trim());
+        while (matcher.find()) {
+            boolean matchedWithPrefix = false;
+
+            for (String token:tokens) {
+                String s = matcher.group(0).toLowerCase();
+                if (s.startsWith(token)) {
+                    s = s.substring(token.length(), s.length());
+                    dateTimeMap.put(token, DateTimeParser.parseString(s));
+                    matchedWithPrefix = true;
+                }
+            }
+
+            if (!matchedWithPrefix && index == 0) {
+                Optional<Integer> optionalInt = parseIndex(matcher.group(0));
+                if (optionalInt.isPresent()) {
+                    index = optionalInt.get();
+                }
+                else {
+                    return new IncorrectCommand(
+                            String.format(MESSAGE_INVALID_COMMAND_FORMAT, ScheduleCommand.MESSAGE_USAGE)); 
+                }
+            }
+        }
+
+        if (dateTimeMap.containsKey(ARGS_BY)) {
+            return new ScheduleCommand(
+                    index, Optional.empty(),
+                    dateTimeMap.get(ARGS_BY)
+            );
+        } else if (dateTimeMap.containsKey(ARGS_FROM) && dateTimeMap.containsKey(ARGS_TO)) {
+            return new ScheduleCommand(
+                    index,
+                    dateTimeMap.get(ARGS_FROM),
+                    dateTimeMap.get(ARGS_TO)
+            );
+        } else if (!dateTimeMap.containsKey(ARGS_FROM) && !dateTimeMap.containsKey(ARGS_TO) && !dateTimeMap.containsKey(ARGS_BY)) {
+            return new ScheduleCommand(
+                    index, Optional.empty(), Optional.empty()
+            );
+        }
+        else {
+            return new IncorrectCommand(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ScheduleCommand.MESSAGE_USAGE));
+        }
+    }
+
     /**
      * Parses arguments in the context of the delete task command.
      *
