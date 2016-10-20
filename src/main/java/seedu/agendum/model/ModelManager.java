@@ -115,6 +115,9 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void deleteTasks(ArrayList<ReadOnlyTask> targets) throws TaskNotFoundException {
         for (ReadOnlyTask target: targets) {
+            if(target.isRecurring() && target.isCompleted()) {
+                target.getParent().deleteChild();
+            }
             toDoList.removeTask(target);
         }
         indicateToDoListChanged();

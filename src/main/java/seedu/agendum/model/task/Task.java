@@ -201,7 +201,7 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
     }
 
     @Override
-    public childRecurringTask getChild() {
+    public ChildRecurringTask getChild() {
         System.out.println("executed in parent class");
         return null;
     }

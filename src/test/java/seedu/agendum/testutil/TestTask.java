@@ -115,7 +115,7 @@ public class TestTask implements ReadOnlyTask {
     }
 
     @Override
-    public childRecurringTask getChild() {
+    public ChildRecurringTask getChild() {
         return null;
     }
 

@@ -17,7 +17,7 @@ public interface ReadOnlyTask {
     Optional<LocalDateTime> getStartDateTime();
     Optional<LocalDateTime> getEndDateTime();
     
-    childRecurringTask getChild();
+    ChildRecurringTask getChild();
     RecurringTask getParent();
 
     /**

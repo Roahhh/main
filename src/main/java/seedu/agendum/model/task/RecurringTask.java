@@ -10,7 +10,7 @@ public class RecurringTask extends Task {
     private LocalDateTime startDateTime;
     private LocalDateTime endDateTime;
     
-    private childRecurringTask child = null;
+    private ChildRecurringTask child = null;
     
     public RecurringTask(Name name, Optional<LocalDateTime> startDateTime, 
             Optional<LocalDateTime> endDateTime, String period) {
@@ -47,9 +47,13 @@ public class RecurringTask extends Task {
         this.endDateTime = DateTimeParser.parseString(period + " before " + this.endDateTime.toString()).get();
     }
     
-    private childRecurringTask setChild() {
-        this.child = new childRecurringTask(this);
+    private ChildRecurringTask setChild() {
+        this.child = new ChildRecurringTask(this);
         return this.child;
+    }
+    
+    public void deleteChild() {
+        this.child = null;
     }
     
     @Override
@@ -63,7 +67,7 @@ public class RecurringTask extends Task {
     }
 
     @Override
-    public childRecurringTask getChild() {
+    public ChildRecurringTask getChild() {
         System.out.println("exeuted in recurringTask class");
         if(this.child == null) {
             System.out.println("child is null");

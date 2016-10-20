@@ -3,13 +3,13 @@ package seedu.agendum.model.task;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-public class childRecurringTask extends RecurringTask{
+public class ChildRecurringTask extends RecurringTask{
 
     private RecurringTask parent;
     private LocalDateTime startDateTime;
     private LocalDateTime endDateTime;
 
-    public childRecurringTask(RecurringTask parent) {
+    public ChildRecurringTask(RecurringTask parent) {
         super(parent);
         System.out.println("Being called by parent!");
         this.parent = parent;
