@@ -7,8 +7,10 @@ import seedu.agendum.commons.core.UnmodifiableObservableList;
 import seedu.agendum.commons.util.ConfigUtil;
 import seedu.agendum.commons.util.StringUtil;
 import seedu.agendum.model.task.ReadOnlyTask;
+import seedu.agendum.model.task.RecurringTask;
 import seedu.agendum.model.task.Task;
 import seedu.agendum.model.task.UniqueTaskList;
+import seedu.agendum.model.task.UniqueTaskList.DuplicateTaskException;
 import seedu.agendum.model.task.UniqueTaskList.TaskNotFoundException;
 import seedu.agendum.commons.events.model.SaveLocationChangedEvent;
 import seedu.agendum.commons.events.model.ToDoListChangedEvent;
@@ -156,7 +158,16 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void markTasks(ArrayList<ReadOnlyTask> targets) throws TaskNotFoundException {
         for (ReadOnlyTask target: targets) {
-            toDoList.markTask(target);
+            if(target.isRecurring()) {
+                try {
+                    // Add a child recurring task that is already marked as completed, and update the time of parent
+                    addTask(target.getChild());
+                } catch (DuplicateTaskException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                toDoList.markTask(target);
+            }
         }
         indicateToDoListChanged();
         backupNewToDoList();
@@ -165,7 +176,15 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void unmarkTasks(ArrayList<ReadOnlyTask> targets) throws TaskNotFoundException {
         for (ReadOnlyTask target: targets) {
-            toDoList.unmarkTask(target);
+            if(target.isRecurring()) {
+                // Delete the child recurring task, and update time of parent to previous
+                target.getParent().setPreviousDateTime();
+                ArrayList<ReadOnlyTask> taskToDelete = new ArrayList<ReadOnlyTask>();
+                taskToDelete.add(target);
+                deleteTasks(taskToDelete);
+            } else {
+                toDoList.unmarkTask(target);
+            }
         }
         indicateToDoListChanged();
         backupNewToDoList();
