@@ -40,8 +40,6 @@ public interface Storage extends ToDoListStorage, UserPrefsStorage {
      */
     void handleToDoListChangedEvent(ToDoListChangedEvent event);
     
-    /**
-     * Sets the save location 
-     */
+    /** Sets the save location of the todo list file **/
     public void handleSaveLocationChangedEvent(SaveLocationChangedEvent event);
 }
