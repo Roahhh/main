@@ -1,6 +1,7 @@
 package seedu.agendum.model.task;
 
 import seedu.agendum.commons.util.CollectionUtil;
+import seedu.agendum.logic.parser.DateTimeParser;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -16,6 +17,7 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
 
     private Name name;
     private boolean isCompleted;
+    private boolean isRecurring;
     private LocalDateTime startDateTime;
     private LocalDateTime endDateTime;
     
@@ -39,6 +41,7 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
         assert !CollectionUtil.isAnyNull(name);
         this.name = name;
         this.isCompleted = false;
+        this.isRecurring = false;
         this.startDateTime = null;
         this.endDateTime = deadline.orElse(null);
     }
@@ -51,6 +54,7 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
         assert !CollectionUtil.isAnyNull(name);
         this.name = name;
         this.isCompleted = false;
+        this.isRecurring = false;
         this.startDateTime = startDateTime.orElse(null);
         this.endDateTime = endDateTime.orElse(null);
     }
@@ -64,6 +68,10 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
         if (source.isCompleted()) {
             this.markAsCompleted();
         }
+    }
+    
+    public Task(Task task) {
+        this.name = task.name;
     }
     
     // ================ Getter methods ==============================
@@ -95,6 +103,10 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
                 LocalDateTime.now().plusDays(UPCOMING_DAYS_THRESHOLD));
     }
 
+    public boolean isRecurring() {
+        return isRecurring;
+    }
+
     @Override
     public Optional<LocalDateTime> getStartDateTime() {
         return Optional.ofNullable(startDateTime);
@@ -124,7 +136,7 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
     }
     
     public void markAsUncompleted() {
-        this.isCompleted = false;
+        this.isCompleted = true;
     }
     
     public void setStartDateTime(Optional<LocalDateTime> startDateTime) {
@@ -188,4 +200,14 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
         return getAsText();
     }
 
+    @Override
+    public childRecurringTask getChild() {
+        System.out.println("executed in parent class");
+        return null;
+    }
+
+    @Override
+    public RecurringTask getParent() {
+        return null;
+    }
 }
