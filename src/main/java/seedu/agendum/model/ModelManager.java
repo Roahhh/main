@@ -322,6 +322,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Subscribe
     public void handleLoadDataCompleteEvent(LoadDataCompleteEvent event) {
         this.toDoList.resetData(event.data);
+        indicateToDoListChanged();
         logger.info("Loading completed - Todolist updated.");
     }
 }
