@@ -80,6 +80,7 @@ public class StorageManager extends ComponentManager implements Storage {
     public void setToDoListFilePath(String filePath){
         assert StringUtil.isValidPathToFile(filePath);
         toDoListStorage.setToDoListFilePath(filePath);
+        logger.info("Setting todo list file path to: " + filePath);
     }
 
     @Override
@@ -98,6 +99,8 @@ public class StorageManager extends ComponentManager implements Storage {
     public void handleSaveLocationChangedEvent(SaveLocationChangedEvent event) {
         String saveLocation = event.saveLocation;
         setToDoListFilePath(saveLocation);
-        logger.info(LogsCenter.getEventHandlingLogMessage(event, "Setting save location to: " + saveLocation));
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+    }
+    
     }
 }
