@@ -156,9 +156,7 @@ public class ModelManager extends ComponentManager implements Model {
         assert StringUtil.isValidPathToFile(location);
         assert XmlUtil.isFileCorrectFormat(location);
         
-        config.setToDoListFilePath(location);
-        indicateSaveLocationChanged(location);
-        saveConfigFile();
+        changeSaveLocation(location);
         indicateLoadDataRequest(location);
     }
 
