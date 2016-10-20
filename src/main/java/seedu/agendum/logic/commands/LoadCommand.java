@@ -31,7 +31,7 @@ public class LoadCommand extends Command {
     public CommandResult execute() {
         assert pathToFile != null;
 
-        if(!isLocationValid()) {
+        if(!isValidPathToFile()) {
             indicateAttemptToExecuteIncorrectCommand();
             return new CommandResult(String.format(MESSAGE_PATH_INVALID, pathToFile));
         }
@@ -49,7 +49,7 @@ public class LoadCommand extends Command {
         return XmlUtil.isFileCorrectFormat(pathToFile);
     }
 
-    private boolean isLocationValid() {
+    private boolean isValidPathToFile() {
         return StringUtil.isValidPathToFile(pathToFile);
     }
 
