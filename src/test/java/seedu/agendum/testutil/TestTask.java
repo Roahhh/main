@@ -109,4 +109,19 @@ public class TestTask implements ReadOnlyTask {
         return sb.toString();
     }
 
+    @Override
+    public boolean isRecurring() {
+        return false;
+    }
+
+    @Override
+    public childRecurringTask getChild() {
+        return null;
+    }
+
+    @Override
+    public RecurringTask getParent() {
+        return null;
+    }
+
 }
