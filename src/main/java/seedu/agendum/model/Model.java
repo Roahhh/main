@@ -1,6 +1,7 @@
 package seedu.agendum.model;
 
 import seedu.agendum.commons.core.UnmodifiableObservableList;
+import seedu.agendum.commons.events.storage.LoadDataCompleteEvent;
 import seedu.agendum.model.task.ReadOnlyTask;
 import seedu.agendum.model.task.Task;
 import seedu.agendum.model.task.UniqueTaskList;
@@ -72,5 +73,8 @@ public interface Model {
 
     /** Returns the overdue task list as an {@code UnmodifiableObservableList<ReadOnlyTask>} */
     UnmodifiableObservableList<ReadOnlyTask> getOverdueTaskList();
+
+    /** Updates the current todolist to the loaded data**/
+    public void handleLoadDataCompleteEvent(LoadDataCompleteEvent event);
 
 }

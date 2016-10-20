@@ -14,6 +14,7 @@ import seedu.agendum.model.task.UniqueTaskList.TaskNotFoundException;
 import seedu.agendum.commons.events.model.LoadDataRequestEvent;
 import seedu.agendum.commons.events.model.SaveLocationChangedEvent;
 import seedu.agendum.commons.events.model.ToDoListChangedEvent;
+import seedu.agendum.commons.events.storage.LoadDataCompleteEvent;
 import seedu.agendum.commons.core.ComponentManager;
 import seedu.agendum.commons.core.Config;
 
@@ -22,6 +23,8 @@ import java.util.ArrayList;
 import java.util.Set;
 import java.util.Stack;
 import java.util.logging.Logger;
+
+import com.google.common.eventbus.Subscribe;
 
 /**
  * Represents the in-memory model of the to do list data.
@@ -314,4 +317,11 @@ public class ModelManager extends ComponentManager implements Model {
         }
     }
 
+    //========== event handling ==================================================
+    @Override
+    @Subscribe
+    public void handleLoadDataCompleteEvent(LoadDataCompleteEvent event) {
+        this.toDoList.resetData(event.data);
+        logger.info("Loading completed - Todolist updated.");
+    }
 }
