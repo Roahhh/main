@@ -1,5 +1,6 @@
 package seedu.agendum.logic.commands;
 
+import seedu.agendum.commons.util.FileUtil;
 import seedu.agendum.commons.util.StringUtil;
 import seedu.agendum.commons.util.XmlUtil;
 
@@ -14,6 +15,7 @@ public class LoadCommand extends Command {
     
     public static final String MESSAGE_SUCCESS = "Data successfully loaded from: %1$s";
     public static final String MESSAGE_PATH_INVALID = "The specified path to file is invalid: %1$s";
+    public static final String MESSAGE_FILE_DOES_NOT_EXIST = "The specified file does not exist: %1$s";
     public static final String MESSAGE_FILE_WRONG_FORMAT = "The specified file is in the wrong format: %1$s";
     
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Specify a file to load from. \n"
@@ -36,6 +38,11 @@ public class LoadCommand extends Command {
             return new CommandResult(String.format(MESSAGE_PATH_INVALID, pathToFile));
         }
         
+        if(!isFileExists()) {
+            indicateAttemptToExecuteIncorrectCommand();
+            return new CommandResult(String.format(MESSAGE_FILE_DOES_NOT_EXIST, pathToFile));            
+        }
+        
         if(!isFileCorrectFormat()) {
             indicateAttemptToExecuteIncorrectCommand();
             return new CommandResult(String.format(MESSAGE_FILE_WRONG_FORMAT, pathToFile));            
@@ -51,6 +58,10 @@ public class LoadCommand extends Command {
 
     private boolean isValidPathToFile() {
         return StringUtil.isValidPathToFile(pathToFile);
+    }
+    
+    private boolean isFileExists() {
+        return FileUtil.isFileExists(pathToFile);
     }
 
     @Override
