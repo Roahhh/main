@@ -23,8 +23,8 @@ public class LoadCommand extends Command {
     
     private String pathToFile;
 
-    public LoadCommand(String location) {
-        pathToFile = location.trim();
+    public LoadCommand(String pathToFile) {
+        this.pathToFile = pathToFile.trim();
     }
 
     @Override
