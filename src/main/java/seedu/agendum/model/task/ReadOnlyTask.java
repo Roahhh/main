@@ -13,8 +13,12 @@ public interface ReadOnlyTask {
     boolean isCompleted();
     boolean isUpcoming();
     boolean isOverdue();
+    boolean isRecurring();
     Optional<LocalDateTime> getStartDateTime();
     Optional<LocalDateTime> getEndDateTime();
+    
+    childRecurringTask getChild();
+    RecurringTask getParent();
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
