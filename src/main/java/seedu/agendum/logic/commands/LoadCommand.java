@@ -21,36 +21,36 @@ public class LoadCommand extends Command {
             + "Example: " + COMMAND_WORD 
             + "agendum/todolist.xml";
     
-    private String loadLocation;
+    private String pathToFile;
 
     public LoadCommand(String location) {
-        loadLocation = location.trim();
+        pathToFile = location.trim();
     }
 
     @Override
     public CommandResult execute() {
-        assert loadLocation != null;
+        assert pathToFile != null;
 
         if(!isLocationValid()) {
             indicateAttemptToExecuteIncorrectCommand();
-            return new CommandResult(String.format(MESSAGE_PATH_INVALID, loadLocation));
+            return new CommandResult(String.format(MESSAGE_PATH_INVALID, pathToFile));
         }
         
         if(!isFileCorrectFormat()) {
             indicateAttemptToExecuteIncorrectCommand();
-            return new CommandResult(String.format(MESSAGE_FILE_WRONG_FORMAT, loadLocation));            
+            return new CommandResult(String.format(MESSAGE_FILE_WRONG_FORMAT, pathToFile));            
         }
 
-        model.loadFromLocation(loadLocation);
-        return new CommandResult(String.format(MESSAGE_SUCCESS, loadLocation));
+        model.loadFromLocation(pathToFile);
+        return new CommandResult(String.format(MESSAGE_SUCCESS, pathToFile));
     }
     
     private boolean isFileCorrectFormat() {
-        return XmlUtil.isFileCorrectFormat(loadLocation);
+        return XmlUtil.isFileCorrectFormat(pathToFile);
     }
 
     private boolean isLocationValid() {
-        return StringUtil.isValidPathToFile(loadLocation);
+        return StringUtil.isValidPathToFile(pathToFile);
     }
 
     @Override
