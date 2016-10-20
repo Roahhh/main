@@ -1,50 +1,82 @@
 package seedu.agendum.logic.commands;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Set;
+
 import seedu.agendum.commons.core.Messages;
 import seedu.agendum.commons.core.UnmodifiableObservableList;
 import seedu.agendum.model.task.ReadOnlyTask;
 import seedu.agendum.model.task.UniqueTaskList.TaskNotFoundException;
 
 /**
- * Unmarks a task identified using its last displayed index from the to do list.
+ * Unmark task(s) identified using their last displayed indices from the to do list.
  */
 public class UnmarkCommand extends Command {
 
+ // COMMAND_WORD, COMMAND_FORMAT, COMMAND_DESCRIPTION are for display in help window
     public static final String COMMAND_WORD = "unmark";
-
+    public static String COMMAND_FORMAT = "unmark <index> \nunmark <index> <more-indexes>";
+    public static String COMMAND_DESCRIPTION = "mark task(s) as uncomplete";
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Unmarks the task identified by the index number used in the last task listing.\n"
-            + "Parameters: INDEX (must be a positive integer)\n"
-            + "Example: " + COMMAND_WORD + " 1";
+            + ": Ununmarks the tasks(s) identified by their index numbers used in the last task listing.\n"
+            + "Parameters: INDEX... (must be a positive number)\n"
+            + "Example: " + COMMAND_WORD + " 1 2 5-6";
 
-    public static final String MESSAGE_UNMARK_TASK_SUCCESS = "Unmarked Task: %1$s";
+    public static final String MESSAGE_UNMARK_TASK_SUCCESS = "Ununmarked Task(s): %1$s";
 
-    public final int targetIndex;
+    public ArrayList<Integer> targetIndexes;
 
-    public UnmarkCommand(int targetIndex) {
-        this.targetIndex = targetIndex;
+    public ArrayList<ReadOnlyTask> tasksToUnmark;
+
+    public UnmarkCommand() {}
+    
+    public UnmarkCommand(Set<Integer> targetIndexes) {
+        this.targetIndexes = new ArrayList<Integer>(targetIndexes);
+        Collections.sort(this.targetIndexes);
+        this.tasksToUnmark = new ArrayList<ReadOnlyTask>();
     }
-
 
     @Override
     public CommandResult execute() {
 
         UnmodifiableObservableList<ReadOnlyTask> lastShownList = model.getFilteredTaskList();
 
-        if (lastShownList.size() < targetIndex) {
+        if (isAnyIndexInvalid(lastShownList)) {
             indicateAttemptToExecuteIncorrectCommand();
             return new CommandResult(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
         }
-
-        ReadOnlyTask taskToUnmark = lastShownList.get(targetIndex - 1);
-
+ 
+        for (int targetIndex: targetIndexes) {
+            ReadOnlyTask taskToUnmark = lastShownList.get(targetIndex - 1);
+            tasksToUnmark.add(taskToUnmark);
+        }
+        
         try {
-            model.unmarkTask(taskToUnmark);
+            model.unmarkTasks(tasksToUnmark);
         } catch (TaskNotFoundException pnfe) {
             assert false : "The target task cannot be missing";
         }
 
-        return new CommandResult(String.format(MESSAGE_UNMARK_TASK_SUCCESS, taskToUnmark));
+        return new CommandResult(String.format(MESSAGE_UNMARK_TASK_SUCCESS, targetIndexes.toString()));
     }
 
+    private boolean isAnyIndexInvalid(UnmodifiableObservableList<ReadOnlyTask> lastShownList) {
+        return targetIndexes.stream().anyMatch(index -> index > lastShownList.size());
+    }
+
+    @Override
+    public String getName() {
+        return COMMAND_WORD;
+    }
+
+    @Override
+    public String getFormat() {
+        return COMMAND_FORMAT;
+    }
+
+    @Override
+    public String getDescription() {
+        return COMMAND_DESCRIPTION;
+    }
 }

@@ -46,7 +46,25 @@ public class LoadCommand extends Command {
     }
 
     private boolean isLocationValid() {
-        return StringUtil.isValidFilePath(loadLocation);
+        return StringUtil.isValidPathToFile(loadLocation);
+    }
+
+    @Override
+    public String getName() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public String getFormat() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public String getDescription() {
+        // TODO Auto-generated method stub
+        return null;
     }
     
 

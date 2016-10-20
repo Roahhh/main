@@ -17,7 +17,7 @@ public class SelectCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Selects the task identified by the index number used in the last task listing.\n"
-            + "Parameters: INDEX (must be a positive integer)\n"
+            + "Parameters: INDEX (must be a positive number)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_SELECT_TASK_SUCCESS = "Selected Task: %1$s";
@@ -39,6 +39,21 @@ public class SelectCommand extends Command {
         EventsCenter.getInstance().post(new JumpToListRequestEvent(targetIndex - 1));
         return new CommandResult(String.format(MESSAGE_SELECT_TASK_SUCCESS, targetIndex));
 
+    }
+
+    @Override
+    public String getName() {
+        return null;
+    }
+    
+    @Override
+    public String getFormat() {
+        return null;
+    }
+
+    @Override
+    public String getDescription() {
+        return null;
     }
 
 }

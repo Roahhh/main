@@ -1,15 +1,11 @@
 package seedu.agendum.model;
 
 import seedu.agendum.commons.core.UnmodifiableObservableList;
-import seedu.agendum.commons.exceptions.FileDeletionException;
-import seedu.agendum.model.task.Name;
 import seedu.agendum.model.task.ReadOnlyTask;
 import seedu.agendum.model.task.Task;
 import seedu.agendum.model.task.UniqueTaskList;
-import seedu.agendum.model.task.UniqueTaskList.TaskNotFoundException;
 
-import java.time.LocalDateTime;
-import java.util.Optional;
+import java.util.ArrayList;
 import java.util.Set;
 
 /**
@@ -22,8 +18,8 @@ public interface Model {
     /** Returns the ToDoList */
     ReadOnlyToDoList getToDoList();
 
-    /** Deletes the given task. */
-    void deleteTask(ReadOnlyTask target) throws UniqueTaskList.TaskNotFoundException;
+    /** Deletes the given task(s) */
+    void deleteTasks(ArrayList<ReadOnlyTask> targets) throws UniqueTaskList.TaskNotFoundException;
 
     /** Adds the given task */
     void addTask(Task task) throws UniqueTaskList.DuplicateTaskException;
@@ -32,17 +28,32 @@ public interface Model {
     void updateTask(ReadOnlyTask target, Task updatedTask)
             throws UniqueTaskList.TaskNotFoundException, UniqueTaskList.DuplicateTaskException;
        
-    /** Marks the given task as completed */
-    void markTask(ReadOnlyTask target) throws UniqueTaskList.TaskNotFoundException;
+    /** Marks the given task(s) as completed */
+    void markTasks(ArrayList<ReadOnlyTask> targets) throws UniqueTaskList.TaskNotFoundException;
     
-    /** Unmarks the given task */
-    void unmarkTask(ReadOnlyTask target) throws UniqueTaskList.TaskNotFoundException;
+    /** Unmarks the given task(s) */
+    void unmarkTasks(ArrayList<ReadOnlyTask> targets) throws UniqueTaskList.TaskNotFoundException;
+
+    /** Restores the previous to do list saved. Returns true if successful; false if no previous saved list*/
+    boolean restorePreviousToDoList();
     
     /** Returns the filtered task list as an {@code UnmodifiableObservableList<ReadOnlyTask>} */
     UnmodifiableObservableList<ReadOnlyTask> getFilteredTaskList();
 
     /** Updates the filter of the filtered task list to show all tasks */
     void updateFilteredListToShowAll();
+
+    /** Updates the filter of the filtered task list to show all uncompleted tasks */
+    void updateFilteredListToShowUncompleted();
+
+    /** Updates the filter of the filtered task list to show all completed tasks */
+    void updateFilteredListToShowCompleted();
+
+    /** Updates the filter of the filtered task list to show all overdue tasks */
+    void updateFilteredListToShowOverdue();
+
+    /** Updates the filter of the filtered task list to show all upcoming tasks */
+    void updateFilteredListToShowUpcoming();
 
     /** Updates the filter of the filtered task list to filter by the given keywords*/
     void updateFilteredTaskList(Set<String> keywords);
@@ -52,5 +63,14 @@ public interface Model {
 
     /** load the data from a file **/
     void loadFromLocation(String location);
+
+    /** Returns the completed task list as an {@code UnmodifiableObservableList<ReadOnlyTask>} */
+    UnmodifiableObservableList<ReadOnlyTask> getCompletedTaskList();
+
+    /** Returns the upcoming task list as an {@code UnmodifiableObservableList<ReadOnlyTask>} */
+    UnmodifiableObservableList<ReadOnlyTask> getUpcomingTaskList();
+
+    /** Returns the overdue task list as an {@code UnmodifiableObservableList<ReadOnlyTask>} */
+    UnmodifiableObservableList<ReadOnlyTask> getOverdueTaskList();
 
 }

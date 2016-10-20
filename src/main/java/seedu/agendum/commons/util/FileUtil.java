@@ -7,13 +7,13 @@ import java.nio.file.Files;
 import seedu.agendum.commons.exceptions.FileDeletionException;
 
 /**
- * Writes and reads file
+ * Writes, reads and deletes file
  */
 public class FileUtil {
     private static final String CHARSET = "UTF-8";
     
-    public static void deleteFileAtPath(String filePath) throws FileDeletionException {
-        assert StringUtil.isValidFilePath(filePath);
+    public static void deleteFile(String filePath) throws FileDeletionException {
+        assert StringUtil.isValidPathToFile(filePath);
         
         File file = new File(filePath);
         if (!file.delete()) {
@@ -30,7 +30,7 @@ public class FileUtil {
      * @return true if the path is exists and user has sufficient privileges.
      */
     public static boolean isPathAvailable(String path) {
-        assert StringUtil.isValidFilePath(path);
+        assert StringUtil.isValidPathToFile(path);
         
         File file = new File(path);
         boolean exists = file.exists();
@@ -49,6 +49,11 @@ public class FileUtil {
         return true;
     }
     
+    public static boolean isFileExists(String filePath) {
+        File file = new File(filePath);
+        return isFileExists(file);
+    }
+	
     public static boolean isFileExists(File file) {
         return file.exists() && file.isFile();
     }
