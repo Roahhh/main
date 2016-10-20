@@ -8,12 +8,15 @@ import com.google.common.eventbus.Subscribe;
 
 import seedu.agendum.commons.core.ComponentManager;
 import seedu.agendum.commons.core.LogsCenter;
+import seedu.agendum.commons.events.model.LoadDataRequestEvent;
 import seedu.agendum.commons.events.model.SaveLocationChangedEvent;
 import seedu.agendum.commons.events.model.ToDoListChangedEvent;
 import seedu.agendum.commons.events.storage.DataSavingExceptionEvent;
+import seedu.agendum.commons.events.storage.LoadDataCompleteEvent;
 import seedu.agendum.commons.exceptions.DataConversionException;
 import seedu.agendum.commons.util.StringUtil;
 import seedu.agendum.model.ReadOnlyToDoList;
+import seedu.agendum.model.ToDoList;
 import seedu.agendum.model.UserPrefs;
 
 /**
@@ -102,5 +105,27 @@ public class StorageManager extends ComponentManager implements Storage {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
     }
     
+
+    @Override
+    @Subscribe
+    public void handleLoadDataRequestEvent(LoadDataRequestEvent event) {
+        
+        setToDoListFilePath(event.loadLocation);
+        
+        Optional<ReadOnlyToDoList> toDoListOptional;
+        ReadOnlyToDoList loadedData;
+        try {
+            toDoListOptional = readToDoList();
+            loadedData = toDoListOptional.get();
+            logger.info("Loading successful - " + LogsCenter.getEventHandlingLogMessage(event));
+        } catch (DataConversionException e) {
+            logger.warning("Loading unsuccessful - Data file not in the correct format. Loading empty ToDoList");
+            loadedData = new ToDoList();
+        } catch (IOException e) {
+            logger.warning("Loading unsuccessful - Problem while reading from the file. Loading empty ToDoList");
+            loadedData = new ToDoList();
+        }
+
+        raise(new LoadDataCompleteEvent(loadedData));
     }
 }
