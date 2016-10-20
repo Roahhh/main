@@ -8,7 +8,6 @@ import seedu.agendum.commons.core.Config;
 import seedu.agendum.commons.core.EventsCenter;
 import seedu.agendum.commons.core.LogsCenter;
 import seedu.agendum.commons.core.Version;
-import seedu.agendum.commons.events.model.LoadDataRequestEvent;
 import seedu.agendum.commons.events.ui.ExitAppRequestEvent;
 import seedu.agendum.commons.exceptions.DataConversionException;
 import seedu.agendum.commons.util.StringUtil;
@@ -180,23 +179,6 @@ public class MainApp extends Application {
     public void handleExitAppRequestEvent(ExitAppRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         this.stop();
-    }
-    
-    @Subscribe
-    public void handleLoadDataRequestEvent(LoadDataRequestEvent event) {        
-        Optional<ReadOnlyToDoList> toDoListOptional;
-        ReadOnlyToDoList loadedData;
-        try {
-            toDoListOptional = storage.readToDoList();
-            loadedData = toDoListOptional.get();
-        } catch (DataConversionException e) {
-            logger.warning("Data file not in the correct format. Loading empty ToDoList");
-            loadedData = new ToDoList();
-        } catch (IOException e) {
-            logger.warning("Problem while reading from the file. Loading empty ToDoList");
-            loadedData = new ToDoList();
-        }        
-        model.resetData(loadedData);
     }
 
     public static void main(String[] args) {
