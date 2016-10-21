@@ -7,6 +7,7 @@ import java.util.Set;
 import seedu.agendum.commons.core.Messages;
 import seedu.agendum.commons.core.UnmodifiableObservableList;
 import seedu.agendum.model.task.ReadOnlyTask;
+import seedu.agendum.model.task.UniqueTaskList.NotLatestRecurringTaskException;
 import seedu.agendum.model.task.UniqueTaskList.TaskNotFoundException;
 
 /**

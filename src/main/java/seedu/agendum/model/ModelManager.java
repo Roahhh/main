@@ -10,7 +10,9 @@ import seedu.agendum.model.task.ReadOnlyTask;
 import seedu.agendum.model.task.RecurringTask;
 import seedu.agendum.model.task.Task;
 import seedu.agendum.model.task.UniqueTaskList;
+import seedu.agendum.model.task.UniqueTaskList.CannotMarkRecurringTaskException;
 import seedu.agendum.model.task.UniqueTaskList.DuplicateTaskException;
+import seedu.agendum.model.task.UniqueTaskList.NotLatestRecurringTaskException;
 import seedu.agendum.model.task.UniqueTaskList.TaskNotFoundException;
 import seedu.agendum.commons.events.model.SaveLocationChangedEvent;
 import seedu.agendum.commons.events.model.ToDoListChangedEvent;
@@ -160,11 +162,11 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void markTasks(ArrayList<ReadOnlyTask> targets) throws TaskNotFoundException {
         for (ReadOnlyTask target: targets) {
+            System.out.println("target is recurring: " + target.isRecurring());
             if(target.isRecurring()) {
                 try {
                     // Add a child recurring task that is already marked as completed, and update the time of parent
                     addTask(target.getChild());
-//                    updateTask(target.getChild().getParent(), target.getChild().getParent());
                 } catch (DuplicateTaskException e) {
                     e.printStackTrace();
                 }
@@ -178,14 +180,19 @@ public class ModelManager extends ComponentManager implements Model {
     }
     
     @Override
-    public synchronized void unmarkTasks(ArrayList<ReadOnlyTask> targets) throws TaskNotFoundException {
+    public synchronized void unmarkTasks(ArrayList<ReadOnlyTask> targets) throws TaskNotFoundException, 
+    NotLatestRecurringTaskException, CannotMarkRecurringTaskException {
         for (ReadOnlyTask target: targets) {
-            if(target.isRecurring()) {
+            if (target.getParent() != null && !target.isLatestChild()) {
+                throw new NotLatestRecurringTaskException();
+            } else if(target.getParent() != null) {
                 // Delete the child recurring task, and update time of parent to previous
                 target.getParent().setPreviousDateTime();
                 ArrayList<ReadOnlyTask> taskToDelete = new ArrayList<ReadOnlyTask>();
                 taskToDelete.add(target);
                 deleteTasks(taskToDelete);
+            } else if(target.isRecurring()) {
+                throw new CannotMarkRecurringTaskException();
             } else {
                 toDoList.unmarkTask(target);
             }
