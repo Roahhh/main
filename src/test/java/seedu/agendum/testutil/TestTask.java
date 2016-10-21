@@ -124,4 +124,9 @@ public class TestTask implements ReadOnlyTask {
         return null;
     }
 
+    @Override
+    public boolean isLatestChild() {
+        return false;
+    }
+
 }

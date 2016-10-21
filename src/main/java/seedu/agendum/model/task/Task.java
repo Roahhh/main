@@ -201,8 +201,12 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
     }
 
     @Override
+    public boolean isLatestChild() {
+        return false;
+    }
+
+    @Override
     public ChildRecurringTask getChild() {
-        System.out.println("executed in parent class");
         return null;
     }
 

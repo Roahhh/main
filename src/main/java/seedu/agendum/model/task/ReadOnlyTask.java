@@ -14,6 +14,7 @@ public interface ReadOnlyTask {
     boolean isUpcoming();
     boolean isOverdue();
     boolean isRecurring();
+    boolean isLatestChild();
     Optional<LocalDateTime> getStartDateTime();
     Optional<LocalDateTime> getEndDateTime();
     
