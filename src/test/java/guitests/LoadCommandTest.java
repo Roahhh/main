@@ -6,8 +6,13 @@ import java.io.IOException;
 import org.junit.Test;
 
 import seedu.agendum.commons.exceptions.FileDeletionException;
+import seedu.agendum.commons.exceptions.IllegalValueException;
 import seedu.agendum.commons.util.FileUtil;
 import seedu.agendum.logic.commands.LoadCommand;
+import seedu.agendum.model.ToDoList;
+import seedu.agendum.model.task.Name;
+import seedu.agendum.model.task.Task;
+import seedu.agendum.storage.XmlToDoListStorage;
 
 public class LoadCommandTest extends ToDoListGuiTest {
 
@@ -20,14 +25,21 @@ public class LoadCommandTest extends ToDoListGuiTest {
     }
     
     @Test
-    public void load_pathValid() throws IOException, FileDeletionException {
-        String fileThatExists = "data/todolist.xml";
+    public void load_pathValid() throws IOException, FileDeletionException, IllegalValueException {
+        String fileThatExists = "data/test/FileThatExists.xml";
         String fileThatDoesNotExist = "data/DoesNotExist.xml";
         String fileInWrongFormat = "data/WrongFormat.xml";
-
+        
+        // setup storage file
+        Task toBeAdded = new Task(new Name("test"));
+        ToDoList expectedTDL = new ToDoList();
+        expectedTDL.addTask(toBeAdded);
+        XmlToDoListStorage xmltdls = new XmlToDoListStorage(fileThatExists);
+        xmltdls.saveToDoList(expectedTDL);
+        
         // load from an existing file
         commandBox.runCommand(command + fileThatExists);
-        assertResultMessage(String.format(LoadCommand.MESSAGE_SUCCESS, fileThatExists));   
+        assertResultMessage(String.format(LoadCommand.MESSAGE_SUCCESS, fileThatExists));
         
         // load from a non-existing file
         commandBox.runCommand(command + fileThatDoesNotExist);
@@ -37,7 +49,10 @@ public class LoadCommandTest extends ToDoListGuiTest {
         FileUtil.createFile(new File(fileInWrongFormat)); // create empty file
         commandBox.runCommand(command + fileInWrongFormat);
         assertResultMessage(String.format(LoadCommand.MESSAGE_FILE_WRONG_FORMAT, fileInWrongFormat));
-        FileUtil.deleteFile(fileInWrongFormat); // cleanup
+        
+        // cleanup
+        FileUtil.deleteFile(fileInWrongFormat); 
+        FileUtil.deleteFile(fileThatExists);
     }
 
     @Test
