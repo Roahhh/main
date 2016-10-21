@@ -130,7 +130,8 @@ public class Parser {
                     if (s.startsWith(token)) {
                         s = s.substring(token.length(), s.length());
                         if(token.equals(ADD_ARGS_EVERY)) {
-                            dateTimeMap.put(token, DateTimeParser.parseString("next " + s));
+                            dateTimeMap.put(token, DateTimeParser.parseString("from " + s).isPresent() ? 
+                                    DateTimeParser.parseString("from " + s) : DateTimeParser.parseString("next " + s));
                         } else {
                             dateTimeMap.put(token, DateTimeParser.parseString(s));
                         }
