@@ -115,9 +115,6 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void deleteTasks(ArrayList<ReadOnlyTask> targets) throws TaskNotFoundException {
         for (ReadOnlyTask target: targets) {
-            if(target.isRecurring() && target.isCompleted()) {
-                target.getParent().deleteChild();
-            }
             toDoList.removeTask(target);
         }
         indicateToDoListChanged();
@@ -129,7 +126,9 @@ public class ModelManager extends ComponentManager implements Model {
         toDoList.addTask(task);
         updateFilteredListToShowAll();
         indicateToDoListChanged();
-        backupNewToDoList();
+        if(!task.isRecurring() && task.isCompleted()) {
+            backupNewToDoList();
+        }
     }
 
     @Override
@@ -165,6 +164,7 @@ public class ModelManager extends ComponentManager implements Model {
                 try {
                     // Add a child recurring task that is already marked as completed, and update the time of parent
                     addTask(target.getChild());
+//                    updateTask(target.getChild().getParent(), target.getChild().getParent());
                 } catch (DuplicateTaskException e) {
                     e.printStackTrace();
                 }
@@ -174,6 +174,7 @@ public class ModelManager extends ComponentManager implements Model {
         }
         indicateToDoListChanged();
         backupNewToDoList();
+        updateFilteredListToShowAll();
     }
     
     @Override
