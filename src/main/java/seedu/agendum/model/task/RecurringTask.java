@@ -1,6 +1,7 @@
 package seedu.agendum.model.task;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Optional;
 import seedu.agendum.logic.parser.DateTimeParser;
 
@@ -10,7 +11,7 @@ public class RecurringTask extends Task {
     private LocalDateTime startDateTime;
     private LocalDateTime endDateTime;
     
-    private ChildRecurringTask child = null;
+    private ArrayList<ChildRecurringTask> children = new ArrayList<ChildRecurringTask>();
     
     public RecurringTask(Name name, Optional<LocalDateTime> startDateTime, 
             Optional<LocalDateTime> endDateTime, String period) {
@@ -47,15 +48,6 @@ public class RecurringTask extends Task {
         this.endDateTime = DateTimeParser.parseString(period + " before " + this.endDateTime.toString()).get();
     }
     
-    private ChildRecurringTask setChild() {
-        this.child = new ChildRecurringTask(this);
-        return this.child;
-    }
-    
-    public void deleteChild() {
-        this.child = null;
-    }
-    
     @Override
     public Optional<LocalDateTime> getStartDateTime() {
         return Optional.ofNullable(this.startDateTime);
@@ -69,14 +61,10 @@ public class RecurringTask extends Task {
     @Override
     public ChildRecurringTask getChild() {
         System.out.println("exeuted in recurringTask class");
-        if(this.child == null) {
-            System.out.println("child is null");
-            this.setChild();
-            this.setNextDateTime();
-        } else {
-            this.setPreviousDateTime();
-        }
-        return this.child;
+        ChildRecurringTask child = new ChildRecurringTask(this);
+        this.children.add(child);
+        this.setNextDateTime();
+        return child;
     }
     
     @Override

@@ -3,7 +3,7 @@ package seedu.agendum.model.task;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-public class ChildRecurringTask extends RecurringTask{
+public class ChildRecurringTask extends RecurringTask {
 
     private RecurringTask parent;
     private LocalDateTime startDateTime;
