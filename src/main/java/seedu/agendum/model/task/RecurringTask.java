@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 import seedu.agendum.logic.parser.DateTimeParser;
 
-public class RecurringTask extends Task {
+public class RecurringTask extends Task implements ReadOnlyTask{
 
     private String period;
     private LocalDateTime startDateTime;
@@ -46,6 +46,10 @@ public class RecurringTask extends Task {
             this.startDateTime = DateTimeParser.parseString(period + " before " + this.startDateTime.toString()).get();
         } 
         this.endDateTime = DateTimeParser.parseString(period + " before " + this.endDateTime.toString()).get();
+        if(this.children.size() >= 2) {
+            this.children.get(this.children.size() - 2).setLatestChild();
+        }
+        this.children.remove(this.children.size() - 1);
     }
     
     @Override
@@ -62,6 +66,10 @@ public class RecurringTask extends Task {
     public ChildRecurringTask getChild() {
         System.out.println("exeuted in recurringTask class");
         ChildRecurringTask child = new ChildRecurringTask(this);
+        child.setLatestChild();
+        if(this.children.size() >= 1) {
+            this.children.get(this.children.size() - 1).unsetLatestChild();
+        }
         this.children.add(child);
         this.setNextDateTime();
         return child;
@@ -85,5 +93,10 @@ public class RecurringTask extends Task {
     @Override
     public void markAsCompleted() {
         return;
+    }
+    
+    @Override
+    public boolean isLatestChild() {
+        return false;
     }
 }

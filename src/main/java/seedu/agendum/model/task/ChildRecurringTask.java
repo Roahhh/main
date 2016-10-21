@@ -8,6 +8,8 @@ public class ChildRecurringTask extends RecurringTask {
     private RecurringTask parent;
     private LocalDateTime startDateTime;
     private LocalDateTime endDateTime;
+    
+    private boolean isLatestChild;
 
     public ChildRecurringTask(RecurringTask parent) {
         super(parent);
@@ -15,6 +17,14 @@ public class ChildRecurringTask extends RecurringTask {
         this.parent = parent;
         this.startDateTime = parent.getStartDateTime().orElse(null);
         this.endDateTime = parent.getEndDateTime().orElse(null);
+    }
+    
+    public void setLatestChild() {
+        isLatestChild = true;
+    }
+    
+    public void unsetLatestChild() {
+        isLatestChild = false;
     }
     
     @Override
@@ -26,6 +36,11 @@ public class ChildRecurringTask extends RecurringTask {
     public boolean isCompleted() {
         return true;
     }
+    
+    @Override
+    public boolean isRecurring() {
+        return false;
+    }
 
     @Override
     public Optional<LocalDateTime> getStartDateTime() {
@@ -35,5 +50,10 @@ public class ChildRecurringTask extends RecurringTask {
     @Override
     public Optional<LocalDateTime> getEndDateTime() {
         return Optional.ofNullable(endDateTime);
+    }
+    
+    @Override
+    public boolean isLatestChild() {
+        return isLatestChild;
     }
 }
