@@ -35,9 +35,9 @@ public class Parser {
 
     private static final Pattern ADD_ARGS_FORMAT = Pattern.compile("(?:.+?(?=(?:(?:by|from|to)\\s|$)))+?");
 
-    private static final String ADD_ARGS_FROM = "from";
-    private static final String ADD_ARGS_BY = "by";
-    private static final String ADD_ARGS_TO = "to";
+    private static final String ARGS_FROM = "from";
+    private static final String ARGS_BY = "by";
+    private static final String ARGS_TO = "to";
 
     public Parser() {}
 
@@ -114,40 +114,38 @@ public class Parser {
         }
 
         try {
-            matcher = ADD_ARGS_FORMAT.matcher(args.trim());
-
-            String taskTitle = null;
+            matcher.reset();
+            matcher.find();
+            String taskTitle = matcher.group(0);
             HashMap<String, Optional<LocalDateTime>> dateTimeMap = new HashMap<>();
-            final String[] tokens = new String[]{ADD_ARGS_FROM, ADD_ARGS_TO, ADD_ARGS_BY};
+            final String[] tokens = new String[]{ARGS_FROM, ARGS_TO, ARGS_BY};
 
             while (matcher.find()) {
-                boolean matchedWithPrefix = false;
-
                 for (String token:tokens) {
                     String s = matcher.group(0).toLowerCase();
                     if (s.startsWith(token)) {
-                        s = s.substring(token.length(), s.length());
-                        dateTimeMap.put(token, DateTimeParser.parseString(s));
-                        matchedWithPrefix = true;
+                        String time = s.substring(token.length(), s.length());
+                        if (DateTimeParser.containsTime(time)) {
+                            dateTimeMap.put(token, DateTimeParser.parseString(time));
+                        } else {
+                            taskTitle = taskTitle + s;
+                        }
                     }
-                }
-                if (!matchedWithPrefix) {
-                    taskTitle = matcher.group(0);
                 }
             }
 
-            if (dateTimeMap.containsKey(ADD_ARGS_BY)) {
+            if (dateTimeMap.containsKey(ARGS_BY)) {
                 return new AddCommand(
                         taskTitle,
-                        dateTimeMap.get(ADD_ARGS_BY)
+                        dateTimeMap.get(ARGS_BY)
                 );
-            } else if (dateTimeMap.containsKey(ADD_ARGS_FROM) && dateTimeMap.containsKey(ADD_ARGS_TO)) {
+            } else if (dateTimeMap.containsKey(ARGS_FROM) && dateTimeMap.containsKey(ARGS_TO)) {
                 return new AddCommand(
                         taskTitle,
-                        dateTimeMap.get(ADD_ARGS_FROM),
-                        dateTimeMap.get(ADD_ARGS_TO)
+                        dateTimeMap.get(ARGS_FROM),
+                        dateTimeMap.get(ARGS_TO)
                 );
-            } else if (!dateTimeMap.containsKey(ADD_ARGS_FROM) && !dateTimeMap.containsKey(ADD_ARGS_TO) && !dateTimeMap.containsKey(ADD_ARGS_BY)) {
+            } else if (!dateTimeMap.containsKey(ARGS_FROM) && !dateTimeMap.containsKey(ARGS_TO) && !dateTimeMap.containsKey(ARGS_BY)) {
                 return new AddCommand(
                         taskTitle
                 );
