@@ -13,8 +13,12 @@ public interface ReadOnlyTask {
     boolean isCompleted();
     boolean isUpcoming();
     boolean isOverdue();
+<<<<<<< HEAD
     boolean isRecurring();
     boolean isLatestChild();
+=======
+    boolean hasTime();
+>>>>>>> master
     Optional<LocalDateTime> getStartDateTime();
     Optional<LocalDateTime> getEndDateTime();
     
@@ -34,13 +38,12 @@ public interface ReadOnlyTask {
     }
 
     /**
-     * Formats the task as text, showing all task details.
+     * Formats the task as text, showing task details e.g name, time (if any).
      */
     default String getAsText() {
         final StringBuilder builder = new StringBuilder();
         builder.append(getName());
-        builder.append("\nStart time: ").append(this.getStartDateTime());
-        builder.append("\nEnd time: ").append(this.getEndDateTime());
+        builder.append("\n");
         return builder.toString();
     }
 }

@@ -12,7 +12,7 @@ import seedu.agendum.model.task.UniqueTaskList.NotLatestRecurringTaskException;
 import seedu.agendum.model.task.UniqueTaskList.TaskNotFoundException;
 
 /**
- * Unmark task(s) identified using their last displayed indices from the to do list.
+ * Unmark task(s) identified using their last displayed indices in the task listing.
  */
 public class UnmarkCommand extends Command {
 
@@ -68,7 +68,8 @@ public class UnmarkCommand extends Command {
             return new CommandResult(String.format(MESSAGE_MARK_RECURRING_TASK_FAIL_, targetIndexes.toString()));
         }
 
-        return new CommandResult(String.format(MESSAGE_UNMARK_TASK_SUCCESS, targetIndexes.toString()));
+        return new CommandResult(String.format(MESSAGE_UNMARK_TASK_SUCCESS,
+                CommandResult.tasksToString(tasksToUnmark, targetIndexes)));
     }
 
     private boolean isAnyIndexInvalid(UnmodifiableObservableList<ReadOnlyTask> lastShownList) {
