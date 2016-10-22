@@ -111,31 +111,10 @@ public class ModelManager extends ComponentManager implements Model {
         toDoList.addTask(task);
         updateFilteredListToShowAll();
         indicateToDoListChanged();
-<<<<<<< HEAD
-        if(!task.isRecurring() && task.isCompleted()) {
+        if(!task.isChild()) {
             backupNewToDoList();
         }
-    }
-
-    @Override
-    public synchronized void changeSaveLocation(String location){
-        assert StringUtil.isValidPathToFile(location);
-
-        config.setToDoListFilePath(location);
-        indicateSaveLocationChanged(location);
-        saveConfigFile();
-    }
-
-    private void saveConfigFile() {
-        try {
-            ConfigUtil.saveConfig(config, Config.DEFAULT_CONFIG_FILE);
-        } catch (IOException e) {
-            logger.warning("Failed to save config file : " + StringUtil.getDetails(e));
-        }        
-=======
-        backupNewToDoList();
         logger.fine("MODEL --- succesfully added the new task to the to-do list");
->>>>>>> master
     }
 
     @Override
@@ -152,7 +131,7 @@ public class ModelManager extends ComponentManager implements Model {
     public synchronized void markTasks(ArrayList<ReadOnlyTask> targets) throws TaskNotFoundException {
         for (ReadOnlyTask target: targets) {
             System.out.println("target is recurring: " + target.isRecurring());
-            if(target.isRecurring()) {
+            if(target.isRecurring() && !target.isChild()) {
                 try {
                     // Add a child recurring task that is already marked as completed, and update the time of parent
                     addTask(target.getChild());
@@ -165,20 +144,17 @@ public class ModelManager extends ComponentManager implements Model {
         }
         indicateToDoListChanged();
         backupNewToDoList();
-<<<<<<< HEAD
         updateFilteredListToShowAll();
-=======
         logger.fine("MODEL --- succesfully marked all specified targets from the to-do list");
->>>>>>> master
     }
     
     @Override
     public synchronized void unmarkTasks(ArrayList<ReadOnlyTask> targets) throws TaskNotFoundException, 
     NotLatestRecurringTaskException, CannotMarkRecurringTaskException {
         for (ReadOnlyTask target: targets) {
-            if (target.getParent() != null && !target.isLatestChild()) {
+            if (target.isChild() && !target.isLatestChild()) {
                 throw new NotLatestRecurringTaskException();
-            } else if(target.getParent() != null) {
+            } else if(target.isLatestChild()) {
                 // Delete the child recurring task, and update time of parent to previous
                 target.getParent().setPreviousDateTime();
                 ArrayList<ReadOnlyTask> taskToDelete = new ArrayList<ReadOnlyTask>();
@@ -229,7 +205,7 @@ public class ModelManager extends ComponentManager implements Model {
             ConfigUtil.saveConfig(config, Config.DEFAULT_CONFIG_FILE);
         } catch (IOException e) {
             logger.warning("Failed to save config file : " + StringUtil.getDetails(e));
-        }        
+        }   
     }
 
     //=========== Filtered Task List Accessors ===============================================================

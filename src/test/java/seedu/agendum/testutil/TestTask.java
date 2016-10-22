@@ -128,4 +128,9 @@ public class TestTask implements ReadOnlyTask {
         return false;
     }
 
+    @Override
+    public boolean isChild() {
+        return false;
+    }
+
 }

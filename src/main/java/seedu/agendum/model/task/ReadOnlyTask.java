@@ -13,12 +13,10 @@ public interface ReadOnlyTask {
     boolean isCompleted();
     boolean isUpcoming();
     boolean isOverdue();
-<<<<<<< HEAD
     boolean isRecurring();
+    boolean isChild();
     boolean isLatestChild();
-=======
     boolean hasTime();
->>>>>>> master
     Optional<LocalDateTime> getStartDateTime();
     Optional<LocalDateTime> getEndDateTime();
     

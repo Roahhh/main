@@ -36,11 +36,6 @@ public class ChildRecurringTask extends RecurringTask {
     public boolean isCompleted() {
         return true;
     }
-    
-    @Override
-    public boolean isRecurring() {
-        return false;
-    }
 
     @Override
     public Optional<LocalDateTime> getStartDateTime() {
@@ -52,6 +47,10 @@ public class ChildRecurringTask extends RecurringTask {
         return Optional.ofNullable(endDateTime);
     }
     
+    @Override
+    public boolean isChild() {
+        return true;
+    }
     @Override
     public boolean isLatestChild() {
         return isLatestChild;

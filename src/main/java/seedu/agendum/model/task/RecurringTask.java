@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 import seedu.agendum.logic.parser.DateTimeParser;
 
-public class RecurringTask extends Task implements ReadOnlyTask{
+public class RecurringTask extends Task {
 
     private String period;
     private LocalDateTime startDateTime;

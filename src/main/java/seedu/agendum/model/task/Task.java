@@ -17,6 +17,7 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
     private Name name;
     private boolean isCompleted;
     private boolean isRecurring;
+    private boolean isChild;
     private LocalDateTime startDateTime;
     private LocalDateTime endDateTime;
     
@@ -31,6 +32,7 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
         this.isCompleted = false;
         this.startDateTime = null;
         this.endDateTime = null;
+        this.isChild = false;
     }
     
     /**
@@ -43,6 +45,7 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
         this.isRecurring = false;
         this.startDateTime = null;
         this.endDateTime = deadline.orElse(null);
+        this.isChild = false;
     }
     
     /**
@@ -56,6 +59,7 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
         this.isRecurring = false;
         this.startDateTime = startDateTime.orElse(null);
         this.endDateTime = endDateTime.orElse(null);
+        this.isChild = false;
     }
 
     /**
@@ -170,7 +174,7 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
     }
 
     public int compareCompletionStatus(Task other) {
-        return Boolean.compare(this.isCompleted(), other.isCompleted);
+        return Boolean.compare(this.isCompleted(), other.isCompleted());
     }
 
     public int compareTime(Task other) {
@@ -192,7 +196,7 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, isCompleted, startDateTime, endDateTime);
+        return Objects.hash(name, isCompleted, isRecurring, isChild, startDateTime, endDateTime);
     }
 
     @Override
@@ -200,7 +204,6 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
         return getAsText();
     }
 
-<<<<<<< HEAD
     @Override
     public boolean isLatestChild() {
         return false;
@@ -215,6 +218,9 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
     public RecurringTask getParent() {
         return null;
     }
-=======
->>>>>>> master
+
+    @Override
+    public boolean isChild() {
+        return false;
+    }
 }
