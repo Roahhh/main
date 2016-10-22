@@ -17,6 +17,7 @@ public interface ReadOnlyTask {
     boolean isChild();
     boolean isLatestChild();
     boolean hasTime();
+    String getPeriod();
     Optional<LocalDateTime> getStartDateTime();
     Optional<LocalDateTime> getEndDateTime();
     

@@ -32,6 +32,7 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
         this.isCompleted = false;
         this.startDateTime = null;
         this.endDateTime = null;
+        this.isRecurring = false;
         this.isChild = false;
     }
     
@@ -138,7 +139,7 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
     }
     
     public void markAsUncompleted() {
-        this.isCompleted = true;
+        this.isCompleted = false;
     }
     
     public void setStartDateTime(Optional<LocalDateTime> startDateTime) {
@@ -222,5 +223,10 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
     @Override
     public boolean isChild() {
         return false;
+    }
+
+    @Override
+    public String getPeriod() {
+        return null;
     }
 }

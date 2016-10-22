@@ -133,4 +133,9 @@ public class TestTask implements ReadOnlyTask {
         return false;
     }
 
+    @Override
+    public String getPeriod() {
+        return null;
+    }
+
 }
