@@ -13,10 +13,10 @@ public class ChildRecurringTask extends RecurringTask {
 
     public ChildRecurringTask(RecurringTask parent) {
         super(parent);
-        System.out.println("Being called by parent!");
-        this.parent = parent;
         this.startDateTime = parent.getStartDateTime().orElse(null);
         this.endDateTime = parent.getEndDateTime().orElse(null);
+        this.parent = parent;
+        parent.setChild(this);
     }
     
     public void setLatestChild() {
@@ -51,8 +51,14 @@ public class ChildRecurringTask extends RecurringTask {
     public boolean isChild() {
         return true;
     }
+    
     @Override
     public boolean isLatestChild() {
         return isLatestChild;
+    }
+    
+    @Override
+    public String getPeriod() {
+        return null;
     }
 }
