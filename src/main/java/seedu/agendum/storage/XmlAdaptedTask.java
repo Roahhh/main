@@ -21,10 +21,18 @@ public class XmlAdaptedTask {
     private String name;
     @XmlElement(required = true)
     private String isCompleted;
+    @XmlElement(required = true)
+    private String isRecurring;
+    @XmlElement(required = true)
+    private String isChild;
     @XmlElement(required = false)
     private String startDateTime;
     @XmlElement(required = false)
     private String endDateTime;
+    @XmlElement(required = false)
+    private String period;
+    @XmlElement(required = false)
+    private String parentName;
 
     /**
      * No-arg constructor for JAXB use.
@@ -39,12 +47,21 @@ public class XmlAdaptedTask {
      */
     public XmlAdaptedTask(ReadOnlyTask source) {
         name = source.getName().fullName;
+        isRecurring = Boolean.toString(source.isRecurring());
         isCompleted = Boolean.toString(source.isCompleted());
+        isChild = Boolean.toString(source.isChild());
+        
         if (source.getStartDateTime().isPresent()) {
             startDateTime = source.getStartDateTime().get().format(formatter);
         }
         if (source.getEndDateTime().isPresent()) {
             endDateTime = source.getEndDateTime().get().format(formatter);
+        }
+        if(source.getPeriod() != null) {
+            period = source.getPeriod();
+        }
+        if(source.getParent() != null) {
+            parentName = source.getParent().getName().fullName;
         }
     }
 
@@ -53,7 +70,7 @@ public class XmlAdaptedTask {
      *
      * @throws IllegalValueException if there were any data constraints violated in the adapted task
      */
-    public Task toModelType() throws IllegalValueException {
+    public Task toTaskModelType() throws IllegalValueException {
         final Name name = new Name(this.name);
         final boolean markedAsCompleted = Boolean.valueOf(isCompleted);
         
@@ -69,4 +86,50 @@ public class XmlAdaptedTask {
         }
         return newTask;
     }
+    
+    /**
+     * Converts this jaxb-friendly adapted task object into the model's RecurringTask object.
+     *
+     * @throws IllegalValueException if there were any data constraints violated in the adapted task
+     */
+    public RecurringTask toRecurringTaskModelType() throws IllegalValueException {
+        final Name name = new Name(this.name);
+        
+        RecurringTask newRecurringTask = null;
+        
+        if (startDateTime != null) {
+            newRecurringTask = new RecurringTask(name, Optional.ofNullable(LocalDateTime.parse(this.startDateTime, formatter)), 
+                    Optional.ofNullable(LocalDateTime.parse(this.endDateTime, formatter)), period);
+        } else {
+            newRecurringTask = new RecurringTask(name, Optional.ofNullable(LocalDateTime.parse(this.endDateTime, formatter)), period);
+        }
+        return newRecurringTask;
+    }
+    
+    /**
+     * Converts this jaxb-friendly adapted task object into the model's ChildRecurringTask object.
+     *
+     * @throws IllegalValueException if there were any data constraints violated in the adapted task
+     */
+    public ChildRecurringTask toChildRecurringTaskModelType(RecurringTask parentRecurringTask) throws IllegalValueException {
+        ChildRecurringTask newChildRecurringTask = new ChildRecurringTask(parentRecurringTask);
+        return newChildRecurringTask;
+    }
+    
+    public boolean isRecurring() {
+        return Boolean.valueOf(isRecurring);
+    }
+    
+    public boolean isChild() {
+        return Boolean.valueOf(isChild);
+    }
+    
+    public String getName() {
+        return this.name;
+    }
+    
+    public String getParentName() {
+        return this.parentName;
+    }
+    
 }
