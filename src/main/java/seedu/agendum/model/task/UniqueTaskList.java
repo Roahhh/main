@@ -159,6 +159,14 @@ public class UniqueTaskList implements Iterable<Task> {
     public ObservableList<Task> getInternalList() {
         return internalList;
     }
+    
+    public List<Task> getInternalListAsList() {
+        List<Task> tasks = new ArrayList<Task>();
+        for(Task task : internalList) {
+            tasks.add(task);
+        }
+        return tasks;
+    }
 
     @Override
     public Iterator<Task> iterator() {

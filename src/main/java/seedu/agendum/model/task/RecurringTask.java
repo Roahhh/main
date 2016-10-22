@@ -19,7 +19,6 @@ public class RecurringTask extends Task {
         this.startDateTime = startDateTime.orElse(null);
         this.endDateTime = endDateTime.orElse(null);
         this.period = period;
-        System.out.println("period: " + period);
     }
     
     public RecurringTask(Name name, Optional<LocalDateTime> endDateTime, String period) {
@@ -27,11 +26,19 @@ public class RecurringTask extends Task {
         this.startDateTime = null;
         this.endDateTime = endDateTime.orElse(null);
         this.period = period;
-        System.out.println("period: " + period);
     }
     
-    public RecurringTask(RecurringTask task) {
-        super(task);
+    public RecurringTask(RecurringTask self) {
+        super(self);
+    }
+    
+    public void setChild(ChildRecurringTask child) {
+        child.setLatestChild();
+        if(this.children.size() >= 1) {
+            this.children.get(this.children.size() - 1).unsetLatestChild();
+        }
+        this.children.add(child);
+        this.setNextDateTime();
     }
     
     public void setNextDateTime() {
@@ -64,14 +71,7 @@ public class RecurringTask extends Task {
 
     @Override
     public ChildRecurringTask getChild() {
-        System.out.println("exeuted in recurringTask class");
         ChildRecurringTask child = new ChildRecurringTask(this);
-        child.setLatestChild();
-        if(this.children.size() >= 1) {
-            this.children.get(this.children.size() - 1).unsetLatestChild();
-        }
-        this.children.add(child);
-        this.setNextDateTime();
         return child;
     }
     
@@ -98,5 +98,10 @@ public class RecurringTask extends Task {
     @Override
     public boolean isLatestChild() {
         return false;
+    }
+    
+    @Override
+    public String getPeriod() {
+        return period;
     }
 }

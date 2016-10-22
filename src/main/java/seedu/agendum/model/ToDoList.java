@@ -35,7 +35,8 @@ public class ToDoList implements ReadOnlyToDoList {
      * Tasks are copied into this to do list
      */
     public ToDoList(UniqueTaskList tasks) {
-        resetData(tasks.getInternalList());
+//        resetData(tasks.getInternalList());
+        setTasks(tasks.getInternalListAsList());
     }
 
     public static ReadOnlyToDoList getEmptyToDoList() {
@@ -53,6 +54,7 @@ public class ToDoList implements ReadOnlyToDoList {
     }
 
     public void resetData(Collection<? extends ReadOnlyTask> newTasks) {
+//        setTasks(newTasks.stream().map(Task::new).collect(Collectors.toList()));
         setTasks(newTasks.stream().map(Task::new).collect(Collectors.toList()));
     }
 
