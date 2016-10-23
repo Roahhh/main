@@ -11,7 +11,6 @@ import seedu.agendum.model.Model;
  */
 public abstract class Command {
     protected Model model;
-    protected CommandLibrary commandLibrary;
     
     /**
      * Return the name of this command.
@@ -51,9 +50,8 @@ public abstract class Command {
      * Commands making use of any of these should override this method to gain
      * access to the dependencies.
      */
-    public void setData(Model model, CommandLibrary commandLibrary) {
+    public void setData(Model model) {
         this.model = model;
-        this.commandLibrary = commandLibrary;
     }
 
     /**

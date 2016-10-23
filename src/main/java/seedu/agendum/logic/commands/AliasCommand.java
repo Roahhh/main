@@ -1,6 +1,7 @@
 package seedu.agendum.logic.commands;
 
 import seedu.agendum.commons.core.Messages;
+import seedu.agendum.logic.CommandLibrary;
 
 /**
  * Create an alias for a reserved command keyword
@@ -20,6 +21,8 @@ public class AliasCommand extends Command {
             + "Parameters: ORIGINAL-COMMAND-WORD YOUR-SHORTHAND-COMMAND\n"
             + "Example: " + COMMAND_WORD
             + " mark m";
+
+    private static final CommandLibrary commandLibrary = CommandLibrary.getInstance();
 
     private String aliasValue = null;
     private String aliasKey = null;
