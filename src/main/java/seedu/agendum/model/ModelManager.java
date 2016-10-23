@@ -132,15 +132,18 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public synchronized void markTasks(List<ReadOnlyTask> targets) throws TaskNotFoundException {
-        for (ReadOnlyTask target: targets) {
+        for (ReadOnlyTask target : targets) {
             System.out.println("target is recurring: " + target.isRecurring());
-            if(target.isRecurring() && !target.isChild()) {
+            if (target.isRecurring() && !target.isChild()) {
                 try {
-                    // Add a child recurring task that is already marked as completed, and update the time of parent
+                    // Add a child recurring task that is already marked as
+                    // completed, and update the time of parent
                     addTask(target.getChild());
                 } catch (DuplicateTaskException e) {
                     e.printStackTrace();
                 }
+            } else if (target.isRecurring()) {
+                return;
             } else {
                 toDoList.markTask(target);
             }
@@ -169,8 +172,8 @@ public class ModelManager extends ComponentManager implements Model {
             }
         }
         logger.fine("[MODEL] --- succesfully unmarked all specified targets from the to-do list");
-        backupNewToDoList();
         indicateToDoListChanged();
+        backupNewToDoList();
     }
 
     @Override
