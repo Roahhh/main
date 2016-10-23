@@ -104,6 +104,7 @@ public class ModelManager extends ComponentManager implements Model {
         }
         logger.fine("[MODEL] --- succesfully deleted all specified targets from the to-do list");
         backupNewToDoList();
+        updateFilteredListToShowAll();
         indicateToDoListChanged();
     }
 
@@ -111,12 +112,11 @@ public class ModelManager extends ComponentManager implements Model {
     public synchronized void addTask(Task task) throws UniqueTaskList.DuplicateTaskException {
         toDoList.addTask(task);      
         logger.fine("[MODEL] --- succesfully added the new task to the to-do list");
-        backupNewToDoList();
-        updateFilteredListToShowAll();
-        indicateToDoListChanged();
         if(!task.isChild()) {
             backupNewToDoList();
         }
+        updateFilteredListToShowAll();
+        indicateToDoListChanged();
         logger.fine("MODEL --- succesfully added the new task to the to-do list");
     }
 
@@ -144,8 +144,8 @@ public class ModelManager extends ComponentManager implements Model {
                 toDoList.markTask(target);
             }
         }
-        indicateToDoListChanged();
         backupNewToDoList();
+        indicateToDoListChanged();
         logger.fine("MODEL --- succesfully marked all specified targets from the to-do list");
     }
     
