@@ -3,6 +3,7 @@ package seedu.agendum.logic.commands;
 import seedu.agendum.commons.core.EventsCenter;
 import seedu.agendum.commons.core.Messages;
 import seedu.agendum.commons.events.ui.IncorrectCommandAttemptedEvent;
+import seedu.agendum.logic.CommandLibrary;
 import seedu.agendum.model.Model;
 
 /**
@@ -10,6 +11,7 @@ import seedu.agendum.model.Model;
  */
 public abstract class Command {
     protected Model model;
+    protected CommandLibrary commandLibrary;
     
     /**
      * Return the name of this command.
@@ -49,8 +51,9 @@ public abstract class Command {
      * Commands making use of any of these should override this method to gain
      * access to the dependencies.
      */
-    public void setData(Model model) {
+    public void setData(Model model, CommandLibrary commandLibrary) {
         this.model = model;
+        this.commandLibrary = commandLibrary;
     }
 
     /**
