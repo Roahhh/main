@@ -131,17 +131,13 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public synchronized void markTasks(List<ReadOnlyTask> targets) throws TaskNotFoundException {
+    public synchronized void markTasks(List<ReadOnlyTask> targets) throws TaskNotFoundException, DuplicateTaskException {
         for (ReadOnlyTask target : targets) {
             System.out.println("target is recurring: " + target.isRecurring());
             if (target.isRecurring() && !target.isChild()) {
-                try {
-                    // Add a child recurring task that is already marked as
-                    // completed, and update the time of parent
-                    addTask(target.getChild());
-                } catch (DuplicateTaskException e) {
-                    e.printStackTrace();
-                }
+                // Add a child recurring task that is already marked as
+                // completed, and update the time of parent
+                addTask(target.getChild());
             } else if (target.isRecurring()) {
                 return;
             } else {

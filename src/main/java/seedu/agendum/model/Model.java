@@ -30,7 +30,8 @@ public interface Model {
             throws UniqueTaskList.TaskNotFoundException, UniqueTaskList.DuplicateTaskException;
        
     /** Marks the given task(s) as completed */
-    void markTasks(List<ReadOnlyTask> targets) throws UniqueTaskList.TaskNotFoundException;
+    void markTasks(List<ReadOnlyTask> targets) throws UniqueTaskList.TaskNotFoundException, 
+    UniqueTaskList.DuplicateTaskException;
     
     /** Unmarks the given task(s) */
     void unmarkTasks(ArrayList<ReadOnlyTask> targets) throws UniqueTaskList.TaskNotFoundException, 
