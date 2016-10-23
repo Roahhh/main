@@ -73,9 +73,7 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
         }
     }
     
-    public Task(Task task) {
-        this.name = task.name;
-    }
+    public Task(RecurringTask task) {}
     
     // ================ Getter methods ==============================
 

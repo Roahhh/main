@@ -8,11 +8,13 @@ public class ChildRecurringTask extends RecurringTask {
     private RecurringTask parent;
     private LocalDateTime startDateTime;
     private LocalDateTime endDateTime;
+    private Name name;
     
     private boolean isLatestChild;
 
     public ChildRecurringTask(RecurringTask parent) {
         super(parent);
+        this.name = parent.getName();
         this.startDateTime = parent.getStartDateTime().orElse(null);
         this.endDateTime = parent.getEndDateTime().orElse(null);
         this.parent = parent;
@@ -27,6 +29,11 @@ public class ChildRecurringTask extends RecurringTask {
         isLatestChild = false;
     }
     
+    @Override
+    public Name getName() {
+        return this.name;
+    }
+     
     @Override
     public RecurringTask getParent() {
         return this.parent;

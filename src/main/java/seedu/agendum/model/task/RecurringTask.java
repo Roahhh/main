@@ -10,6 +10,7 @@ public class RecurringTask extends Task {
     private String period;
     private LocalDateTime startDateTime;
     private LocalDateTime endDateTime;
+    private Name name;
     
     private ArrayList<ChildRecurringTask> children = new ArrayList<ChildRecurringTask>();
     
@@ -19,6 +20,7 @@ public class RecurringTask extends Task {
         this.startDateTime = startDateTime.orElse(null);
         this.endDateTime = endDateTime.orElse(null);
         this.period = period;
+        this.name = name;
     }
     
     public RecurringTask(Name name, Optional<LocalDateTime> endDateTime, String period) {
@@ -26,6 +28,7 @@ public class RecurringTask extends Task {
         this.startDateTime = null;
         this.endDateTime = endDateTime.orElse(null);
         this.period = period;
+        this.name = name;
     }
     
     public RecurringTask(RecurringTask self) {
@@ -57,6 +60,11 @@ public class RecurringTask extends Task {
             this.children.get(this.children.size() - 2).setLatestChild();
         }
         this.children.remove(this.children.size() - 1);
+    }
+    
+    @Override
+    public Name getName() {
+        return this.name;
     }
     
     @Override
