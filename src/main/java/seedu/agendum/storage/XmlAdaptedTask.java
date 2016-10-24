@@ -113,6 +113,10 @@ public class XmlAdaptedTask {
      */
     public ChildRecurringTask toChildRecurringTaskModelType(RecurringTask parentRecurringTask) throws IllegalValueException {
         ChildRecurringTask newChildRecurringTask = new ChildRecurringTask(parentRecurringTask);
+        if(this.startDateTime != null) {
+            newChildRecurringTask.setStartDateTime(Optional.ofNullable(LocalDateTime.parse(this.startDateTime, formatter)));
+        }
+        newChildRecurringTask.setEndDateTime(Optional.ofNullable(LocalDateTime.parse(this.endDateTime, formatter)));
         return newChildRecurringTask;
     }
     
