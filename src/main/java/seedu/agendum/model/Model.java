@@ -34,7 +34,7 @@ public interface Model {
     UniqueTaskList.DuplicateTaskException;
     
     /** Unmarks the given task(s) */
-    void unmarkTasks(ArrayList<ReadOnlyTask> targets) throws UniqueTaskList.TaskNotFoundException, 
+    void unmarkTasks(List<ReadOnlyTask> targets) throws UniqueTaskList.TaskNotFoundException, 
     UniqueTaskList.NotLatestRecurringTaskException, UniqueTaskList.CannotMarkRecurringTaskException;
 
 
