@@ -39,6 +39,9 @@ public class Parser {
     private static final String ADD_ARGS_BY = "by";
     private static final String ADD_ARGS_TO = "to";
     private static final String ADD_ARGS_EVERY = "every";
+    
+    private static final String RELATIVE_FROM = "from ";
+    private static final String RELATIVE_NEXT = "next ";
 
     public Parser() {}
 
@@ -131,8 +134,9 @@ public class Parser {
                     if (s.startsWith(token)) {
                         s = s.substring(token.length(), s.length());
                         if(token.equals(ADD_ARGS_EVERY)) {
-                            dateTimeMap.put(token, DateTimeParser.parseString("from " + s).isPresent() ? 
-                                    DateTimeParser.parseString("from " + s) : DateTimeParser.parseString("next " + s));
+                            dateTimeMap.put(token, DateTimeParser.parseString(RELATIVE_FROM + s).isPresent() ? 
+                                    DateTimeParser.parseString(RELATIVE_FROM + s) : 
+                                        DateTimeParser.parseString(RELATIVE_NEXT + s));
                         } else {
                             dateTimeMap.put(token, DateTimeParser.parseString(s));
                         }
