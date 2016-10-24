@@ -48,7 +48,7 @@ public class MainApp extends Application {
         super.init();
 
         config = initConfig(getApplicationParameter("config"));
-        storage = new StorageManager(config.getToDoListFilePath(), config.getUserPrefsFilePath());
+        storage = new StorageManager(config.getToDoListFilePath(), config.getUserPrefsFilePath(), config);
 
         userPrefs = initPrefs(config);
 
@@ -85,7 +85,7 @@ public class MainApp extends Application {
             initialData = new ToDoList();
         }
 
-        return new ModelManager(initialData, userPrefs, config);
+        return new ModelManager(initialData, userPrefs);
     }
 
     private void initLogging(Config config) {
