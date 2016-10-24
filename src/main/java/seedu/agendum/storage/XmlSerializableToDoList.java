@@ -10,6 +10,7 @@ import seedu.agendum.model.ReadOnlyToDoList;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -46,18 +47,25 @@ public class XmlSerializableToDoList implements ReadOnlyToDoList {
     public UniqueTaskList getUniqueTaskList() {
         UniqueTaskList lists = new UniqueTaskList();
         List<XmlAdaptedTask> childrenWatingList = new ArrayList<XmlAdaptedTask>();
+        HashMap<String, RecurringTask> parents = new HashMap<String, RecurringTask>();
         try {
             for (XmlAdaptedTask p : tasks) {
                 if (p.isRecurring() && p.isChild()) {
                     childrenWatingList.add(p);
                 } else if (p.isRecurring()) {
-                    lists.add(p.toRecurringTaskModelType());
+                    RecurringTask parent = p.toRecurringTaskModelType();
+                    lists.add(parent);
+                    parents.put(parent.getName().fullName, parent);
                 } else {
                     lists.add(p.toTaskModelType());
                 }
             }
             for (XmlAdaptedTask p : childrenWatingList) {
-                lists.add(p.toChildRecurringTaskModelType(getParent(p, lists)));
+                if(parents.containsKey(p.getName())) {
+                    lists.add(p.toChildRecurringTaskModelType(parents.get(p.getName())));
+                } else {
+                    lists.add(p.toTaskModelType());
+                }
             }
         } catch (IllegalValueException e) {
             // TODO: better error handling
@@ -67,15 +75,6 @@ public class XmlSerializableToDoList implements ReadOnlyToDoList {
 
     @Override
     public List<ReadOnlyTask> getTaskList() {
-//        return tasks.stream().map(p -> {
-//            try {
-//                return p.toTaskModelType();
-//            } catch (IllegalValueException e) {
-//                e.printStackTrace();
-//                //TODO: better error handling
-//                return null;
-//            }
-//        }).collect(Collectors.toCollection(ArrayList::new));
         List<ReadOnlyTask> tasks = new ArrayList<ReadOnlyTask>();
         Iterator itr =  getUniqueTaskList().iterator();
         while(itr.hasNext()) {
@@ -83,15 +82,4 @@ public class XmlSerializableToDoList implements ReadOnlyToDoList {
         }
         return tasks;
     }
-    
-    public RecurringTask getParent(XmlAdaptedTask child, UniqueTaskList lists) {
-        String parentName = child.getParentName();
-        for(Task task : lists) {
-            if(!task.isChild() && task.getName().fullName.equals(parentName) && task.isRecurring()) {
-                return (RecurringTask)task;
-            }
-        }
-        return null;
-    }
-
 }
