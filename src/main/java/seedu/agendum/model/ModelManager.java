@@ -6,6 +6,7 @@ import seedu.agendum.commons.core.LogsCenter;
 import seedu.agendum.commons.core.UnmodifiableObservableList;
 import seedu.agendum.commons.util.ConfigUtil;
 import seedu.agendum.commons.util.StringUtil;
+import seedu.agendum.model.task.ChildRecurringTask;
 import seedu.agendum.model.task.ReadOnlyTask;
 import seedu.agendum.model.task.RecurringTask;
 import seedu.agendum.model.task.Task;
@@ -21,6 +22,7 @@ import seedu.agendum.commons.core.Config;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 import java.util.Stack;
@@ -132,14 +134,11 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void markTasks(List<ReadOnlyTask> targets) throws TaskNotFoundException, DuplicateTaskException {
         for (ReadOnlyTask target : targets) {
-            System.out.println("target is recurring: " + target.isRecurring());
             if (target.isRecurring() && !target.isChild()) {
                 // Add a child recurring task that is already marked as
                 // completed, and update the time of parent
                 addTask(target.getChild());
-            } else if (target.isRecurring()) {
-                return;
-            } else {
+            } else if (!target.isRecurring()) {
                 toDoList.markTask(target);
             }
         }
@@ -178,11 +177,40 @@ public class ModelManager extends ComponentManager implements Model {
             return false;
         } else {
             previousLists.pop();
-            toDoList.resetData(previousLists.peek());
+            restorePreviousToDoListTaskType(previousLists.peek());
             logger.fine("[MODEL] --- succesfully restored the previous the to-do list from this session");
             indicateToDoListChanged();
             return true;
         }
+    }
+
+    @Override
+    public void restorePreviousToDoListTaskType(ReadOnlyToDoList previousToDoList) {
+        List<ReadOnlyTask> readOnlyTasks = previousToDoList.getTaskList();
+        List<Task> tasks = new ArrayList<Task>();
+        HashMap<String, RecurringTask> parents = new HashMap<String, RecurringTask>();
+        List<ReadOnlyTask> childWaitingList = new ArrayList<ReadOnlyTask>();
+        for (ReadOnlyTask task : readOnlyTasks) {
+            if (task.isRecurring() && task.isChild()) {
+                childWaitingList.add(task);
+            } else if (task.isRecurring()) {
+                RecurringTask parent = new RecurringTask(task);
+                tasks.add(parent);
+                parents.put(task.getName().fullName, parent);
+            } else {
+                tasks.add(new Task(task));
+            }
+        }
+
+        for (ReadOnlyTask child : childWaitingList) {
+            if (parents.containsKey(child.getName().fullName)) {
+                RecurringTask parent = parents.get(child.getName().fullName);
+                tasks.add(new ChildRecurringTask(parent));
+            } else {
+                tasks.add(new Task(child));
+            }
+        }
+        toDoList.setTasks(tasks);
     }
  
     private void backupNewToDoList() {

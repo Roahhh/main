@@ -41,6 +41,9 @@ public interface Model {
     /** Restores the previous to do list saved. Returns true if successful; false if no previous saved list*/
     boolean restorePreviousToDoList();
     
+    /** Restores the previous to do list task typesaved. Returns true if successful; false if no previous saved list*/
+    void restorePreviousToDoListTaskType(ReadOnlyToDoList previousToDoList);
+    
     /** Returns the filtered task list as an {@code UnmodifiableObservableList<ReadOnlyTask>} */
     UnmodifiableObservableList<ReadOnlyTask> getFilteredTaskList();
 
