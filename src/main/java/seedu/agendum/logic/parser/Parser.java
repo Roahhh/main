@@ -97,6 +97,9 @@ public class Parser {
         case StoreCommand.COMMAND_WORD:
             return new StoreCommand(arguments);
 
+//            Reflections reflections = new Reflections("com.mycompany");
+//            Set<Class<? extends MyInterface>> classes = reflections.getSubTypesOf(MyInterface.class);xz
+
         default:
             return new IncorrectCommand(MESSAGE_UNKNOWN_COMMAND);
         }
