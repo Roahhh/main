@@ -124,11 +124,40 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void updateTask(ReadOnlyTask target, Task updatedTask)
             throws UniqueTaskList.TaskNotFoundException, UniqueTaskList.DuplicateTaskException {
-        toDoList.updateTask(target, updatedTask);
+        if(target.isRecurring() && !target.isChild()) {
+            updateRecurringTask(target,updatedTask);
+        } else {
+            toDoList.updateTask(target, updatedTask);
+        }
         logger.fine("[MODEL] --- succesfully updated the target task in the to-do list");
         backupNewToDoList();
         updateFilteredListToShowAll();
         indicateToDoListChanged();
+    }
+    
+    private void updateRecurringTask(ReadOnlyTask target, Task updatedTask) 
+            throws UniqueTaskList.TaskNotFoundException, UniqueTaskList.DuplicateTaskException {
+        List<ReadOnlyTask> tasks = toDoList.getTaskList();
+        ArrayList<ReadOnlyTask> children = new ArrayList<ReadOnlyTask>();
+        String parentName = target.getName().fullName;
+        
+        for(ReadOnlyTask task : tasks) {
+            if(task.isChild() && task.getName().fullName.equals(parentName)) {
+                children.add(task);
+            }
+        }
+        
+        RecurringTask newParent = new RecurringTask(target);
+        newParent.setName(updatedTask.getName());
+        toDoList.updateTask(target, newParent);
+        
+        for(ReadOnlyTask task : children) {
+            ChildRecurringTask newChild = new ChildRecurringTask(newParent);
+            newChild.setStartDateTime(task.getStartDateTime());
+            newChild.setEndDateTime(task.getEndDateTime());
+            toDoList.updateTask(task, newChild);
+        }
+        
     }
 
     @Override
@@ -190,6 +219,7 @@ public class ModelManager extends ComponentManager implements Model {
         List<Task> tasks = new ArrayList<Task>();
         HashMap<String, RecurringTask> parents = new HashMap<String, RecurringTask>();
         List<ReadOnlyTask> childWaitingList = new ArrayList<ReadOnlyTask>();
+        
         for (ReadOnlyTask task : readOnlyTasks) {
             if (task.isRecurring() && task.isChild()) {
                 childWaitingList.add(task);
@@ -205,11 +235,15 @@ public class ModelManager extends ComponentManager implements Model {
         for (ReadOnlyTask child : childWaitingList) {
             if (parents.containsKey(child.getName().fullName)) {
                 RecurringTask parent = parents.get(child.getName().fullName);
-                tasks.add(new ChildRecurringTask(parent));
+                ChildRecurringTask newChild = new ChildRecurringTask(parent);
+                newChild.setEndDateTime(child.getEndDateTime());
+                newChild.setStartDateTime(child.getStartDateTime());
+                tasks.add(newChild);
             } else {
                 tasks.add(new Task(child));
             }
         }
+        
         toDoList.setTasks(tasks);
     }
  

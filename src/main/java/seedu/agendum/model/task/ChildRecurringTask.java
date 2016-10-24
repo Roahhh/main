@@ -30,6 +30,16 @@ public class ChildRecurringTask extends RecurringTask {
     }
     
     @Override
+    public void setStartDateTime(Optional<LocalDateTime> startDateTime) {
+        this.startDateTime = startDateTime.orElse(null);
+    }
+    
+    @Override
+    public void setEndDateTime(Optional<LocalDateTime> endDateTime) {
+        this.endDateTime = endDateTime.orElse(null);
+    }
+    
+    @Override
     public Name getName() {
         return this.name;
     }

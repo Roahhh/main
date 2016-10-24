@@ -52,7 +52,6 @@ public class RecurringTask extends Task {
             this.children.get(this.children.size() - 1).unsetLatestChild();
         }
         this.children.add(child);
-        this.setNextDateTime();
     }
     
     public void setNextDateTime() {
@@ -74,6 +73,11 @@ public class RecurringTask extends Task {
     }
     
     @Override
+    public void setName(Name name) {
+        this.name = name;
+    }
+    
+    @Override
     public Name getName() {
         return this.name;
     }
@@ -91,6 +95,7 @@ public class RecurringTask extends Task {
     @Override
     public ChildRecurringTask getChild() {
         ChildRecurringTask child = new ChildRecurringTask(this);
+        this.setNextDateTime();
         return child;
     }
     
