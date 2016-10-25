@@ -1,6 +1,7 @@
 package seedu.agendum.storage;
 
 import java.io.IOException;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.logging.Logger;
 
@@ -12,13 +13,13 @@ import seedu.agendum.commons.core.LogsCenter;
 import seedu.agendum.commons.events.model.LoadDataRequestEvent;
 import seedu.agendum.commons.events.model.ChangeSaveLocationRequestEvent;
 import seedu.agendum.commons.events.model.ToDoListChangedEvent;
+import seedu.agendum.commons.events.storage.DataLoadingExceptionEvent;
 import seedu.agendum.commons.events.storage.DataSavingExceptionEvent;
 import seedu.agendum.commons.events.storage.LoadDataCompleteEvent;
 import seedu.agendum.commons.exceptions.DataConversionException;
 import seedu.agendum.commons.util.ConfigUtil;
 import seedu.agendum.commons.util.StringUtil;
 import seedu.agendum.model.ReadOnlyToDoList;
-import seedu.agendum.model.ToDoList;
 import seedu.agendum.model.UserPrefs;
 
 /**
@@ -127,19 +128,18 @@ public class StorageManager extends ComponentManager implements Storage {
         setToDoListFilePath(event.loadLocation);
         
         Optional<ReadOnlyToDoList> toDoListOptional;
-        ReadOnlyToDoList loadedData;
+        ReadOnlyToDoList loadedData = null;
         try {
             toDoListOptional = readToDoList();
             loadedData = toDoListOptional.get();
             logger.info("Loading successful - " + LogsCenter.getEventHandlingLogMessage(event));
-        } catch (DataConversionException e) {
-            logger.warning("Loading unsuccessful - Data file not in the correct format. Loading empty ToDoList");
-            loadedData = new ToDoList();
-        } catch (IOException e) {
-            logger.warning("Loading unsuccessful - Problem while reading from the file. Loading empty ToDoList");
-            loadedData = new ToDoList();
+            raise(new LoadDataCompleteEvent(loadedData));
+        } catch (DataConversionException dce) {
+            logger.warning("Loading unsuccessful - Data file not in the correct format. ");
+            raise(new DataLoadingExceptionEvent(dce));
+        } catch (NoSuchElementException nse) {
+            logger.warning("Loading unsuccessful - File does not exist.");
+            raise(new DataLoadingExceptionEvent(nse));            
         }
-
-        raise(new LoadDataCompleteEvent(loadedData));
     }
 }
