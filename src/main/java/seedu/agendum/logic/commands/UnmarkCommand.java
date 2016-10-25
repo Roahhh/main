@@ -26,9 +26,9 @@ public class UnmarkCommand extends Command {
             + "Example: " + COMMAND_WORD + " 1 2 5-6";
 
     public static final String MESSAGE_UNMARK_TASK_SUCCESS = "Ununmarked Task(s): %1$s";
-    public static final String MESSAGE_MARK_CHILD_RECURRING_TASK_FAIL_ = "Failed to unmark Task(s): %1$s, "
+    public static final String MESSAGE_MARK_CHILD_RECURRING_TASK_FAIL = "Failed to unmark Task(s): %1$s, "
             + "because this future tasks of this recurring task has been marked";
-    public static final String MESSAGE_MARK_RECURRING_TASK_FAIL_ = "Failed to unmark Task(s): %1$s, "
+    public static final String MESSAGE_MARK_RECURRING_TASK_FAIL = "Failed to unmark Task(s): %1$s, "
             + "because recurring tasks cannot be marked";
 
     public ArrayList<Integer> targetIndexes;
@@ -63,9 +63,9 @@ public class UnmarkCommand extends Command {
         } catch (TaskNotFoundException pnfe) {
             assert false : "The target task cannot be missing";
         } catch (NotLatestRecurringTaskException e) {
-            return new CommandResult(String.format(MESSAGE_MARK_CHILD_RECURRING_TASK_FAIL_, targetIndexes.toString()));
+            return new CommandResult(String.format(MESSAGE_MARK_CHILD_RECURRING_TASK_FAIL, targetIndexes.toString()));
         } catch (CannotMarkRecurringTaskException e) {
-            return new CommandResult(String.format(MESSAGE_MARK_RECURRING_TASK_FAIL_, targetIndexes.toString()));
+            return new CommandResult(String.format(MESSAGE_MARK_RECURRING_TASK_FAIL, targetIndexes.toString()));
         }
 
         return new CommandResult(String.format(MESSAGE_UNMARK_TASK_SUCCESS,
