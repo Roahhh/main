@@ -36,7 +36,8 @@ public class UnmarkCommand extends Command {
     public ArrayList<ReadOnlyTask> tasksToUnmark;
 
     public UnmarkCommand() {}
-    
+
+    //@@author A0133367E    
     public UnmarkCommand(Set<Integer> targetIndexes) {
         this.targetIndexes = new ArrayList<Integer>(targetIndexes);
         Collections.sort(this.targetIndexes);
@@ -76,6 +77,7 @@ public class UnmarkCommand extends Command {
         return targetIndexes.stream().anyMatch(index -> index > lastShownList.size());
     }
 
+    //@@author
     @Override
     public String getName() {
         return COMMAND_WORD;

@@ -16,7 +16,7 @@ import seedu.agendum.model.task.UniqueTaskList.TaskNotFoundException;
  */
 public class MarkCommand extends Command {
 
- // COMMAND_WORD, COMMAND_FORMAT, COMMAND_DESCRIPTION are for display in help window
+    // COMMAND_WORD, COMMAND_FORMAT, COMMAND_DESCRIPTION are for display in help window
     public static final String COMMAND_WORD = "mark";
     public static String COMMAND_FORMAT = "mark <index> \nmark <index> <more-indexes>";
     public static String COMMAND_DESCRIPTION ="mark task(s) as completed";
@@ -33,6 +33,7 @@ public class MarkCommand extends Command {
     
     public MarkCommand() {}
 
+    //@@author A0133367E
     public MarkCommand(Set<Integer> targetIndexes) {
         this.targetIndexes = new ArrayList<Integer>(targetIndexes);
         Collections.sort(this.targetIndexes);
@@ -70,7 +71,7 @@ public class MarkCommand extends Command {
         return targetIndexes.stream().anyMatch(index -> index > lastShownList.size());
     }
 
-
+    //@@author
     @Override
     public String getName() {
         return COMMAND_WORD;

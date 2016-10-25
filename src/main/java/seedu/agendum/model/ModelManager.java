@@ -76,6 +76,7 @@ public class ModelManager extends ComponentManager implements Model {
         this.config = config;
     }
 
+    //@@author A0133367E
     @Override
     public void resetData(ReadOnlyToDoList newData) {
         toDoList.resetData(newData);
@@ -83,7 +84,8 @@ public class ModelManager extends ComponentManager implements Model {
         backupNewToDoList();
         indicateToDoListChanged();
     }
-
+  
+    //@@author
     @Override
     public ReadOnlyToDoList getToDoList() {
         return toDoList;
@@ -99,6 +101,7 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new ChangeSaveLocationRequestEvent(location));
     }
 
+    //@@author A0133367E
     @Override
     public synchronized void deleteTasks(List<ReadOnlyTask> targets) throws TaskNotFoundException {
         for (ReadOnlyTask target: targets) {
@@ -200,6 +203,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized boolean restorePreviousToDoList() {
         assert !previousLists.empty();
+
         if (previousLists.size() == 1) {
             return false;
         } else {
@@ -249,6 +253,8 @@ public class ModelManager extends ComponentManager implements Model {
         ToDoList latestList = new ToDoList(this.getToDoList());
         previousLists.push(latestList);
     }
+
+    //@@author
 
     // Storage method
     @Override

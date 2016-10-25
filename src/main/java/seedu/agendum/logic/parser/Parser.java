@@ -191,7 +191,8 @@ public class Parser {
             return new IncorrectCommand(ive.getMessage());
         }
     }
-	
+
+    //@@author A0133367E
     /**
      * Parses arguments in the context of the delete task command.
      *
@@ -267,6 +268,7 @@ public class Parser {
         }
     }
 
+    //@@author
     /**
      * Parses arguments in the context of the select task command.
      *
@@ -301,6 +303,7 @@ public class Parser {
         return Optional.of(Integer.parseInt(index));
     }
 
+    //@@author A0133367E
     /**
      * Returns the specified indices in the {@code command} if positive unsigned integer(s) are given.
      *   Returns an empty set otherwise.
@@ -334,7 +337,8 @@ public class Parser {
 
         return taskIds;
     }
-
+    
+    //@@author
     /**
      * Parses arguments in the context of the find task command.
      *
