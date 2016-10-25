@@ -62,12 +62,12 @@ public class StorageManager extends ComponentManager implements Storage {
     }
 
     @Override
-    public Optional<ReadOnlyToDoList> readToDoList() throws DataConversionException, IOException {
+    public Optional<ReadOnlyToDoList> readToDoList() throws DataConversionException {
         return readToDoList(toDoListStorage.getToDoListFilePath());
     }
 
     @Override
-    public Optional<ReadOnlyToDoList> readToDoList(String filePath) throws DataConversionException, IOException {
+    public Optional<ReadOnlyToDoList> readToDoList(String filePath) throws DataConversionException {
         logger.fine("Attempting to read data from file: " + filePath);
         return toDoListStorage.readToDoList(filePath);
     }
