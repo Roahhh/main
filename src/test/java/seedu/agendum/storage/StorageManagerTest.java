@@ -19,6 +19,7 @@ import seedu.agendum.commons.core.Config;
 import seedu.agendum.commons.events.model.ChangeSaveLocationRequestEvent;
 import seedu.agendum.commons.events.model.LoadDataRequestEvent;
 import seedu.agendum.commons.events.model.ToDoListChangedEvent;
+import seedu.agendum.commons.events.storage.DataLoadingExceptionEvent;
 import seedu.agendum.commons.events.storage.DataSavingExceptionEvent;
 import seedu.agendum.commons.exceptions.DataConversionException;
 import seedu.agendum.commons.exceptions.FileDeletionException;
@@ -97,17 +98,20 @@ public class StorageManagerTest {
     
     @Test
     public void handleLoadDataRequestEvent_validPathToFile_invalidFile() throws IOException, FileDeletionException {
+        EventsCollector eventCollector = new EventsCollector();
         String validPath = "data/testLoad.xml";
         assert !FileUtil.isFileExists(validPath);
         
         // File does not exist
-        //thrown.expect(NoSuchElementException.class);
         storageManager.handleLoadDataRequestEvent(new LoadDataRequestEvent(validPath));
+        DataLoadingExceptionEvent dlee = (DataLoadingExceptionEvent)eventCollector.get(0);
+        assertTrue(dlee.exception instanceof NoSuchElementException);
 
         // File in wrong format
         FileUtil.createFile(new File(validPath));
-        //thrown.expect(DataConversionException.class);
         storageManager.handleLoadDataRequestEvent(new LoadDataRequestEvent(validPath));
+        dlee = (DataLoadingExceptionEvent)eventCollector.get(1);
+        assertTrue(dlee.exception instanceof DataConversionException);
         FileUtil.deleteFile(validPath);
     }
     
