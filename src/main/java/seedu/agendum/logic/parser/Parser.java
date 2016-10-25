@@ -13,6 +13,7 @@ import java.util.stream.IntStream;
 
 import static seedu.agendum.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.agendum.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.agendum.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND_WITH_SUGGESTION;
 
 /**
  * Parses user input.
@@ -33,9 +34,8 @@ public class Parser {
 
     private static final Pattern RENAME_ARGS_FORMAT = Pattern.compile("(?<targetIndex>\\d+)\\s+(?<name>.+)");
 
-    private static final Pattern ADD_ARGS_FORMAT = Pattern.compile("(?:.+?(?=(?:(?:by|from|to|every)\\s|$)))+?");
+    private static final Pattern ADD_ARGS_FORMAT = Pattern.compile("(?:.+?(?=(?:(?:by|from|to)\\s|$)))+?");
 
-    private static final Pattern SCHEDULE_ARGS_FORMAT = Pattern.compile("(?:.+?(?=(?:(?:by|from|to)\\s|$)))+?");
 
     private static final String ARGS_FROM = "from";
     private static final String ARGS_BY = "by";
@@ -107,10 +107,16 @@ public class Parser {
             return new LoadCommand(arguments);
 
         default:
-            return new IncorrectCommand(MESSAGE_UNKNOWN_COMMAND);
+            Optional<String> alternativeCommand = EditDistanceCalculator.parseString(commandWord);
+            if (alternativeCommand.isPresent()) {
+                return new IncorrectCommand(String.format(MESSAGE_UNKNOWN_COMMAND_WITH_SUGGESTION, alternativeCommand.get()));
+            } else {
+                return new IncorrectCommand(MESSAGE_UNKNOWN_COMMAND);
+            }
         }
     }
 
+	//@@author A0003878Y
     /**
      * Parses arguments in the context of the add task command.
      *
