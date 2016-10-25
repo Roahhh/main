@@ -12,6 +12,7 @@ import seedu.agendum.commons.core.Config;
 import seedu.agendum.commons.core.EventsCenter;
 import seedu.agendum.commons.core.UnmodifiableObservableList;
 import seedu.agendum.logic.commands.*;
+import seedu.agendum.logic.parser.DateTimeParser;
 import seedu.agendum.commons.events.ui.JumpToListRequestEvent;
 import seedu.agendum.commons.events.ui.ShowHelpRequestEvent;
 import seedu.agendum.commons.util.FileUtil;
@@ -25,10 +26,12 @@ import seedu.agendum.storage.StorageManager;
 import seedu.agendum.storage.XmlToDoListStorage;
 
 import java.io.File;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -168,7 +171,7 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void execute_add_successful() throws Exception {
+    public void execute_addNormalTask_successful() throws Exception {
         // setup expectations
         TestDataHelper helper = new TestDataHelper();
         Task toBeAdded = helper.adam();
@@ -180,7 +183,21 @@ public class LogicManagerTest {
                 String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded),
                 expectedTDL,
                 expectedTDL.getTaskList());
+    }
+    
+    @Test
+    public void execute_addRecurringTask_successful() throws Exception {
+        // setup expectations
+        TestDataHelper helper = new TestDataHelper();
+        RecurringTask toBeAdded = helper.recurringAdam();
+        ToDoList expectedTDL = new ToDoList();
+        expectedTDL.addTask(toBeAdded);
 
+        // execute command and verify result
+        assertCommandBehavior(helper.generateAddCommandWithRecurringTask(toBeAdded),
+                String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded),
+                expectedTDL,
+                expectedTDL.getTaskList());
     }
 
     @Test
@@ -500,6 +517,35 @@ public class LogicManagerTest {
     }
     
     @Test
+    public void execute_mark_marksCorrectSingleRecurringTaskAsCompleted() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        List<Task> tasks = new ArrayList<Task>();
+        tasks.add(helper.recurringAdam());
+        helper.addToModel(model, tasks);
+
+        ReadOnlyToDoList expectedTDL = model.getToDoList();
+        List<ReadOnlyTask> taskToMark = new ArrayList<ReadOnlyTask>();
+        taskToMark.add(tasks.get(0));
+
+        CommandResult result = logic.execute("mark 1");
+        String tasksAsString = CommandResult.tasksToString(helper.generateReadOnlyTaskList(tasks.get(0)), 
+                helper.generateNumberList(1));
+        
+        assertEquals(expectedTDL.getTaskList().size(), 2);
+        
+        ReadOnlyTask parent = expectedTDL.getTaskList().get(0);
+        ReadOnlyTask child = expectedTDL.getTaskList().get(1);
+
+        assertEquals(parent.getName(), child.getName());
+        assertTrue(!parent.isCompleted() && parent.isRecurring());
+        assertTrue(child.isCompleted() && child.isChild() && child.isLatestChild());
+        assertEquals(DateTimeParser.parseString(parent.getPeriod() + 
+                " from " + parent.getEndDateTime().toString()).get(), child.getEndDateTime().get());
+        assertEquals(String.format(MarkCommand.MESSAGE_MARK_TASK_SUCCESS, tasksAsString), result.feedbackToUser);
+    }
+    
+    
+    @Test
     public void execute_mark_marksCorrectRangeOfTasks() throws Exception {
         TestDataHelper helper = new TestDataHelper();
         List<Task> fourTasks = helper.generateTaskList(4);
@@ -564,7 +610,7 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void execute_unmark_UnmarksCorrectSingleTaskFromCompleted() throws Exception {
+    public void execute_unmark_unmarksCorrectSingleTaskFromCompleted() throws Exception {
         TestDataHelper helper = new TestDataHelper();
         List<Task> threeTasks = helper.generateTaskList(2);
         threeTasks.add(helper.generateCompletedTask(3));
@@ -586,6 +632,43 @@ public class LogicManagerTest {
                 String.format(UnmarkCommand.MESSAGE_UNMARK_TASK_SUCCESS, tasksAsString),
                 expectedTDL,
                 expectedTDL.getTaskList());
+    }
+    
+    @Test
+    public void execute_unmark_unmarksCorrectSingleRecurringTaskFromCompleted() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        List<Task> tasks = new ArrayList<Task>();
+        tasks.add(helper.recurringAdam());
+        helper.addToModel(model, tasks);
+
+        ReadOnlyToDoList expectedTDL = model.getToDoList();
+        List<ReadOnlyTask> taskToMark = new ArrayList<ReadOnlyTask>();
+        taskToMark.add(tasks.get(0));
+        ReadOnlyTask expectedTask = expectedTDL.getTaskList().get(0);
+        logic.execute("mark 1");
+        
+        List<ReadOnlyTask> taskToUnmark = new ArrayList<ReadOnlyTask>();
+        taskToUnmark.add(expectedTDL.getTaskList().get(1));
+        CommandResult result = logic.execute("unmark 2");
+        String tasksAsString = CommandResult.tasksToString(taskToUnmark, helper.generateNumberList(2));
+        assertEquals(String.format(UnmarkCommand.MESSAGE_UNMARK_TASK_SUCCESS, tasksAsString), result.feedbackToUser);
+
+        assertEquals(expectedTask, expectedTDL.getTaskList().get(0));
+    }
+    
+    @Test
+    public void execute_unmark_unmarksIncorrectRecurringTask() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        List<Task> tasks = new ArrayList<Task>();
+        tasks.add(helper.recurringAdam());
+        helper.addToModel(model, tasks);
+
+        List<ReadOnlyTask> taskToUnmark = new ArrayList<ReadOnlyTask>();
+        taskToUnmark.add(tasks.get(0));
+        CommandResult result = logic.execute("unmark 1");
+
+        assertEquals(String.format(UnmarkCommand.MESSAGE_MARK_RECURRING_TASK_FAIL, helper.generateNumberList(1)), 
+                result.feedbackToUser);
     }
 
     @Test
@@ -717,6 +800,30 @@ public class LogicManagerTest {
                 expectedTDL,
                 expectedTDL.getTaskList());
     }
+    
+    @Test
+    public void execute_rename_RenameRecurringTask() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        List<Task> tasks = new ArrayList<Task>();
+        tasks.add(helper.recurringAdam());
+        helper.addToModel(model, tasks);
+
+        ReadOnlyToDoList expectedTDL = model.getToDoList();
+        List<ReadOnlyTask> taskToMark = new ArrayList<ReadOnlyTask>();
+        taskToMark.add(tasks.get(0));
+        logic.execute("mark 1");
+        
+        List<ReadOnlyTask> taskToRename = new ArrayList<ReadOnlyTask>();
+        taskToRename.add(expectedTDL.getTaskList().get(1));
+        String newTaskName = "meet bob";
+        CommandResult result = logic.execute("rename 1 " + newTaskName);
+        assertEquals(String.format(RenameCommand.MESSAGE_SUCCESS, "1", newTaskName), result.feedbackToUser);
+
+        ReadOnlyTask parent = expectedTDL.getTaskList().get(0);
+        ReadOnlyTask child = expectedTDL.getTaskList().get(1);
+        assertTrue(parent.isRecurring() && child.isChild());
+        assertTrue(parent.getName().fullName.equals(newTaskName) && child.getName().fullName.equals(newTaskName));
+    }
 
 
     //@@author
@@ -829,7 +936,27 @@ public class LogicManagerTest {
         readOnlyTaskList = helper.generateReadOnlyTaskList(p3);
         model.unmarkTasks(readOnlyTaskList);
         assertCommandBehavior("undo", UndoCommand.MESSAGE_SUCCESS, expectedTDL, listWithOneTask);
+    }
+    
+    @Test
+    public void execute_undo_recurringTaskExecution() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        List<Task> tasks = new ArrayList<Task>();
+        tasks.add(helper.recurringAdam());
+        helper.addToModel(model, tasks);
 
+        ReadOnlyToDoList expectedTDL = model.getToDoList();
+        List<ReadOnlyTask> taskToMark = new ArrayList<ReadOnlyTask>();
+        taskToMark.add(tasks.get(0));
+        logic.execute("mark 1");
+        CommandResult result = logic.execute("undo");
+        assertEquals(taskToMark, expectedTDL.getTaskList());
+        assertEquals(result.feedbackToUser, UndoCommand.MESSAGE_SUCCESS);
+        
+        logic.execute("rename 1 meet bob");
+        result = logic.execute("undo");
+        assertEquals(taskToMark, expectedTDL.getTaskList());
+        assertEquals(result.feedbackToUser, UndoCommand.MESSAGE_SUCCESS);
     }
     //@@author
 
@@ -865,6 +992,11 @@ public class LogicManagerTest {
         Task adam() throws Exception {
             Name name = new Name("Adam Brown");
             return new Task(name);
+        }
+        
+        RecurringTask recurringAdam() throws Exception {
+            Name name = new Name("meet Adam Brown");
+            return new RecurringTask(name, DateTimeParser.parseString("next tuesday 5pm"), "tuesday 5pm");
         }
 
         /**
@@ -906,6 +1038,16 @@ public class LogicManagerTest {
 
             cmd.append(p.getName().toString());
 
+            return cmd.toString();
+        }
+        
+        String generateAddCommandWithRecurringTask(RecurringTask p) {
+            StringBuffer cmd = new StringBuffer();
+            cmd.append("add ");
+            cmd.append(p.getName().toString());
+            cmd.append(" every ");
+            cmd.append(p.getPeriod());
+            System.out.println(cmd.toString());
             return cmd.toString();
         }
 
@@ -990,8 +1132,12 @@ public class LogicManagerTest {
          */
         UnmodifiableObservableList<Task> generateSortedList(List<? extends ReadOnlyTask> expectedShownList) throws Exception {
             List<Task> taskList = new ArrayList<Task>();
-            for (int i = 0; i < expectedShownList.size(); i++) {
-                taskList.add(new Task(expectedShownList.get(i)));
+            for(ReadOnlyTask task : expectedShownList) {
+                if(task.isRecurring()) {
+                    taskList.add(new RecurringTask(task));
+                } else {
+                    taskList.add(new Task(task));
+                }
             }
             ToDoList toDoList = generateToDoList(taskList); 
             return new UnmodifiableObservableList<>(toDoList.getTasks().sorted());

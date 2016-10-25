@@ -33,11 +33,15 @@ public class Parser {
 
     private static final Pattern RENAME_ARGS_FORMAT = Pattern.compile("(?<targetIndex>\\d+)\\s+(?<name>[^/]+)");
 
-    private static final Pattern ADD_ARGS_FORMAT = Pattern.compile("(?:.+?(?=(?:(?:by|from|to)\\s|$)))+?");
+    private static final Pattern ADD_ARGS_FORMAT = Pattern.compile("(?:.+?(?=(?:(?:by|from|to|every)\\s|$)))+?");
 
     private static final String ADD_ARGS_FROM = "from";
     private static final String ADD_ARGS_BY = "by";
     private static final String ADD_ARGS_TO = "to";
+    private static final String ADD_ARGS_EVERY = "every";
+    
+    private static final String RELATIVE_FROM = "from ";
+    private static final String RELATIVE_NEXT = "next ";
 
     public Parser() {}
 
@@ -112,17 +116,18 @@ public class Parser {
      * @return the prepared command
      */
     private Command prepareAdd(String args){
+        
         Matcher matcher = ADD_ARGS_FORMAT.matcher(args.trim());
         if (!matcher.matches()) {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
-
+        
         try {
             matcher = ADD_ARGS_FORMAT.matcher(args.trim());
 
             String taskTitle = null;
             HashMap<String, Optional<LocalDateTime>> dateTimeMap = new HashMap<>();
-            final String[] tokens = new String[]{ADD_ARGS_FROM, ADD_ARGS_TO, ADD_ARGS_BY};
+            final String[] tokens = new String[]{ADD_ARGS_FROM, ADD_ARGS_TO, ADD_ARGS_BY, ADD_ARGS_EVERY};
 
             while (matcher.find()) {
                 boolean matchedWithPrefix = false;
@@ -131,7 +136,13 @@ public class Parser {
                     String s = matcher.group(0).toLowerCase();
                     if (s.startsWith(token)) {
                         s = s.substring(token.length(), s.length());
-                        dateTimeMap.put(token, DateTimeParser.parseString(s));
+                        if(token.equals(ADD_ARGS_EVERY)) {
+                            dateTimeMap.put(token, DateTimeParser.parseString(RELATIVE_FROM + s).isPresent() ? 
+                                    DateTimeParser.parseString(RELATIVE_FROM + s) : 
+                                        DateTimeParser.parseString(RELATIVE_NEXT + s));
+                        } else {
+                            dateTimeMap.put(token, DateTimeParser.parseString(s));
+                        }
                         matchedWithPrefix = true;
                     }
                 }
@@ -140,7 +151,27 @@ public class Parser {
                 }
             }
 
-            if (dateTimeMap.containsKey(ADD_ARGS_BY)) {
+            if(dateTimeMap.containsKey(ADD_ARGS_EVERY) && 
+                    dateTimeMap.containsKey(ADD_ARGS_FROM) && dateTimeMap.containsKey(ADD_ARGS_TO)) {
+                return new AddCommand(
+                        taskTitle,
+                        dateTimeMap.get(ADD_ARGS_FROM),
+                        dateTimeMap.get(ADD_ARGS_TO),
+                        args.substring(args.toLowerCase().lastIndexOf(ADD_ARGS_EVERY)+6)
+                );
+            } else if(dateTimeMap.containsKey(ADD_ARGS_EVERY) && dateTimeMap.containsKey(ADD_ARGS_BY)) {
+                return new AddCommand(
+                        taskTitle,
+                        dateTimeMap.get(ADD_ARGS_BY),
+                        args.substring(args.toLowerCase().lastIndexOf(ADD_ARGS_EVERY)+6)
+                );
+            } else if(dateTimeMap.containsKey(ADD_ARGS_EVERY)) {
+                return new AddCommand(
+                        taskTitle,
+                        dateTimeMap.get(ADD_ARGS_EVERY),
+                        args.substring(args.toLowerCase().lastIndexOf(ADD_ARGS_EVERY)+6)
+                );
+            } else if (dateTimeMap.containsKey(ADD_ARGS_BY)) {
                 return new AddCommand(
                         taskTitle,
                         dateTimeMap.get(ADD_ARGS_BY)
@@ -155,8 +186,7 @@ public class Parser {
                 return new AddCommand(
                         taskTitle
                 );
-            }
-            else {
+            } else {
                 return new IncorrectCommand(
                         String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
             }
