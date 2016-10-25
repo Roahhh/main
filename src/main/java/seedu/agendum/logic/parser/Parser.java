@@ -40,6 +40,7 @@ public class Parser {
     private static final String ARGS_FROM = "from";
     private static final String ARGS_BY = "by";
     private static final String ARGS_TO = "to";
+    private static final String[] TIME_TOKENS = new String[] { ARGS_FROM, ARGS_TO, ARGS_BY };
 
     public Parser() {}
 
@@ -57,6 +58,7 @@ public class Parser {
 
         final String commandWord = matcher.group("commandWord").toLowerCase();
         final String arguments = matcher.group("arguments");
+
         switch (commandWord) {
 
         case AddCommand.COMMAND_WORD:
@@ -123,10 +125,9 @@ public class Parser {
             matcher.find();
             String taskTitle = matcher.group(0);
             HashMap<String, Optional<LocalDateTime>> dateTimeMap = new HashMap<>();
-            final String[] tokens = new String[] { ARGS_FROM, ARGS_TO, ARGS_BY };
 
             while (matcher.find()) {
-                for (String token : tokens) {
+                for (String token : TIME_TOKENS) {
                     String s = matcher.group(0).toLowerCase();
                     if (s.startsWith(token)) {
                         String time = s.substring(token.length(), s.length());
@@ -180,10 +181,9 @@ public class Parser {
         }
         
         HashMap<String, Optional<LocalDateTime>> dateTimeMap = new HashMap<>();
-        final String[] tokens = new String[]{ARGS_FROM, ARGS_TO, ARGS_BY};
 
         while (matcher.find()) {
-            for (String token:tokens) {
+            for (String token : TIME_TOKENS) {
                 String s = matcher.group(0).toLowerCase();
                 if (s.startsWith(token)) {
                     String time = s.substring(token.length(), s.length());
@@ -267,16 +267,16 @@ public class Parser {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, RenameCommand.MESSAGE_USAGE));
         }
 
-        final String givenIndex = matcher.group("targetIndex");
         final String givenName = matcher.group("name").trim();
-        final int index = Integer.parseInt(givenIndex);
+        final String givenIndex = matcher.group("targetIndex");
+        Optional<Integer> index = parseIndex(givenIndex);
 
-        if (index <= 0) {
+        if (!index.isPresent()) {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, RenameCommand.MESSAGE_USAGE));
         }
 
         try {
-            return new RenameCommand(index, givenName);
+            return new RenameCommand(index.get(), givenName);
         } catch (IllegalValueException ive) {
             return new IncorrectCommand(ive.getMessage());
         }
@@ -312,8 +312,8 @@ public class Parser {
         if(!StringUtil.isUnsignedInteger(index)){
             return Optional.empty();
         }
-        return Optional.of(Integer.parseInt(index));
 
+        return Optional.of(Integer.parseInt(index));
     }
 
     /**
@@ -329,6 +329,7 @@ public class Parser {
         }
 
         args = args.replaceAll("[ ]+", ",").replaceAll(",+", ",");
+
         String[] taskIdStrings = args.split(",");
         for (String taskIdString : taskIdStrings) {
             if (taskIdString.matches("\\d+")) {
@@ -337,9 +338,11 @@ public class Parser {
                 String[] startAndEndIndexes = taskIdString.split("-");
                 int startIndex = Integer.parseInt(startAndEndIndexes[0]);
                 int endIndex = Integer.parseInt(startAndEndIndexes[1]);
-                taskIds.addAll(IntStream.rangeClosed(startIndex,endIndex).boxed().collect(Collectors.toList()));
+                taskIds.addAll(IntStream.rangeClosed(startIndex, endIndex)
+                        .boxed().collect(Collectors.toList()));
             }
         }
+
         if (taskIds.remove(0)) {
             return new HashSet<Integer>();
         }

@@ -15,12 +15,13 @@ import seedu.agendum.model.task.UniqueTaskList.TaskNotFoundException;
 public class ScheduleCommand extends Command {
 
     public static final String COMMAND_WORD = "schedule";
-    public static final String COMMAND_FORMAT = "schedule <name> \nschedule <name> by <deadline> "
+    public static final String COMMAND_FORMAT = "schedule <name> "
+                                            + "\nschedule <name> by <deadline> "
                                             + "\nschedule <name> from <start-time> to <end-time>";
     public static final String COMMAND_DESCRIPTION = "update the time of a task";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Re-schedule an existing task. "
-            + "Parameters: INDEX (must be a positive number) [new deadline/start/end time]\n"
+            + "Parameters: INDEX (must be a positive number) [NEW DEADLINE/ START_TIME/ END_TIME]\n"
             + "Example: " + COMMAND_WORD
             + " 2 from 7pm to 9pm";
 
@@ -65,6 +66,7 @@ public class ScheduleCommand extends Command {
         } catch (TaskNotFoundException e) {
             assert false : "The target task cannot be missing";
         }
+
         return new CommandResult(String.format(MESSAGE_SUCCESS, targetIndex, updatedTask));
     }
 
