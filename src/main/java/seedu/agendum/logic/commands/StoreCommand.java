@@ -4,9 +4,8 @@ import seedu.agendum.commons.core.Config;
 import seedu.agendum.commons.util.FileUtil;
 import seedu.agendum.commons.util.StringUtil;
 
-/**
- * Allow the user to specify a folder as the data storage location
- */
+//@@author A0148095X
+/** Allow the user to specify a folder as the data storage location **/
 public class StoreCommand extends Command {
     
     public static final String COMMAND_WORD = "store";

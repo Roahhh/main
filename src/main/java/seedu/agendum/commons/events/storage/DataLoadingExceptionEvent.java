@@ -2,9 +2,8 @@ package seedu.agendum.commons.events.storage;
 
 import seedu.agendum.commons.events.BaseEvent;
 
-/**
- * Indicates an exception during a file saving
- */
+//@@author A0148095X
+/** Indicates an exception during a file loading **/
 public class DataLoadingExceptionEvent extends BaseEvent {
 
     public Exception exception;

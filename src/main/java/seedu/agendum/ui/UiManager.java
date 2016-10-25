@@ -98,12 +98,14 @@ public class UiManager extends ComponentManager implements Ui {
 
     //==================== Event Handling Code =================================================================
 
+    //@@author A0148095X
     @Subscribe
     private void handleDataLoadingExceptionEvent(DataLoadingExceptionEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         showFileOperationAlertAndWait("Could not load data", "Could not load data from file", event.exception);
-    }
-    
+    }    
+
+    //@@author
     @Subscribe
     private void handleDataSavingExceptionEvent(DataSavingExceptionEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));

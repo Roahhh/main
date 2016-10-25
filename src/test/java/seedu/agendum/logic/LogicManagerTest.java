@@ -420,7 +420,7 @@ public class LogicManagerTest {
                 expectedTDL.getTaskList());
     }
 
-
+    //@@author A0148095X
     @Test
     public void execute_store_successful() throws Exception {
         // setup expectations
@@ -457,7 +457,7 @@ public class LogicManagerTest {
         // delete file
         FileUtil.deleteFile(location);
     }
-
+    //@@author
 
     @Test
     public void execute_markInvalidArgsFormat_errorMessageShown() throws Exception {
@@ -826,6 +826,7 @@ public class LogicManagerTest {
 
     }
 
+    //@@author A0148095X
     @Test
     public void execute_load_successful() throws Exception {
         // setup expectations
@@ -847,7 +848,8 @@ public class LogicManagerTest {
         
         FileUtil.deleteFile(filePath);
     }
-
+    
+    //@@author
     /**
      * A utility class to generate test data.
      */

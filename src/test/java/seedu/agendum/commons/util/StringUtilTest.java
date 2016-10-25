@@ -47,6 +47,7 @@ public class StringUtilTest {
         StringUtil.getDetails(null);
     }
     
+    //@@author A0148095X
     /*
      * Valid equivalence partitions for path to file:
      *   - file path is valid
@@ -67,7 +68,6 @@ public class StringUtilTest {
      *
      * The test method below tries to verify all above with a reasonably low number of test cases.
      */
-    
     @Test
     public void isValidPathToFile(){
         // null and empty file paths

@@ -2,7 +2,8 @@ package seedu.agendum.commons.events.model;
 
 import seedu.agendum.commons.events.BaseEvent;
 
-/** Indicates the ToDoList in the model has changed*/
+//@@author A0148095X
+/** Indicates a request from model to load data **/
 public class LoadDataRequestEvent extends BaseEvent {
 
     public final String loadLocation;

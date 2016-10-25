@@ -83,7 +83,8 @@ public class StorageManager extends ComponentManager implements Storage {
         logger.fine("Attempting to write to data file: " + filePath);
         toDoListStorage.saveToDoList(toDoList, filePath);
     }
-
+    
+    //@@author A0148095X
     @Override
     public void setToDoListFilePath(String filePath){
         assert StringUtil.isValidPathToFile(filePath);
@@ -99,6 +100,7 @@ public class StorageManager extends ComponentManager implements Storage {
         }        
     }
 
+    //@@author
     @Override
     @Subscribe
     public void handleToDoListChangedEvent(ToDoListChangedEvent event) {
@@ -109,7 +111,8 @@ public class StorageManager extends ComponentManager implements Storage {
             raise(new DataSavingExceptionEvent(e));
         }
     }
-
+    
+    //@@author A0148095X
     @Override
     @Subscribe
     public void handleChangeSaveLocationRequestEvent(ChangeSaveLocationRequestEvent event) {

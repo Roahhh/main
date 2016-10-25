@@ -4,9 +4,8 @@ import seedu.agendum.commons.util.FileUtil;
 import seedu.agendum.commons.util.StringUtil;
 import seedu.agendum.commons.util.XmlUtil;
 
-/**
- * Allow the user to specify a folder as the data storage location
- */
+//@@author A0148095X
+/** Allow the user to load a file in the correct todolist format **/
 public class LoadCommand extends Command {
     
     public static final String COMMAND_WORD = "load";

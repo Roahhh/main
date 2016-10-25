@@ -83,6 +83,7 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new ToDoListChangedEvent(toDoList));
     }
     
+    //@@author A0148095X
     /** Raises an event to indicate that save location has changed */
     private void indicateChangeSaveLocationRequest(String location) {
         raise(new ChangeSaveLocationRequestEvent(location));
@@ -93,6 +94,7 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new LoadDataRequestEvent(location));
     }
 
+    //@@author
     @Override
     public synchronized void deleteTasks(List<ReadOnlyTask> targets) throws TaskNotFoundException {
         for (ReadOnlyTask target: targets) {
@@ -111,16 +113,7 @@ public class ModelManager extends ComponentManager implements Model {
         updateFilteredListToShowAll();
         indicateToDoListChanged();
     }
-
-    @Override
-    public synchronized void loadFromLocation(String location) {
-        assert StringUtil.isValidPathToFile(location);
-        assert XmlUtil.isFileCorrectFormat(location);
-        
-        changeSaveLocation(location);
-        indicateLoadDataRequest(location);
-    }
-
+    
     @Override
     public synchronized void updateTask(ReadOnlyTask target, Task updatedTask)
             throws UniqueTaskList.TaskNotFoundException, UniqueTaskList.DuplicateTaskException {
@@ -170,13 +163,24 @@ public class ModelManager extends ComponentManager implements Model {
         previousLists.push(latestList);
     }
 
-    // Storage method
+    //=========== Storage Methods ==========================================================================
+    
+    //@@author A0148095X
     @Override
     public synchronized void changeSaveLocation(String location){
         assert StringUtil.isValidPathToFile(location);
         indicateChangeSaveLocationRequest(location);
     }
 
+    //@@author A0148095X
+    @Override
+    public synchronized void loadFromLocation(String location) {
+        assert StringUtil.isValidPathToFile(location);
+        assert XmlUtil.isFileCorrectFormat(location);
+        
+        changeSaveLocation(location);
+        indicateLoadDataRequest(location);
+    }
 
     //=========== Filtered Task List Accessors ===============================================================
 
@@ -252,6 +256,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     //========== event handling ==================================================
+    //@@author A0148095X
     @Override
     @Subscribe
     public void handleLoadDataCompleteEvent(LoadDataCompleteEvent event) {

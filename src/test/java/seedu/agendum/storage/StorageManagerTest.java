@@ -88,7 +88,8 @@ public class StorageManagerTest {
         storage.handleToDoListChangedEvent(new ToDoListChangedEvent(new ToDoList()));
         assertTrue(eventCollector.get(0) instanceof DataSavingExceptionEvent);
     }
-    
+
+    //@@author A0148095X
     @Test
     public void handleSaveLocationChangedEvent_validFilePath() {
         String validPath = "data/test.xml";
@@ -133,7 +134,7 @@ public class StorageManagerTest {
         storageManager.setToDoListFilePath(validPath);
         assertEquals(validPath, storageManager.getToDoListFilePath());
     }
-
+    //@@author
 
     /**
      * A Stub class to throw an exception when the save method is called

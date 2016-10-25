@@ -15,6 +15,7 @@ import java.io.FileNotFoundException;
  */
 public class XmlUtil {
 
+    //@@author A0148095X
     public static boolean isFileCorrectFormat(String filePath) {
         File file = new File(filePath);
         try {
@@ -25,6 +26,7 @@ public class XmlUtil {
         }
     }
     
+    //@@author
     /**
      * Returns the xml data in the file as an object of the specified type.
      *

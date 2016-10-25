@@ -14,6 +14,7 @@ import seedu.agendum.model.task.Name;
 import seedu.agendum.model.task.Task;
 import seedu.agendum.storage.XmlToDoListStorage;
 
+//@@author A0148095X
 public class LoadCommandTest extends ToDoListGuiTest {
 
     private String command;
