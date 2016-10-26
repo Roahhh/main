@@ -25,7 +25,7 @@ We are a team based in the [School of Computing, National University of Singapor
 * Code written:
 * Other major contributions:
    * Did most of the refactoring from AddressBook to ToDoList
-   * Update user/developer guide to match CS2101
+   * Update user/developer guide
 -----
 
 #### [Vishnu Prem](http://github.com/burnflare)
@@ -46,13 +46,14 @@ We are a team based in the [School of Computing, National University of Singapor
 <img src="https://scontent-sin6-1.xx.fbcdn.net/v/t1.0-1/13263887_10154230768419399_6568873221777598771_n.jpg?oh=44a8b0e75beff2a5093d9ebe41e8184d&oe=58676A35" width="150"><br>
 * Role: Developer <br>
 * Components in charge of: Storage, Commons <br>
-* Aspects/tools in charge of: Documentation, Deliverables and deadlines <br>
+* Aspects/tools in charge of: Documentation, Deliverables and Deadlines <br>
 * Features implemented:
    * [Choose a custom storage location](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/docs/UserGuide.md#specifying-the-data-storage-location--store)
    * [Load from a specific storage location](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/docs/UserGuide.md#loading-from-another-data-storage-location--load)
 * Code written:
 * Other major contributions:
-   *  Actively update user/developer guide to match CS2101
+   * Actively update user/developer guide
+   * Correct most grammatical errors in user/developer guide
 
 
 -----
