@@ -291,6 +291,7 @@ You can alter certain properties of our Agendum application (e.g. logging level)
 
 &nbsp;
 
+[comment]: # (@@author A0148095X)
 ## Testing
 
 You can find all the test files in the `./src/test/java` folder.
@@ -345,6 +346,7 @@ See [UsingGradle.md](UsingGradle.md#running-tests)  for instructions on how to r
 &nbsp;
 
 
+[comment]: # (@@author A0133367E)
 ## Dev Ops
 
 ### 1. Build Automation
@@ -601,6 +603,7 @@ Priority | As a ... | I want to ... | So that I can...
 > *b2. System displays a short list of valid commands
 
 
+[comment]: # (@@author A0148095X)
 ### Use case 08 - Specify data storage location
 
 **MSS**
