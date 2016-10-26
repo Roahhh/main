@@ -15,7 +15,7 @@
    <children>
       <GridPane alignment="CENTER_LEFT" style="-fx-background-color: transparent;">
          <HBox.margin>
-            <Insets bottom="10.0" />
+            <Insets />
          </HBox.margin>
          <columnConstraints>
             <ColumnConstraints hgrow="ALWAYS" />
