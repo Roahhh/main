@@ -35,17 +35,21 @@ public class UniqueTaskList implements Iterable<Task> {
      */
     public static class TaskNotFoundException extends Exception {}
     
+    //@@author A0148031R
     /**
      * Signals that an operation trying to mark a recurring task would fail because recurring tasks cannot be marked
      */
     public static class CannotMarkRecurringTaskException extends Exception {}
     
+    //@@author A0148031R
     /**
      * Signals that an operation trying to mark a child recurring task when its future tasks have 
      * already been marked as completed.
      */
     public static class NotLatestRecurringTaskException extends Exception{}
 
+    
+    //@@author
     private final ObservableList<Task> internalList = FXCollections.observableArrayList();
 
     /**
@@ -184,6 +188,7 @@ public class UniqueTaskList implements Iterable<Task> {
         return internalList;
     }
     
+   //@@author A0148031R
     public List<Task> getInternalListAsList() {
         List<Task> tasks = new ArrayList<Task>();
         for(Task task : internalList) {
@@ -192,6 +197,7 @@ public class UniqueTaskList implements Iterable<Task> {
         return tasks;
     }
 
+    //@@author
     @Override
     public Iterator<Task> iterator() {
         return internalList.iterator();

@@ -185,6 +185,7 @@ public class LogicManagerTest {
                 expectedTDL.getTaskList());
     }
     
+    //@@author A0148031R
     @Test
     public void execute_addRecurringTask_successful() throws Exception {
         // setup expectations
@@ -200,6 +201,7 @@ public class LogicManagerTest {
                 expectedTDL.getTaskList());
     }
 
+    //@@author
     @Test
     public void execute_addDuplicate_notAllowed() throws Exception {
         // setup expectations
@@ -446,7 +448,7 @@ public class LogicManagerTest {
     public void execute_store_successful() throws Exception {
         // setup expectations
         ToDoList expectedTDL = new ToDoList();
-        String location = "data/test.xml";
+        String location = "data/test_store_successful.xml";
 
         // execute command and verify result
         assertCommandBehavior("store " + location,
@@ -459,12 +461,14 @@ public class LogicManagerTest {
                 String.format(StoreCommand.MESSAGE_LOCATION_DEFAULT, Config.DEFAULT_SAVE_LOCATION),
                 expectedTDL,
                 expectedTDL.getTaskList());
+        
+        FileUtil.deleteFile(location);
     }
     
     public void execute_store_fail_fileExists() throws Exception {
         // setup expectations
         ToDoList expectedTDL = new ToDoList();
-        String location = "data/test.xml";
+        String location = "data/test_store_fail.xml";
 
         // create file
         FileUtil.createIfMissing(new File(location));
@@ -516,6 +520,7 @@ public class LogicManagerTest {
                 expectedTDL.getTaskList());
     }
     
+    //@@author A0148031R
     @Test
     public void execute_mark_marksCorrectSingleRecurringTaskAsCompleted() throws Exception {
         TestDataHelper helper = new TestDataHelper();
@@ -545,6 +550,7 @@ public class LogicManagerTest {
     }
     
     
+    //@@author
     @Test
     public void execute_mark_marksCorrectRangeOfTasks() throws Exception {
         TestDataHelper helper = new TestDataHelper();
@@ -634,6 +640,7 @@ public class LogicManagerTest {
                 expectedTDL.getTaskList());
     }
     
+    //@@author A0148031R
     @Test
     public void execute_unmark_unmarksCorrectSingleRecurringTaskFromCompleted() throws Exception {
         TestDataHelper helper = new TestDataHelper();
@@ -656,6 +663,7 @@ public class LogicManagerTest {
         assertEquals(expectedTask, expectedTDL.getTaskList().get(0));
     }
     
+    //@@author A0148031R
     @Test
     public void execute_unmark_unmarksIncorrectRecurringTask() throws Exception {
         TestDataHelper helper = new TestDataHelper();
@@ -671,6 +679,8 @@ public class LogicManagerTest {
                 result.feedbackToUser);
     }
 
+    
+    //@@author
     @Test
     public void execute_unmark_unmarksCorrectRangeOfTasks() throws Exception {
         // indexes provided are startIndex-endIndex.
@@ -801,6 +811,8 @@ public class LogicManagerTest {
                 expectedTDL.getTaskList());
     }
     
+    
+    //@@author A0148031R
     @Test
     public void execute_rename_RenameRecurringTask() throws Exception {
         TestDataHelper helper = new TestDataHelper();
@@ -826,6 +838,7 @@ public class LogicManagerTest {
     }
 
  
+    //@@author
     @Test
     public void execute_scheduleInvalidArgsFormat_errorMessageShown() throws Exception {
         // invalid index format
@@ -1018,6 +1031,7 @@ public class LogicManagerTest {
         assertCommandBehavior("undo", UndoCommand.MESSAGE_SUCCESS, expectedTDL, listWithOneTask);
     }
     
+    //@@author A0148031R
     @Test
     public void execute_undo_recurringTaskExecution() throws Exception {
         TestDataHelper helper = new TestDataHelper();
@@ -1038,7 +1052,6 @@ public class LogicManagerTest {
         assertEquals(taskToMark, expectedTDL.getTaskList());
         assertEquals(result.feedbackToUser, UndoCommand.MESSAGE_SUCCESS);
     }
-    //@@author
 
     //@@author A0148095X
     @Test

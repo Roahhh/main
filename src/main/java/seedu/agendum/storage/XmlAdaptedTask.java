@@ -87,6 +87,7 @@ public class XmlAdaptedTask {
         return newTask;
     }
     
+    //@@author A0148031R
     /**
      * Converts this jaxb-friendly adapted task object into the model's RecurringTask object.
      *
@@ -106,6 +107,7 @@ public class XmlAdaptedTask {
         return newRecurringTask;
     }
     
+    //@@author A0148031R
     /**
      * Converts this jaxb-friendly adapted task object into the model's ChildRecurringTask object.
      *

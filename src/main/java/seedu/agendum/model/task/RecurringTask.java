@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 import seedu.agendum.logic.parser.DateTimeParser;
 
+//@@author A0148031R
 public class RecurringTask extends Task {
 
     private String period;

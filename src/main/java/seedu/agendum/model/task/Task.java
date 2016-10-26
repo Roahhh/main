@@ -204,6 +204,7 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
         return getAsText();
     }
 
+    //@@author A0148031R
     @Override
     public boolean isLatestChild() {
         return false;
