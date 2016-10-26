@@ -16,7 +16,7 @@ import java.util.Optional;
  */
 public class XmlAdaptedTask {
 
-    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     @XmlElement(required = true)
     private String name;
     @XmlElement(required = true)
@@ -25,6 +25,8 @@ public class XmlAdaptedTask {
     private String isRecurring;
     @XmlElement(required = true)
     private String isChild;
+    @XmlElement(required = true)
+    private String lastUpdatedTime;
     @XmlElement(required = false)
     private String startDateTime;
     @XmlElement(required = false)
@@ -49,11 +51,15 @@ public class XmlAdaptedTask {
         name = source.getName().fullName;
         isRecurring = Boolean.toString(source.isRecurring());
         isCompleted = Boolean.toString(source.isCompleted());
+
         isChild = Boolean.toString(source.isChild());
         
+        lastUpdatedTime = source.getLastUpdatedTime().format(formatter);
+
         if (source.getStartDateTime().isPresent()) {
             startDateTime = source.getStartDateTime().get().format(formatter);
         }
+
         if (source.getEndDateTime().isPresent()) {
             endDateTime = source.getEndDateTime().get().format(formatter);
         }
@@ -73,17 +79,22 @@ public class XmlAdaptedTask {
     public Task toTaskModelType() throws IllegalValueException {
         final Name name = new Name(this.name);
         final boolean markedAsCompleted = Boolean.valueOf(isCompleted);
-        
+
         Task newTask = new Task(name);
+        newTask.setLastUpdatedTime(LocalDateTime.parse(this.lastUpdatedTime, formatter));
+
         if (markedAsCompleted) {
             newTask.markAsCompleted();
         }
+
         if (startDateTime != null) {
             newTask.setStartDateTime(Optional.ofNullable(LocalDateTime.parse(this.startDateTime, formatter)));
         }
+
         if (endDateTime != null) {
             newTask.setEndDateTime(Optional.ofNullable(LocalDateTime.parse(this.endDateTime, formatter)));
         }
+
         return newTask;
     }
     
