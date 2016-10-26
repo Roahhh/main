@@ -35,10 +35,7 @@ public class ScheduleCommand extends Command {
     //for help message
     public ScheduleCommand() {}
 
-<<<<<<< HEAD
     //@@author A0133367E
-=======
->>>>>>> midnight-time-bug
     public ScheduleCommand(int targetIndex, Optional<LocalDateTime> startTime,
             Optional<LocalDateTime> endTime) {
         this.targetIndex = targetIndex;
@@ -74,10 +71,6 @@ public class ScheduleCommand extends Command {
         return new CommandResult(String.format(MESSAGE_SUCCESS, targetIndex, updatedTask));
     }
 
-<<<<<<< HEAD
-    //@author
-=======
->>>>>>> midnight-time-bug
     @Override
     public String getName() {
         return COMMAND_WORD;
