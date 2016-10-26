@@ -104,7 +104,7 @@ Examples:
 
 The event “project meeting” will start at 12pm on 10 October and end at 2pm on 10 October.
 
-[comment]: # (@@author A0148095X)
+[comment]: # (@@author A0148031R)
 #### Retrieving task list : `list`
 
 You might want to view the lists to all overdue, upcoming and completed tasks again.<br>
@@ -261,7 +261,7 @@ Examples:
   The task "homework" which has been added previously, will be removed.
 
 
-[comment]: # (@@author A0148031R)
+[comment]: # (@@author A0148095X)
 #### Creating an alias for a command : `alias`
 
 If you are looking for alternatives or want to type a command faster, you can use the `alias` comand.<br>
