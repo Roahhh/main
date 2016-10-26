@@ -40,9 +40,9 @@ public class MainWindow extends UiPart {
     private Logic logic;
     
     // Independent Ui parts residing in this Ui container
-    private AllTasksPanel allTasksPanel;
-    private CompletedTasksPanel completedTasksPanel;
-    private OtherTasksPanel otherTasksPanel;
+    private TasksPanel allTasksPanel;
+    private TasksPanel completedTasksPanel;
+    private TasksPanel otherTasksPanel;
     private ResultPopUp resultPopUp;
     private StatusBarFooter statusBarFooter;
     private CommandBox commandBox;
@@ -126,9 +126,12 @@ public class MainWindow extends UiPart {
 
   //@@author A0148031R
     void fillInnerParts() {
-        allTasksPanel = AllTasksPanel.load(primaryStage, getAllTasksPlaceHolder(), logic.getFilteredTaskList());
-        completedTasksPanel = CompletedTasksPanel.load(primaryStage, getCompletedTasksPlaceHolder(), logic.getFilteredTaskList());
-        otherTasksPanel = OtherTasksPanel.load(primaryStage, getOtherTasksPlaceHolder(), logic.getFilteredTaskList());
+        allTasksPanel = AllTasksPanel.load(primaryStage, getAllTasksPlaceHolder(), 
+                logic.getFilteredTaskList(), new AllTasksPanel());
+        completedTasksPanel = CompletedTasksPanel.load(primaryStage, getCompletedTasksPlaceHolder(), 
+                logic.getFilteredTaskList().filtered(p -> p.isCompleted()), new CompletedTasksPanel());
+        otherTasksPanel = OtherTasksPanel.load(primaryStage, getOtherTasksPlaceHolder(), 
+                logic.getFilteredTaskList().filtered(p -> !p.isCompleted()), new OtherTasksPanel());
         resultPopUp = ResultPopUp.load(primaryStage);
         statusBarFooter = StatusBarFooter.load(primaryStage, getStatusbarPlaceholder(), config.getToDoListFilePath());
         commandBox = CommandBox.load(primaryStage, getCommandBoxPlaceholder(), resultPopUp, logic);
@@ -208,11 +211,16 @@ public class MainWindow extends UiPart {
         raise(new ExitAppRequestEvent());
     }
 
+    //@@author A0148031R
     public AllTasksPanel getAllTasksPanel() {
-        return this.allTasksPanel;
+        return (AllTasksPanel)this.allTasksPanel;
     }
     
-    public CompletedTasksPanel getCompletedTasksPanel() {
-        return this.completedTasksPanel;
+    public TasksPanel getCompletedTasksPanel() {
+        return (CompletedTasksPanel)this.completedTasksPanel;
+    }
+    
+    public TasksPanel getOhterTasksPanel() {
+        return (OtherTasksPanel)this.otherTasksPanel;
     }
 }
