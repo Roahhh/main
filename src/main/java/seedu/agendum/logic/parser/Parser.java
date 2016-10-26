@@ -100,6 +100,9 @@ public class Parser {
             
         case StoreCommand.COMMAND_WORD:
             return new StoreCommand(arguments);
+            
+        case LoadCommand.COMMAND_WORD:
+            return new LoadCommand(arguments);
 
         default:
             Optional<String> alternativeCommand = EditDistanceCalculator.parseString(commandWord);
