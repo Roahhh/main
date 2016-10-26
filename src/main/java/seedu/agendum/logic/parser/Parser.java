@@ -131,7 +131,7 @@ public class Parser {
         if (!matcher.matches()) {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
-
+        
         try {
             matcher.reset();
             matcher.find();
@@ -167,7 +167,6 @@ public class Parser {
             return new IncorrectCommand(ive.getMessage());
         }
     }
-
 
     /**
      * Parses arguments in the context of the schedule task command.
@@ -220,8 +219,6 @@ public class Parser {
         }
     }
 	
-
-    //@@author A0133367E
     /**
      * Parses arguments in the context of the delete task command.
      *
