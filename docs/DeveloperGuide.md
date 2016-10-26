@@ -22,7 +22,7 @@
 &nbsp;
 
 
-[comment]: # (@@author A0148095X)
+[comment]: # (@@author A0148031R)
 ## Introduction
 
 Agendum is a task manager for busy users to manage their schedules and tasks via keyboard commands. It is a Java desktop application that has a **GUI** implemented with JavaFX.
@@ -151,7 +151,7 @@ The diagram below shows what happens after a `ToDoListChangedEvent` is raised. `
 The following sections will then give more details of each individual component.
 
 
-[comment]: # (@@author A0148095X)
+[comment]: # (@@author A0148031R)
 ### 2. UI component
 
 <img src="images/UiClassDiagram.png" width="800"><br>
@@ -219,7 +219,7 @@ The identified task is removed from the `UniqueTaskList`. The `ModelManager` rai
 > `Model`’s _deleteTasks_ methods actually take in `ArrayList<ReadOnlyTask>` instead of a single task. We use _deleteTasks(task)_ for simplicity in the sequence diagram.
 
 
-[comment]: # (@@author A0148031R)
+[comment]: # (@@author A0148095X)
 ### 5. Storage component
 
 <img src="images/StorageClassDiagram.png" width="800"><br>
@@ -373,7 +373,7 @@ Agendum depends on third-party libraries, such as the
 &nbsp;
 
 
-[comment]: # (@@author A0148031R)
+[comment]: # (@@author A0148095X)
 ## Appendix A : User Stories
 
 >Priorities: High (must have) - `* * *`, Medium (nice to have)  - `* *`,  Low (unlikely to have) - `*`
@@ -422,7 +422,7 @@ Priority | As a ... | I want to ... | So that I can...
 &nbsp;
 
 
-[comment]: # (@@author A0148095X)
+[comment]: # (@@author A0148031R)
 ## Appendix B : Use Cases
 
 >For all use cases below, the **System** is `Agendum` and the **Actor** is the `user`, unless specified otherwise
@@ -679,7 +679,7 @@ Priority | As a ... | I want to ... | So that I can...
 &nbsp;
 
 
-[comment]: # (@@author A0148031R)
+[comment]: # (@@author A0148095X)
 ## Appendix D : Glossary
 
 ##### Mainstream OS:
