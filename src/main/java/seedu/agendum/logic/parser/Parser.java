@@ -1,5 +1,6 @@
 package seedu.agendum.logic.parser;
 
+import seedu.agendum.logic.CommandLibrary;
 import seedu.agendum.logic.commands.*;
 import seedu.agendum.commons.util.StringUtil;
 import seedu.agendum.commons.exceptions.IllegalValueException;
@@ -45,6 +46,13 @@ public class Parser {
     private static final String[] TIME_TOKENS = new String[] { ARGS_FROM, ARGS_TO, ARGS_BY };
 	
     //@@author
+    private static final Pattern ALIAS_ARGS_FORMAT = Pattern.compile(
+            "(?<commandword>[\\p{Alnum}\\p{Punct}]+)\\s+(?<shorthand>[\\p{Alnum}\\p{Punct}]+)");
+
+    private static final Pattern UNALIAS_ARGS_FORMAT = Pattern.compile("(?<shorthand>[\\p{Alnum}\\p{Punct}]+)");
+
+    private final CommandLibrary commandLibrary = CommandLibrary.getInstance();
+
     public Parser() {}
 
     /**
@@ -58,8 +66,12 @@ public class Parser {
         if (!matcher.matches()) {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
         }
+                
+        String commandWord = matcher.group("commandWord").toLowerCase();;
+        if (commandLibrary.isExistingAliasKey(commandWord)) {
+            commandWord = commandLibrary.getAliasedValue(commandWord);
+        }
 
-        final String commandWord = matcher.group("commandWord").toLowerCase();
         final String arguments = matcher.group("arguments");
 
         switch (commandWord) {
@@ -96,6 +108,12 @@ public class Parser {
 
         case UndoCommand.COMMAND_WORD:
             return new UndoCommand();
+
+        case AliasCommand.COMMAND_WORD:
+            return prepareAlias(arguments);
+
+        case UnaliasCommand.COMMAND_WORD:
+            return prepareUnalias(arguments);
 
         case ExitCommand.COMMAND_WORD:
             return new ExitCommand();
@@ -309,6 +327,45 @@ public class Parser {
         }
 
         return new SelectCommand(index.get());
+    }
+
+    /**
+     * Parses arguments in the context of the alias command.
+     *
+     * @param args full command args string
+     * @return the prepared command
+     */
+    private Command prepareAlias(String args) {
+        args = args.toLowerCase();
+        final Matcher matcher = ALIAS_ARGS_FORMAT.matcher(args.trim());
+        if (!matcher.matches()) {
+            return new IncorrectCommand(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, AliasCommand.MESSAGE_USAGE));
+        }
+
+        String aliasKey = matcher.group("shorthand");
+        String aliasValue = matcher.group("commandword");
+
+        return new AliasCommand(aliasKey, aliasValue);
+    }
+
+    /**
+     * Parses arguments in the context of the unalias command.
+     *
+     * @param args full command args string
+     * @return the prepared command
+     */
+    private Command prepareUnalias(String args) {
+        args = args.toLowerCase();
+        final Matcher matcher = UNALIAS_ARGS_FORMAT.matcher(args.trim());
+        if (!matcher.matches()) {
+            return new IncorrectCommand(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, UnaliasCommand.MESSAGE_USAGE));
+        }
+
+        String aliasKey = matcher.group("shorthand");
+
+        return new UnaliasCommand(aliasKey);
     }
 
     /**
