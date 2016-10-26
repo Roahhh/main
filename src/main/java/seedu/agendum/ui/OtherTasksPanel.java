@@ -3,8 +3,11 @@ package seedu.agendum.ui;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Control;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import seedu.agendum.commons.core.EventsCenter;
+import seedu.agendum.commons.events.ui.JumpToListRequestEvent;
 import seedu.agendum.model.task.ReadOnlyTask;
 
 //@@author A0148031R
@@ -31,10 +34,6 @@ public class OtherTasksPanel extends TasksPanel {
         otherTasksListView.setItems(otherTasks);
         otherTasksListView.setCellFactory(listView -> new OtherTasksListViewCell());
     }
-    
-    protected ListView<ReadOnlyTask> getListView() {
-        return otherTasksListView;
-    }
 
     public void scrollTo(int index) {
         Platform.runLater(() -> {
@@ -44,7 +43,10 @@ public class OtherTasksPanel extends TasksPanel {
     }
     
     class OtherTasksListViewCell extends ListCell<ReadOnlyTask> {
-        public OtherTasksListViewCell() {}
+        public OtherTasksListViewCell() {
+            prefWidthProperty().bind(otherTasksListView.widthProperty());
+            setMaxWidth(Control.USE_PREF_SIZE);
+        }
 
         @Override
         protected void updateItem(ReadOnlyTask task, boolean empty) {
@@ -56,6 +58,7 @@ public class OtherTasksPanel extends TasksPanel {
             } else {
                 setGraphic(TaskCard.load(task).getLayout());
             }
+//            EventsCenter.getInstance().post(new JumpToListRequestEvent(getIndex()));
         }
     }
 }

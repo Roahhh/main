@@ -5,10 +5,13 @@ import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Control;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import seedu.agendum.model.task.ReadOnlyTask;
+import seedu.agendum.commons.core.EventsCenter;
 import seedu.agendum.commons.core.LogsCenter;
+import seedu.agendum.commons.events.ui.JumpToListRequestEvent;
 
 //@@author A0148031R
 /**
@@ -46,6 +49,8 @@ public class AllTasksPanel extends TasksPanel {
     class allTasksListViewCell extends ListCell<ReadOnlyTask> {
 
         public allTasksListViewCell() {
+            prefWidthProperty().bind(allTasksListView.widthProperty());
+            setMaxWidth(Control.USE_PREF_SIZE);
         }
 
         @Override
