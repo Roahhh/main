@@ -1,6 +1,5 @@
 package seedu.agendum.logic.parser;
 
-import seedu.agendum.logic.CommandLibrary;
 import seedu.agendum.logic.commands.*;
 import seedu.agendum.commons.util.StringUtil;
 import seedu.agendum.commons.exceptions.IllegalValueException;

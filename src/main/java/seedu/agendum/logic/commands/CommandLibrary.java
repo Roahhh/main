@@ -1,11 +1,10 @@
-package seedu.agendum.logic;
+package seedu.agendum.logic.commands;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.List;
 
-import seedu.agendum.logic.commands.*;
 
 /**
  * Manage and store the various alias keys and values
@@ -20,8 +19,10 @@ public class CommandLibrary {
             FindCommand.COMMAND_WORD,
             HelpCommand.COMMAND_WORD,
             ListCommand.COMMAND_WORD,
+            LoadCommand.COMMAND_WORD,
             MarkCommand.COMMAND_WORD,
             RenameCommand.COMMAND_WORD,
+            ScheduleCommand.COMMAND_WORD,
             StoreCommand.COMMAND_WORD,
             UnaliasCommand.COMMAND_WORD,
             UndoCommand.COMMAND_WORD,
@@ -45,6 +46,9 @@ public class CommandLibrary {
      * Returns true if key is already an alias to a command keyword
      */
     public boolean isExistingAliasKey(String key) {
+        assert key != null;
+        assert key.equals(key.toLowerCase());
+
         return aliasTable.containsKey(key);
     }
 
@@ -54,6 +58,7 @@ public class CommandLibrary {
      */
     public String getAliasedValue(String key) {
         assert isExistingAliasKey(key);
+
         return aliasTable.get(key);
     }
 
@@ -61,6 +66,9 @@ public class CommandLibrary {
      * Returns true if value is a reserved command word
      */
     public boolean isReservedCommandKeyword(String value) {
+        assert value != null;
+        assert value.equals(value.toLowerCase());
+
         return allCommandWords.contains(value);
     }
 

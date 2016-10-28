@@ -3,7 +3,6 @@ package seedu.agendum.logic.commands;
 import seedu.agendum.commons.core.EventsCenter;
 import seedu.agendum.commons.core.Messages;
 import seedu.agendum.commons.events.ui.IncorrectCommandAttemptedEvent;
-import seedu.agendum.logic.CommandLibrary;
 import seedu.agendum.model.Model;
 
 /**

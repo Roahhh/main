@@ -1,7 +1,6 @@
 package seedu.agendum.logic.commands;
 
 import seedu.agendum.commons.core.Messages;
-import seedu.agendum.logic.CommandLibrary;
 
 /**
  * Create an alias for a reserved command keyword
@@ -16,12 +15,10 @@ public class UnaliasCommand extends Command {
     public static final String MESSAGE_FAILURE_NO_ALIAS_KEY = 
             "The alias <%1$s> does not exist";
     public static final Object MESSAGE_USAGE = COMMAND_WORD 
-            + ": Unalias previous shorthand commands defined \n"
-            + "Parameters: YOUR-SHORTHAND-COMMAND\n"
+            + ": Unalias a shorthand command defined \n"
+            + "Parameters: SHORTHAND-COMMAND\n"
             + "Example: " + COMMAND_WORD
             + " m (if m is an alias for mark)";
-
-    private static final CommandLibrary commandLibrary = CommandLibrary.getInstance();
 
     private String aliasKey;
     
@@ -31,6 +28,7 @@ public class UnaliasCommand extends Command {
 
     @Override
     public CommandResult execute() {
+        CommandLibrary commandLibrary = CommandLibrary.getInstance();
         if (!commandLibrary.isExistingAliasKey(aliasKey)) {
             return new CommandResult(String.format(
                     MESSAGE_FAILURE_NO_ALIAS_KEY, aliasKey));
@@ -43,7 +41,6 @@ public class UnaliasCommand extends Command {
     public static String getName() {
         return COMMAND_WORD;
     }
-
 
     public static String getFormat() {
         return COMMAND_FORMAT;
