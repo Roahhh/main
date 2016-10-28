@@ -8,6 +8,7 @@ import static org.junit.Assert.assertTrue;
 import java.io.File;
 import java.io.IOException;
 import java.util.NoSuchElementException;
+import java.util.Hashtable;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -65,6 +66,19 @@ public class StorageManagerTest {
         storageManager.saveUserPrefs(original);
         UserPrefs retrieved = storageManager.readUserPrefs().get();
         assertEquals(original, retrieved);
+    }
+    
+    /**
+     * Verifies that StorageManager is properly wired to {@link JsonCommandLibraryStorage} class
+     */
+    @Test
+    public void commandLibraryReadSave() throws Exception {
+        Hashtable<String, String> testingTable = new Hashtable<String, String>();
+        testingTable.put("a", "add");
+        testingTable.put("d", "delete");
+        storageManager.saveCommandLibraryTable(testingTable);
+        Hashtable<String, String> retrieved = storageManager.readCommandLibraryTable().get();
+        assertEquals(testingTable, retrieved); 
     }
 
     @Test
