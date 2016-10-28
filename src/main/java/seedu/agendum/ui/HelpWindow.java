@@ -16,25 +16,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-<<<<<<< HEAD
 import javafx.util.Callback;
-import seedu.agendum.logic.commands.AddCommand;
-import seedu.agendum.logic.commands.AliasCommand;
-import seedu.agendum.logic.commands.ClearCommand;
-import seedu.agendum.logic.commands.Command;
-import seedu.agendum.logic.commands.DeleteCommand;
-import seedu.agendum.logic.commands.ExitCommand;
-import seedu.agendum.logic.commands.FindCommand;
-import seedu.agendum.logic.commands.HelpCommand;
-import seedu.agendum.logic.commands.ListCommand;
-import seedu.agendum.logic.commands.MarkCommand;
-import seedu.agendum.logic.commands.RenameCommand;
-import seedu.agendum.logic.commands.UnaliasCommand;
-import seedu.agendum.logic.commands.UnmarkCommand;
-=======
 import org.reflections.Reflections;
 import seedu.agendum.logic.commands.Command;
->>>>>>> master
 import seedu.agendum.commons.core.LogsCenter;
 
 import java.util.Collections;
