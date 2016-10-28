@@ -4,28 +4,41 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
+import org.reflections.Reflections;
 import seedu.agendum.commons.core.EventsCenter;
+import seedu.agendum.commons.core.LogsCenter;
 import seedu.agendum.commons.events.logic.CommandLibraryChangedEvent;
-
-import com.google.common.eventbus.Subscribe;
 
 /**
  * Manage and store the various alias keys and values
  */
 public class CommandLibrary {
 
-    private List<String> allCommandWords = new ArrayList<String>(Arrays.asList(AddCommand.COMMAND_WORD,
-            AliasCommand.COMMAND_WORD, DeleteCommand.COMMAND_WORD, ExitCommand.COMMAND_WORD, FindCommand.COMMAND_WORD,
-            HelpCommand.COMMAND_WORD, ListCommand.COMMAND_WORD, LoadCommand.COMMAND_WORD, MarkCommand.COMMAND_WORD,
-            RenameCommand.COMMAND_WORD, ScheduleCommand.COMMAND_WORD, StoreCommand.COMMAND_WORD,
-            UnaliasCommand.COMMAND_WORD, UndoCommand.COMMAND_WORD, UnmarkCommand.COMMAND_WORD));
+    private static final Logger logger = LogsCenter.getLogger(CommandLibrary.class);
+    private List<String> allCommandWords = new ArrayList<String>();
 
     // Hashtable with key as user-defined aliases,
     // value as Agendum's reserved command keywords
     private Hashtable<String, String> aliasTable = new Hashtable<String, String>();
 
     public CommandLibrary() {
+        allCommandWords = new Reflections("seedu.agendum").getSubTypesOf(Command.class)
+                .stream()
+                .map(s -> {
+                    try {
+                        return s.getMethod("getName").invoke(null).toString();
+                    } catch (NullPointerException e) {
+                        return null;
+                    } catch (Exception e) {
+                        logger.severe("Java reflection for Command class failed");
+                        throw new RuntimeException();
+                    }
+                })
+                .filter(p -> p != null) // remove nulls
+                .collect(Collectors.toList());
     }
 
     public void loadCommandTable(Hashtable<String, String> aliasTable) {
