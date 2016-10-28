@@ -1,6 +1,7 @@
 package seedu.agendum.logic.commands;
 
 import seedu.agendum.commons.core.Messages;
+import seedu.agendum.model.Model;
 
 /**
  * Create an alias for a reserved command keyword
@@ -21,14 +22,19 @@ public class UnaliasCommand extends Command {
             + " m (if m is an alias for mark)";
 
     private String aliasKey;
+    private CommandLibrary commandLibrary;
     
     public UnaliasCommand(String aliasKey) {
         this.aliasKey = aliasKey;
     }
 
+    public void setData(Model model, CommandLibrary commandLibrary) {
+        this.model = model;
+        this.commandLibrary = commandLibrary;
+    }
+
     @Override
     public CommandResult execute() {
-        CommandLibrary commandLibrary = CommandLibrary.getInstance();
         if (!commandLibrary.isExistingAliasKey(aliasKey)) {
             return new CommandResult(String.format(
                     MESSAGE_FAILURE_NO_ALIAS_KEY, aliasKey));

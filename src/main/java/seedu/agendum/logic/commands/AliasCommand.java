@@ -1,6 +1,7 @@
 package seedu.agendum.logic.commands;
 
 import seedu.agendum.commons.core.Messages;
+import seedu.agendum.model.Model;
 
 /**
  * Create an alias for a reserved command keyword
@@ -14,8 +15,8 @@ public class AliasCommand extends Command {
     public static final String MESSAGE_SUCCESS = "New alias <%1$s> created for <%2$s>";
     public static final String MESSAGE_FAILURE_ALIAS_IN_USE = "<%1$s> is already an alias for <%2$s>";
     public static final String MESSAGE_FAILURE_UNAVAILABLE_ALIAS = "<%1$s> is a reserved command word";
-    public static final String MESSAGE_FAILURE_NON_ORIGINAL_COMMAND = 
-            "We do not recognise <%1$s> as an Agendum Command";
+    public static final String MESSAGE_FAILURE_NON_ORIGINAL_COMMAND =
+            "We don't recognise <%1$s> as an Agendum Command";
     public static final Object MESSAGE_USAGE = COMMAND_WORD 
             + ": Creates an alias for a reserved command word \n"
             + "Parameters: ORIGINAL-COMMAND SHORTHAND-COMMAND\n"
@@ -24,15 +25,20 @@ public class AliasCommand extends Command {
 
     private String aliasValue;
     private String aliasKey;
+    private CommandLibrary commandLibrary;
     
     public AliasCommand(String aliasKey, String aliasValue) {
         this.aliasKey = aliasKey;
         this.aliasValue = aliasValue;
     }
 
+    public void setData(Model model, CommandLibrary commandLibrary) {
+        this.model = model;
+        this.commandLibrary = commandLibrary;
+    }
+
     @Override
     public CommandResult execute() {
-        CommandLibrary commandLibrary = CommandLibrary.getInstance();
         if (!commandLibrary.isReservedCommandKeyword(aliasValue)) {
             return new CommandResult(String.format(
                     MESSAGE_FAILURE_NON_ORIGINAL_COMMAND, aliasValue));

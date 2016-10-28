@@ -49,10 +49,12 @@ public class Parser {
     private static final String ARGS_TO = "to";
     private static final String[] TIME_TOKENS = new String[] { ARGS_FROM, ARGS_TO, ARGS_BY };
 
-    private final CommandLibrary commandLibrary = CommandLibrary.getInstance();
+    private CommandLibrary commandLibrary;
        	
     //@@author
-    public Parser() {}
+    public Parser(CommandLibrary commandLibrary) {
+        this.commandLibrary = commandLibrary;
+    }
 
     /**
      * Parses user input into command for execution.
