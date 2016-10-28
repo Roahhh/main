@@ -49,6 +49,7 @@ public class CommandLibrary {
     }
 
     /**
+     * Precondition: key is an existing alias.
      * Returns the reserved command word that is aliased by key
      */
     public String getAliasedValue(String key) {
@@ -59,17 +60,19 @@ public class CommandLibrary {
     /**
      * Returns true if value is a reserved command word
      */
-    public boolean isValidAliasValue(String value) {
+    public boolean isReservedCommandKeyword(String value) {
         return allCommandWords.contains(value);
     }
 
     /**
-     * Precondition: key is a new unique alias and value is a reserved command word
+     * Precondition: key is a new unique alias and not a command keyword;
+     * value is a reserved command word.
      * Saves the new alias relationship (key can be used in place of value)
      */
     public void addNewAlias(String key, String value) {
         assert !isExistingAliasKey(key);
-        assert isValidAliasValue(value);
+        assert !isReservedCommandKeyword(key);
+        assert isReservedCommandKeyword(value);
         
         aliasTable.put(key, value);
     }

@@ -13,7 +13,8 @@ public class AliasCommand extends Command {
     public static String COMMAND_FORMAT = "alias <original-command> <your-command>";
     public static String COMMAND_DESCRIPTION = "specify your own shorthand command";
     public static final String MESSAGE_SUCCESS = "New alias <%1$s> created for <%2$s>";
-    public static final String MESSAGE_FAILURE_DUPLICATE = "<%1$s> is already an alias for <%2$s>";
+    public static final String MESSAGE_FAILURE_ALIAS_IN_USE = "<%1$s> is already an alias for <%2$s>";
+    public static final String MESSAGE_FAILURE_UNAVAILABLE_ALIAS = "<%1$s> is a reserved command word";
     public static final String MESSAGE_FAILURE_NON_ORIGINAL_COMMAND = 
             "We do not recognise <%1$s> as an Agendum Command";
     public static final Object MESSAGE_USAGE = COMMAND_WORD 
@@ -24,8 +25,8 @@ public class AliasCommand extends Command {
 
     private static final CommandLibrary commandLibrary = CommandLibrary.getInstance();
 
-    private String aliasValue = null;
-    private String aliasKey = null;
+    private String aliasValue;
+    private String aliasKey;
 
     public AliasCommand() {}
     
@@ -36,7 +37,7 @@ public class AliasCommand extends Command {
 
     @Override
     public CommandResult execute() {
-        if (!commandLibrary.isValidAliasValue(aliasValue)) {
+        if (!commandLibrary.isReservedCommandKeyword(aliasValue)) {
             return new CommandResult(String.format(
                     MESSAGE_FAILURE_NON_ORIGINAL_COMMAND, aliasValue));
         }
@@ -44,7 +45,12 @@ public class AliasCommand extends Command {
         if (commandLibrary.isExistingAliasKey(aliasKey)) {
             String associatedValue = commandLibrary.getAliasedValue(aliasKey);
             return new CommandResult(String.format(
-                    MESSAGE_FAILURE_DUPLICATE, aliasKey, associatedValue));
+                    MESSAGE_FAILURE_ALIAS_IN_USE, aliasKey, associatedValue));
+        }
+
+        if (commandLibrary.isReservedCommandKeyword(aliasKey)) {
+            return new CommandResult(String.format(
+                    MESSAGE_FAILURE_UNAVAILABLE_ALIAS, aliasKey));
         }
         
         commandLibrary.addNewAlias(aliasKey, aliasValue);
