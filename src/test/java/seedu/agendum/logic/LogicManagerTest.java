@@ -834,7 +834,8 @@ public class LogicManagerTest {
     @Test
     public void execute_aliasValidKey_successfullyAdded() throws Exception {
         String expectedMessage = String.format(AliasCommand.MESSAGE_SUCCESS, "a", AddCommand.COMMAND_WORD);
-        assertCommandBehavior("alias " + AddCommand.COMMAND_WORD + " a",
+        //should be case insensitive
+        assertCommandBehavior("alias " + AddCommand.COMMAND_WORD + " A",
                 expectedMessage, new ToDoList(), Collections.emptyList());
         TestDataHelper helper = new TestDataHelper();
  
