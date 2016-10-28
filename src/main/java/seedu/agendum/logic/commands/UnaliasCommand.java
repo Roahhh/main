@@ -23,9 +23,7 @@ public class UnaliasCommand extends Command {
 
     private static final CommandLibrary commandLibrary = CommandLibrary.getInstance();
 
-    private String aliasKey = null;
-
-    public UnaliasCommand() {}
+    private String aliasKey;
     
     public UnaliasCommand(String aliasKey) {
         this.aliasKey = aliasKey;
@@ -42,18 +40,16 @@ public class UnaliasCommand extends Command {
         return new CommandResult(String.format(MESSAGE_SUCCESS, aliasKey));
     }
 
-    @Override
-    public String getName() {
+    public static String getName() {
         return COMMAND_WORD;
     }
 
-    @Override
-    public String getFormat() {
+
+    public static String getFormat() {
         return COMMAND_FORMAT;
     }
 
-    @Override
-    public String getDescription() {
+    public static String getDescription() {
         return COMMAND_DESCRIPTION;
     }
 }

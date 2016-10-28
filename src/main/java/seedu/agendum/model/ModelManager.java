@@ -4,22 +4,24 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import seedu.agendum.commons.core.LogsCenter;
 import seedu.agendum.commons.core.UnmodifiableObservableList;
-import seedu.agendum.commons.util.ConfigUtil;
 import seedu.agendum.commons.util.StringUtil;
+import seedu.agendum.commons.util.XmlUtil;
 import seedu.agendum.model.task.ReadOnlyTask;
 import seedu.agendum.model.task.Task;
 import seedu.agendum.model.task.UniqueTaskList;
 import seedu.agendum.model.task.UniqueTaskList.TaskNotFoundException;
-import seedu.agendum.commons.events.model.SaveLocationChangedEvent;
+import seedu.agendum.commons.events.model.LoadDataRequestEvent;
+import seedu.agendum.commons.events.model.ChangeSaveLocationRequestEvent;
 import seedu.agendum.commons.events.model.ToDoListChangedEvent;
+import seedu.agendum.commons.events.storage.LoadDataCompleteEvent;
 import seedu.agendum.commons.core.ComponentManager;
-import seedu.agendum.commons.core.Config;
 
-import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.Stack;
 import java.util.logging.Logger;
+
+import com.google.common.eventbus.Subscribe;
 
 /**
  * Represents the in-memory model of the to do list data.
@@ -32,17 +34,15 @@ public class ModelManager extends ComponentManager implements Model {
     private final Stack<ToDoList> previousLists;
     private final FilteredList<Task> filteredTasks;
     private final SortedList<Task> sortedTasks;
-    private final Config config;
 
     /**
      * Initializes a ModelManager with the given ToDoList
      * ToDoList and its variables should not be null
      */
-    public ModelManager(ToDoList src, UserPrefs userPrefs, Config config) {
+    public ModelManager(ToDoList src, UserPrefs userPrefs) {
         super();
         assert src != null;
         assert userPrefs != null;
-        assert config != null;
 
         logger.fine("Initializing with to do list: " + src + " and user prefs " + userPrefs);
 
@@ -51,32 +51,30 @@ public class ModelManager extends ComponentManager implements Model {
         sortedTasks = filteredTasks.sorted();
         previousLists = new Stack<ToDoList>();
         backupNewToDoList();
-
-        this.config = config;
     }
 
     public ModelManager() {
-        this(new ToDoList(), new UserPrefs(), new Config());
+        this(new ToDoList(), new UserPrefs());
     }
 
-    public ModelManager(ReadOnlyToDoList initialData, UserPrefs userPrefs, Config config) {
+    public ModelManager(ReadOnlyToDoList initialData, UserPrefs userPrefs) {
         toDoList = new ToDoList(initialData);
         filteredTasks = new FilteredList<>(toDoList.getTasks());
         sortedTasks = filteredTasks.sorted();
         previousLists = new Stack<ToDoList>();
         backupNewToDoList();
-
-        this.config = config;
     }
 
+    //@@author A0133367E
     @Override
     public void resetData(ReadOnlyToDoList newData) {
         toDoList.resetData(newData);
-        indicateToDoListChanged();
+        logger.fine("[MODEL] --- succesfully reset data of the to-do list");
         backupNewToDoList();
-        logger.fine("MODEL --- succesfully reset data of the to-do list");
+        indicateToDoListChanged();
     }
-
+  
+    //@@author
     @Override
     public ReadOnlyToDoList getToDoList() {
         return toDoList;
@@ -87,70 +85,78 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new ToDoListChangedEvent(toDoList));
     }
     
+    //@@author A0148095X
     /** Raises an event to indicate that save location has changed */
-    private void indicateSaveLocationChanged(String location) {
-        raise(new SaveLocationChangedEvent(location));
+    private void indicateChangeSaveLocationRequest(String location) {
+        raise(new ChangeSaveLocationRequestEvent(location));
+    }
+    
+    /** Raises an event to indicate that save location has changed */
+    private void indicateLoadDataRequest(String location) {
+        raise(new LoadDataRequestEvent(location));
     }
 
+    //@@author A0133367E
     @Override
-    public synchronized void deleteTasks(ArrayList<ReadOnlyTask> targets) throws TaskNotFoundException {
+    public synchronized void deleteTasks(List<ReadOnlyTask> targets) throws TaskNotFoundException {
         for (ReadOnlyTask target: targets) {
             toDoList.removeTask(target);
         }
-        indicateToDoListChanged();
         backupNewToDoList();
-        logger.fine("MODEL --- succesfully deleted all specified targets from the to-do list");
+        logger.fine("[MODEL] --- succesfully deleted all specified targets from the to-do list");
+        indicateToDoListChanged();
     }
 
     @Override
     public synchronized void addTask(Task task) throws UniqueTaskList.DuplicateTaskException {
-        toDoList.addTask(task);
+        toDoList.addTask(task);      
+        logger.fine("[MODEL] --- succesfully added the new task to the to-do list");
+        backupNewToDoList();
         updateFilteredListToShowAll();
         indicateToDoListChanged();
-        backupNewToDoList();
-        logger.fine("MODEL --- succesfully added the new task to the to-do list");
     }
-
+    
     @Override
     public synchronized void updateTask(ReadOnlyTask target, Task updatedTask)
             throws UniqueTaskList.TaskNotFoundException, UniqueTaskList.DuplicateTaskException {
         toDoList.updateTask(target, updatedTask);
+        logger.fine("[MODEL] --- succesfully updated the target task in the to-do list");
+        backupNewToDoList();
         updateFilteredListToShowAll();
         indicateToDoListChanged();
-        backupNewToDoList();
-        logger.fine("MODEL --- succesfully updated the target task in the to-do list");
     }
 
     @Override
-    public synchronized void markTasks(ArrayList<ReadOnlyTask> targets) throws TaskNotFoundException {
+    public synchronized void markTasks(List<ReadOnlyTask> targets) throws TaskNotFoundException {
         for (ReadOnlyTask target: targets) {
             toDoList.markTask(target);
-        }
-        indicateToDoListChanged();
+        } 
+        logger.fine("[MODEL] --- succesfully marked all specified targets from the to-do list");
         backupNewToDoList();
-        logger.fine("MODEL --- succesfully marked all specified targets from the to-do list");
+        indicateToDoListChanged();
     }
     
     @Override
-    public synchronized void unmarkTasks(ArrayList<ReadOnlyTask> targets) throws TaskNotFoundException {
+    public synchronized void unmarkTasks(List<ReadOnlyTask> targets) throws TaskNotFoundException {
         for (ReadOnlyTask target: targets) {
             toDoList.unmarkTask(target);
         }
-        indicateToDoListChanged();
+        logger.fine("[MODEL] --- succesfully unmarked all specified targets from the to-do list");
         backupNewToDoList();
-        logger.fine("MODEL --- succesfully unmarked all specified targets from the to-do list");
+        indicateToDoListChanged();
     }
 
     @Override
     public synchronized boolean restorePreviousToDoList() {
         assert !previousLists.empty();
+
         if (previousLists.size() == 1) {
             return false;
         } else {
             previousLists.pop();
             toDoList.resetData(previousLists.peek());
+            logger.fine("[MODEL] --- succesfully restored the previous the to-do list from this session");
             indicateToDoListChanged();
-            logger.fine("MODEL --- succesfully restored the previous the to-do list from this session");
             return true;
         }
     }
@@ -159,25 +165,28 @@ public class ModelManager extends ComponentManager implements Model {
         ToDoList latestList = new ToDoList(this.getToDoList());
         previousLists.push(latestList);
     }
+
+
+    //=========== Storage Methods ==========================================================================
     
-    // Storage
+    //@@author A0148095X
     @Override
     public synchronized void changeSaveLocation(String location){
         assert StringUtil.isValidPathToFile(location);
-
-        config.setToDoListFilePath(location);
-        indicateSaveLocationChanged(location);
-        saveConfigFile();
+        indicateChangeSaveLocationRequest(location);
+        indicateToDoListChanged();
     }
 
-    private void saveConfigFile() {
-        try {
-            ConfigUtil.saveConfig(config, Config.DEFAULT_CONFIG_FILE);
-        } catch (IOException e) {
-            logger.warning("Failed to save config file : " + StringUtil.getDetails(e));
-        }        
-    }
+    @Override
+    public synchronized void loadFromLocation(String location) {
+        assert StringUtil.isValidPathToFile(location);
+        assert XmlUtil.isFileCorrectFormat(location);
 
+        indicateChangeSaveLocationRequest(location);
+        indicateLoadDataRequest(location);
+    }
+    //@@author
+    
     //=========== Filtered Task List Accessors ===============================================================
 
     @Override
@@ -251,4 +260,13 @@ public class ModelManager extends ComponentManager implements Model {
         }
     }
 
+    //========== event handling ==================================================
+    //@@author A0148095X
+    @Override
+    @Subscribe
+    public void handleLoadDataCompleteEvent(LoadDataCompleteEvent event) {
+        this.toDoList.resetData(event.data);
+        indicateToDoListChanged();
+        logger.info("Loading completed - Todolist updated.");
+    }
 }

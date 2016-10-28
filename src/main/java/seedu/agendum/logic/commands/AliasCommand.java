@@ -27,8 +27,6 @@ public class AliasCommand extends Command {
 
     private String aliasValue;
     private String aliasKey;
-
-    public AliasCommand() {}
     
     public AliasCommand(String aliasKey, String aliasValue) {
         this.aliasKey = aliasKey;
@@ -57,18 +55,15 @@ public class AliasCommand extends Command {
         return new CommandResult(String.format(MESSAGE_SUCCESS, aliasKey, aliasValue));
     }
 
-    @Override
-    public String getName() {
+    public static String getName() {
         return COMMAND_WORD;
     }
 
-    @Override
-    public String getFormat() {
+    public static String getFormat() {
         return COMMAND_FORMAT;
     }
 
-    @Override
-    public String getDescription() {
+    public static String getDescription() {
         return COMMAND_DESCRIPTION;
     }
 }

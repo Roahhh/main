@@ -4,25 +4,19 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Control;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyCodeCombination;
-import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+<<<<<<< HEAD
 import javafx.util.Callback;
 import seedu.agendum.logic.commands.AddCommand;
 import seedu.agendum.logic.commands.AliasCommand;
@@ -37,12 +31,21 @@ import seedu.agendum.logic.commands.MarkCommand;
 import seedu.agendum.logic.commands.RenameCommand;
 import seedu.agendum.logic.commands.UnaliasCommand;
 import seedu.agendum.logic.commands.UnmarkCommand;
+=======
+import org.reflections.Reflections;
+import seedu.agendum.logic.commands.Command;
+>>>>>>> master
 import seedu.agendum.commons.core.LogsCenter;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 import java.util.logging.Logger;
 
 import com.sun.javafx.stage.StageHelper;
 
+//@@author A0148031R
 /**
  * Controller for a help page
  */
@@ -54,23 +57,27 @@ public class HelpWindow extends UiPart {
     private static final String TITLE = "Help";
     private static final int WIDTH = 1000;
     private static final int HEIGHT = 650;
-    private ObservableList<Command> commandList = FXCollections.observableArrayList();
+    private ObservableList<Map<CommandColumns, String>> commandList = FXCollections.observableArrayList();
 
     private AnchorPane mainPane;
 
     private static Stage dialogStage;
+
+    private enum CommandColumns {
+        COMMAND, DESCRIPTION, FORMAT
+    }
     
     @FXML
-    private TableView<Command> commandTable;
+    private TableView<Map<CommandColumns, String>> commandTable;
     
     @FXML
-    private TableColumn<Command, String> commandColumn;
+    private TableColumn<Map<CommandColumns, String>, String> commandColumn;
     
     @FXML
-    private TableColumn<Command, String> descriptionColumn;
+    private TableColumn<Map<CommandColumns, String>, String> descriptionColumn;
     
     @FXML
-    private TableColumn<Command, String> formatColumn;
+    private TableColumn<Map<CommandColumns, String>, String> formatColumn;
     
     @FXML
     private Button backButton;
@@ -86,9 +93,9 @@ public class HelpWindow extends UiPart {
             dialogStage.close();
         });
         
-        commandColumn.setCellValueFactory(cellData ->  new SimpleStringProperty(cellData.getValue().getName()));
-        descriptionColumn.setCellValueFactory(cellData ->  new SimpleStringProperty(cellData.getValue().getDescription()));
-        formatColumn.setCellValueFactory(cellData ->  new SimpleStringProperty(cellData.getValue().getFormat()));
+        commandColumn.setCellValueFactory(cellData ->  new SimpleStringProperty(cellData.getValue().get(CommandColumns.COMMAND)));
+        descriptionColumn.setCellValueFactory(cellData ->  new SimpleStringProperty(cellData.getValue().get(CommandColumns.DESCRIPTION)));
+        formatColumn.setCellValueFactory(cellData ->  new SimpleStringProperty(cellData.getValue().get(CommandColumns.FORMAT)));
         
         commandTable.setItems(commandList);
     }
@@ -144,19 +151,26 @@ public class HelpWindow extends UiPart {
         });
     }
 
+    //@@author A0003878Y
     private void loadHelpList() {
-       commandList.add(new AddCommand());
-       commandList.add(new RenameCommand());
-       commandList.add(new MarkCommand());
-       commandList.add(new UnmarkCommand());
-       commandList.add(new DeleteCommand());
-       commandList.add(new ListCommand());
-       commandList.add(new FindCommand());
-       commandList.add(new ClearCommand());
-       commandList.add(new AliasCommand());
-       commandList.add(new UnaliasCommand());
-       commandList.add(new HelpCommand());
-       commandList.add(new ExitCommand());
+        Reflections reflections = new Reflections("seedu.agendum");
+        Set<Class<? extends Command>> classes = reflections.getSubTypesOf(Command.class);
+
+        for (Class<? extends Command> c :classes) {
+            try {
+                Map<CommandColumns, String> map = new HashMap<CommandColumns, String>();
+                map.put(CommandColumns.COMMAND, c.getMethod("getName").invoke(null).toString());
+                map.put(CommandColumns.FORMAT, c.getMethod("getFormat").invoke(null).toString());
+                map.put(CommandColumns.DESCRIPTION, c.getMethod("getDescription").invoke(null).toString());
+                commandList.add(map);
+            } catch (NullPointerException e) {
+                    continue;
+            } catch (Exception e) {
+                logger.severe("Java reflection for Command class failed");
+            }
+        }
+        
+        Collections.sort(commandList, (lhs, rhs) -> lhs.get(CommandColumns.COMMAND).compareTo(rhs.get(CommandColumns.COMMAND)));
     }
 
     public void show() {

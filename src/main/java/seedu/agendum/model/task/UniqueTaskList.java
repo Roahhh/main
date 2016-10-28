@@ -3,10 +3,11 @@ package seedu.agendum.model.task;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.agendum.commons.util.CollectionUtil;
+import seedu.agendum.commons.core.LogsCenter;
 import seedu.agendum.commons.exceptions.DuplicateDataException;
 
-import java.time.LocalDateTime;
 import java.util.*;
+import java.util.logging.Logger;
 
 /**
  * A list of tasks that enforces uniqueness between its elements and does not allow nulls.
@@ -17,6 +18,7 @@ import java.util.*;
  * @see CollectionUtil#elementsAreUnique(Collection)
  */
 public class UniqueTaskList implements Iterable<Task> {
+    private static final Logger logger = LogsCenter.getLogger(UniqueTaskList.class);
 
     /**
      * Signals that an operation would have violated the 'no duplicates' property of the list.
@@ -48,6 +50,7 @@ public class UniqueTaskList implements Iterable<Task> {
         return internalList.contains(toCheck);
     }
 
+    //@@author A0133367E
     /**
      * Adds a task to the list.
      *
@@ -55,10 +58,14 @@ public class UniqueTaskList implements Iterable<Task> {
      */
     public void add(Task toAdd) throws DuplicateTaskException {
         assert toAdd != null;
+ 
         if (contains(toAdd)) {
+            logger.fine("[TASK LIST] --- Duplicate Task: " + toAdd.getDetailedText());
             throw new DuplicateTaskException();
         }
+
         internalList.add(toAdd);
+        logger.fine("[TASK LIST] --- Added a Task: " + toAdd.getDetailedText());
     }
 
     /**
@@ -69,9 +76,14 @@ public class UniqueTaskList implements Iterable<Task> {
     public boolean remove(ReadOnlyTask toRemove) throws TaskNotFoundException {
         assert toRemove != null;
         final boolean taskFoundAndDeleted = internalList.remove(toRemove);
+
         if (!taskFoundAndDeleted) {
+            logger.fine("[TASK LIST] --- Missing Task: " + toRemove.getDetailedText());
             throw new TaskNotFoundException();
         }
+
+        logger.fine("[TASK LIST] --- Deleted a Task: " + toRemove.getDetailedText());
+
         return taskFoundAndDeleted;
     }
     
@@ -90,14 +102,19 @@ public class UniqueTaskList implements Iterable<Task> {
         final boolean taskFoundAndUpdated = (taskIndex != -1);
 
         if (!taskFoundAndUpdated) {
+            logger.fine("[TASK LIST] --- Missing Task: " + toUpdate.getDetailedText());
             throw new TaskNotFoundException();
         }
 
         if (contains(updatedTask)) {
+            logger.fine("[TASK LIST] --- Duplicate Task: " + toUpdate.getDetailedText());
             throw new DuplicateTaskException();
         }
 
         internalList.set(taskIndex, updatedTask);
+        logger.fine("[TASK LIST] --- Updated Task: " + toUpdate.getDetailedText()
+                + " updated to " + updatedTask.getDetailedText());
+
         return taskFoundAndUpdated;
     }
 
@@ -113,12 +130,15 @@ public class UniqueTaskList implements Iterable<Task> {
         final boolean taskFoundAndMarked = (taskIndex != -1);
 
         if (!taskFoundAndMarked) {
+            logger.fine("[TASK LIST] --- Missing Task: " + toMark.getDetailedText());
             throw new TaskNotFoundException();
         }
 
         Task markedTask = new Task(toMark);
         markedTask.markAsCompleted();
         internalList.set(taskIndex, markedTask);
+
+        logger.fine("[TASK LIST] --- Marked Task: " + markedTask.getDetailedText());
 
         return taskFoundAndMarked;
     }
@@ -135,6 +155,7 @@ public class UniqueTaskList implements Iterable<Task> {
         final boolean taskFoundAndUnmarked = (taskIndex != -1);
 
         if (!taskFoundAndUnmarked) {
+            logger.fine("[TASK LIST] --- Missing Task: " + toUnmark.getDetailedText());
             throw new TaskNotFoundException();
         }
 
@@ -142,9 +163,12 @@ public class UniqueTaskList implements Iterable<Task> {
         unmarkedTask.markAsUncompleted();
         internalList.set(taskIndex, unmarkedTask);
 
+        logger.fine("[TASK LIST] --- Unmarked Task: " + unmarkedTask.getDetailedText());
+
         return taskFoundAndUnmarked;
     }
 
+    //@@author
     public ObservableList<Task> getInternalList() {
         return internalList;
     }
