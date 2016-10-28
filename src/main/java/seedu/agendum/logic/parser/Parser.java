@@ -282,8 +282,8 @@ public class Parser {
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, AliasCommand.MESSAGE_USAGE));
         }
 
-        String aliasKey = matcher.group("shorthand");
-        String aliasValue = matcher.group("commandword");
+        String aliasKey = matcher.group("shorthand").toLowerCase();
+        String aliasValue = matcher.group("commandword").toLowerCase();
 
         return new AliasCommand(aliasKey, aliasValue);
     }
@@ -301,7 +301,7 @@ public class Parser {
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, UnaliasCommand.MESSAGE_USAGE));
         }
 
-        String aliasKey = matcher.group("shorthand");
+        String aliasKey = matcher.group("shorthand").toLowerCase();
 
         return new UnaliasCommand(aliasKey);
     }
