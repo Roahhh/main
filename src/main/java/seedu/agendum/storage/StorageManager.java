@@ -1,6 +1,7 @@
 package seedu.agendum.storage;
 
 import java.io.IOException;
+import java.util.Hashtable;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -11,6 +12,7 @@ import seedu.agendum.commons.core.ComponentManager;
 import seedu.agendum.commons.core.Config;
 import seedu.agendum.commons.core.LogsCenter;
 import seedu.agendum.commons.events.model.LoadDataRequestEvent;
+import seedu.agendum.commons.events.logic.CommandLibraryChangedEvent;
 import seedu.agendum.commons.events.model.ChangeSaveLocationRequestEvent;
 import seedu.agendum.commons.events.model.ToDoListChangedEvent;
 import seedu.agendum.commons.events.storage.DataLoadingExceptionEvent;
@@ -30,17 +32,34 @@ public class StorageManager extends ComponentManager implements Storage {
     private static final Logger logger = LogsCenter.getLogger(StorageManager.class);
     private ToDoListStorage toDoListStorage;
     private UserPrefsStorage userPrefsStorage;
+    private CommandLibraryStorage commandLibraryStorage;
     private Config config;
 
-    public StorageManager(ToDoListStorage toDoListStorage, UserPrefsStorage userPrefsStorage, Config config) {
+    public StorageManager(ToDoListStorage toDoListStorage, CommandLibraryStorage aliasCommandStorage,
+            UserPrefsStorage userPrefsStorage, Config config) {
         super();
         this.toDoListStorage = toDoListStorage;
+        this.commandLibraryStorage = aliasCommandStorage;
         this.userPrefsStorage = userPrefsStorage;
         this.config = config;
     }
 
-    public StorageManager(String toDoListFilePath, String userPrefsFilePath, Config config) {
-        this(new XmlToDoListStorage(toDoListFilePath), new JsonUserPrefsStorage(userPrefsFilePath), config);
+    public StorageManager(String toDoListFilePath, String commandFilePath,
+            String userPrefsFilePath, Config config) {
+        this(new XmlToDoListStorage(toDoListFilePath), new JsonCommandLibraryStorage(commandFilePath),
+                new JsonUserPrefsStorage(userPrefsFilePath), config);
+    }
+    
+    // ================ Alias command methods ==============================
+    @Override
+    public Optional<Hashtable<String, String>> readCommandTable()
+            throws DataConversionException, IOException {
+        return commandLibraryStorage.readCommandTable();
+    }
+
+    @Override
+    public void saveCommandTable(Hashtable<String, String> table) throws IOException {
+        commandLibraryStorage.saveCommandTable(table);
     }
 
     // ================ UserPrefs methods ==============================
@@ -107,6 +126,17 @@ public class StorageManager extends ComponentManager implements Storage {
         logger.info(LogsCenter.getEventHandlingLogMessage(event, "Local data changed, saving to file"));
         try {
             saveToDoList(event.data);
+        } catch (IOException e) {
+            raise(new DataSavingExceptionEvent(e));
+        }
+    }
+    
+    @Override
+    @Subscribe
+    public void handleCommandLibraryChangedEvent(CommandLibraryChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event, "Command library changed, saving to file"));
+        try {
+            saveCommandTable(event.aliasTable);
         } catch (IOException e) {
             raise(new DataSavingExceptionEvent(e));
         }

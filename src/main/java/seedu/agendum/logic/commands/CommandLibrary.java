@@ -5,6 +5,12 @@ import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.List;
 
+import seedu.agendum.commons.core.EventsCenter;
+import seedu.agendum.commons.events.logic.CommandLibraryChangedEvent;
+import seedu.agendum.commons.events.model.ToDoListChangedEvent;
+
+import com.google.common.eventbus.Subscribe;
+
 
 /**
  * Manage and store the various alias keys and values
@@ -40,6 +46,14 @@ public class CommandLibrary {
             instance = new CommandLibrary();
         }
         return instance;
+    }
+
+    public void loadCommandTable(Hashtable<String, String> aliasTable) {
+        this.aliasTable = aliasTable;
+    }
+
+    public Hashtable<String, String> getCommandTable() {
+        return aliasTable;
     }
 
     /**
@@ -83,6 +97,8 @@ public class CommandLibrary {
         assert isReservedCommandKeyword(value);
         
         aliasTable.put(key, value);
+  
+        indicateCommandLibraryChanged(key);
     }
 
     /**
@@ -92,6 +108,12 @@ public class CommandLibrary {
         assert isExistingAliasKey(key);
 
         aliasTable.remove(key);
+
+        indicateCommandLibraryChanged(key);
+    }
+
+    private void indicateCommandLibraryChanged(String key) {
+        EventsCenter.getInstance().post(new CommandLibraryChangedEvent(key, aliasTable));
     }
 
 }

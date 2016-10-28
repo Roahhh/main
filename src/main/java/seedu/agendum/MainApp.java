@@ -13,6 +13,7 @@ import seedu.agendum.commons.exceptions.DataConversionException;
 import seedu.agendum.commons.util.StringUtil;
 import seedu.agendum.logic.Logic;
 import seedu.agendum.logic.LogicManager;
+import seedu.agendum.logic.commands.CommandLibrary;
 import seedu.agendum.model.*;
 import seedu.agendum.commons.util.ConfigUtil;
 import seedu.agendum.storage.Storage;
@@ -22,6 +23,7 @@ import seedu.agendum.ui.UiManager;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.Hashtable;
 import java.util.Optional;
 import java.util.logging.Logger;
 
@@ -48,9 +50,12 @@ public class MainApp extends Application {
         super.init();
 
         config = initConfig(getApplicationParameter("config"));
-        storage = new StorageManager(config.getToDoListFilePath(), config.getUserPrefsFilePath(), config);
+        storage = new StorageManager(config.getToDoListFilePath(), config.getCommandLibraryFilePath(),
+                config.getUserPrefsFilePath(), config);
 
         userPrefs = initPrefs(config);
+        
+        initCommandLibrary(config);
 
         initLogging(config);
 
@@ -150,6 +155,35 @@ public class MainApp extends Application {
         }
 
         return initializedPrefs;
+    }
+
+    protected void initCommandLibrary(Config config) {
+        assert config != null;
+
+        String commandLibraryFilePath = config.getCommandLibraryFilePath();
+        logger.info("Using command library file : " + commandLibraryFilePath);
+
+        Hashtable<String, String> initializedCommandLibrary;
+        try {
+            Optional<Hashtable<String, String>> commandsOptional = storage.readCommandTable();
+            initializedCommandLibrary = commandsOptional.orElse(new Hashtable<String, String>());
+        } catch (DataConversionException e) {
+            logger.warning("CommandLibrary file at " + commandLibraryFilePath + " is not in the correct format. " +
+                    "Using default command library");
+            initializedCommandLibrary = new Hashtable<String, String>();
+        } catch (IOException e) {
+            logger.warning("Problem while reading from the file. . Will be starting with an empty command library");
+            initializedCommandLibrary = new Hashtable<String, String>();
+        }
+
+        CommandLibrary.getInstance().loadCommandTable(initializedCommandLibrary);
+        
+        //Update commandLibrary file in case it was missing to begin with or there are new/unused fields
+        try {
+            storage.saveCommandTable(initializedCommandLibrary);
+        } catch (IOException e) {
+            logger.warning("Failed to save command library file : " + StringUtil.getDetails(e));
+        }
     }
 
     private void initEventsCenter() {
