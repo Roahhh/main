@@ -16,6 +16,7 @@ public class ConfigTest {
     public void toString_defaultObject_stringReturned() {
         String defaultConfigAsString = "App title : Agendum\n" +
                 "Current log level : INFO\n" +
+                "Command Library file location: commands.json\n" +
                 "Preference file Location : preferences.json\n" +
                 "Local data file location : data/todolist.xml\n" +
                 "ToDoList name : MyToDoList";
