@@ -19,11 +19,11 @@ import java.util.Optional;
 public interface Storage extends ToDoListStorage, UserPrefsStorage, CommandLibraryStorage {
 
     @Override
-    Optional<Hashtable<String, String>> readCommandTable()
+    Optional<Hashtable<String, String>> readCommandLibraryTable()
             throws DataConversionException, IOException;
 
     @Override
-    void saveCommandTable(Hashtable<String, String> table) throws IOException;
+    void saveCommandLibraryTable(Hashtable<String, String> table) throws IOException;
 
     @Override
     Optional<UserPrefs> readUserPrefs() throws DataConversionException, IOException;

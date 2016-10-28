@@ -12,7 +12,7 @@ import java.util.Optional;
 import java.util.logging.Logger;
 
 /**
- * A class to access the alias command table stored in the hard disk as a json file
+ * A class to access the (alias) command table stored in the hard disk as a json file
  */
 public class JsonCommandLibraryStorage implements CommandLibraryStorage {
 
@@ -25,37 +25,37 @@ public class JsonCommandLibraryStorage implements CommandLibraryStorage {
     }
 
     @Override
-    public Optional<Hashtable<String, String>> readCommandTable() throws DataConversionException, IOException {
-        return readCommandTable(filePath);
+    public Optional<Hashtable<String, String>> readCommandLibraryTable() throws DataConversionException, IOException {
+        return readCommandLibraryTable(filePath);
     }
 
     @Override
-    public void saveCommandTable(Hashtable<String, String> table) throws IOException {
-        saveCommandTable(table, filePath);
+    public void saveCommandLibraryTable(Hashtable<String, String> table) throws IOException {
+        saveCommandLibraryTable(table, filePath);
     }
 
     /**
-     * Similar to {@link #readCommandTable()}
-     * @param commandLibraryFilePath location of the data. Cannot be null.
+     * Similar to {@link #readCommandLibraryTable()}
+     * @param commandLibraryFilePath location of the command library data. Cannot be null.
      * @throws DataConversionException if the file format is not as expected.
      */
-    public Optional<Hashtable<String, String>> readCommandTable(String commandLibraryFilePath)
+    public Optional<Hashtable<String, String>> readCommandLibraryTable(String commandLibraryFilePath)
             throws DataConversionException {
         assert commandLibraryFilePath != null;
 
-        File commandsFile = new File(commandLibraryFilePath);
+        File commandLibraryFile = new File(commandLibraryFilePath);
 
-        if (!commandsFile.exists()) {
-            logger.info("Commands file: "  + commandsFile + " not found");
+        if (!commandLibraryFile.exists()) {
+            logger.info("Commands file: "  + commandLibraryFile + " not found");
             return Optional.empty();
         }
 
         Hashtable<String, String> table = new Hashtable<String, String>();
 
         try {
-            table = FileUtil.deserializeObjectFromJsonFile(commandsFile, table.getClass());
+            table = FileUtil.deserializeObjectFromJsonFile(commandLibraryFile, table.getClass());
         } catch (IOException e) {
-            logger.warning("Error reading from commands file " + commandsFile + ": " + e);
+            logger.warning("Error reading from command library file " + commandLibraryFile + ": " + e);
             throw new DataConversionException(e); 
         }
 
@@ -64,9 +64,9 @@ public class JsonCommandLibraryStorage implements CommandLibraryStorage {
 
     /**
      * Similar to {@link #saveCommandTable(Hashtable<String, String> table)}
-     * @param commandLibraryFilePath location of the data. Cannot be null.
+     * @param commandLibraryFilePath location of the command library data. Cannot be null.
      */
-    public void saveCommandTable(Hashtable<String, String> table, String commandLibraryFilePath)
+    public void saveCommandLibraryTable(Hashtable<String, String> table, String commandLibraryFilePath)
             throws IOException {
         assert table != null;
         assert commandLibraryFilePath != null;

@@ -35,31 +35,32 @@ public class StorageManager extends ComponentManager implements Storage {
     private CommandLibraryStorage commandLibraryStorage;
     private Config config;
 
-    public StorageManager(ToDoListStorage toDoListStorage, CommandLibraryStorage aliasCommandStorage,
+    public StorageManager(ToDoListStorage toDoListStorage, CommandLibraryStorage commandLibraryStorage,
             UserPrefsStorage userPrefsStorage, Config config) {
         super();
         this.toDoListStorage = toDoListStorage;
-        this.commandLibraryStorage = aliasCommandStorage;
+        this.commandLibraryStorage = commandLibraryStorage;
         this.userPrefsStorage = userPrefsStorage;
         this.config = config;
     }
 
-    public StorageManager(String toDoListFilePath, String commandFilePath,
+    public StorageManager(String toDoListFilePath, String commandLibraryFilePath,
             String userPrefsFilePath, Config config) {
-        this(new XmlToDoListStorage(toDoListFilePath), new JsonCommandLibraryStorage(commandFilePath),
+        this(new XmlToDoListStorage(toDoListFilePath), new JsonCommandLibraryStorage(commandLibraryFilePath),
                 new JsonUserPrefsStorage(userPrefsFilePath), config);
     }
     
-    // ================ Alias command methods ==============================
+    // ================ CommandLibrary methods ==============================
+
     @Override
-    public Optional<Hashtable<String, String>> readCommandTable()
+    public Optional<Hashtable<String, String>> readCommandLibraryTable()
             throws DataConversionException, IOException {
-        return commandLibraryStorage.readCommandTable();
+        return commandLibraryStorage.readCommandLibraryTable();
     }
 
     @Override
-    public void saveCommandTable(Hashtable<String, String> table) throws IOException {
-        commandLibraryStorage.saveCommandTable(table);
+    public void saveCommandLibraryTable(Hashtable<String, String> table) throws IOException {
+        commandLibraryStorage.saveCommandLibraryTable(table);
     }
 
     // ================ UserPrefs methods ==============================
@@ -136,7 +137,7 @@ public class StorageManager extends ComponentManager implements Storage {
     public void handleCommandLibraryChangedEvent(CommandLibraryChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event, "Command library changed, saving to file"));
         try {
-            saveCommandTable(event.aliasTable);
+            saveCommandLibraryTable(event.aliasTable);
         } catch (IOException e) {
             raise(new DataSavingExceptionEvent(e));
         }
