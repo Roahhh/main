@@ -7,17 +7,17 @@ safe: false
 
 ### site serving configuration ###
 exclude: [CNAME, README.md, .gitignore]
-permalink: / ## disables post output
+permalink: /:title ## disables post output
 timezone: null
 lsi: false
 markdown: kramdown
 
 
 ### content configuration ###
-title:       "SinglePaged - Title: Edit me in _config.yml!"
-keywords:    "SinglePaged, jekyll, template, github, blog, single page"
-description: "A single-page template for Jekyll based blogs (like what you'd use on github pages!)"
-source_link: "https://github.com/t413/SinglePaged"
+title:       "Agendum - A task manager for everyone!"
+keywords:    "Agendum, todo list, task manager, google calendar"
+description: "Agendum is a task manager for busy users to manage their schedules and tasks via keyboard commands. It is a Java desktop application that has a GUI implemented with JavaFX."
+source_link: "https://github.com/CS2103AUG2016-W11-C2/main/"
 favicon:     #put a path like: "img/favicon.ico"
 touch_icon:  #put a path like: "img/apple-touch-icon.png"
 google_analytics_key: ## put YOUR key here to enable tracking! (blank to disable)
