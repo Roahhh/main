@@ -145,17 +145,6 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void execute_clear() throws Exception {
-        TestDataHelper helper = new TestDataHelper();
-        model.addTask(helper.generateTask(1));
-        model.addTask(helper.generateTask(2));
-        model.addTask(helper.generateTask(3));
-
-        assertCommandBehavior("clear", ClearCommand.MESSAGE_SUCCESS, new ToDoList(), Collections.emptyList());
-    }
-
-
-    @Test
     public void execute_add_invalidArgsFormat() throws Exception {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE);
         // TODO
@@ -489,6 +478,7 @@ public class LogicManagerTest {
         expectedTDL.markTask(threeTasks.get(0));
 
         // prepare model
+        model.resetData(new ToDoList());
         helper.addToModel(model, threeTasks);
 
         // prepare for message
@@ -510,10 +500,11 @@ public class LogicManagerTest {
 
         // prepare expected TDL
         ToDoList expectedTDL = helper.generateToDoList(fourTasks);
-        expectedTDL.markTask(fourTasks.get(3));
         expectedTDL.markTask(fourTasks.get(2));
+        expectedTDL.markTask(fourTasks.get(3));
 
         // prepare model
+        model.resetData(new ToDoList());
         helper.addToModel(model, fourTasks);
 
         // prepare for message
@@ -536,9 +527,9 @@ public class LogicManagerTest {
 
         // prepare expected TDL
         ToDoList expectedTDL = helper.generateToDoList(fourTasks);
-        expectedTDL.markTask(fourTasks.get(3));
-        expectedTDL.markTask(fourTasks.get(2));
         expectedTDL.markTask(fourTasks.get(1));
+        expectedTDL.markTask(fourTasks.get(2));
+        expectedTDL.markTask(fourTasks.get(3));
 
         // prepare model
         helper.addToModel(model, fourTasks);
@@ -578,6 +569,7 @@ public class LogicManagerTest {
         expectedTDL.unmarkTask(threeTasks.get(2));
 
         // prepare model
+        model.resetData(new ToDoList());
         helper.addToModel(model, threeTasks);
 
         // prepare for message
@@ -607,6 +599,7 @@ public class LogicManagerTest {
         expectedTDL.unmarkTask(fourTasks.get(3));
 
         // prepare model
+        model.resetData(new ToDoList());
         helper.addToModel(model, fourTasks);
 
         // prepare for message
@@ -946,9 +939,13 @@ public class LogicManagerTest {
      */
     class TestDataHelper{
 
+        private LocalDateTime fixedTime = LocalDateTime.of(2016, 10, 10, 10, 10);
+
         Task adam() throws Exception {
             Name name = new Name("Adam Brown");
-            return new Task(name);
+            Task adam = new Task(name);
+            adam.setLastUpdatedTime(fixedTime);
+            return adam;
         }
 
         /**
@@ -959,9 +956,11 @@ public class LogicManagerTest {
          * @param seed used to generate the task data field values
          */
         Task generateTask(int seed) throws Exception {
-            return new Task(
+            Task task =  new Task(
                     new Name("Task " + seed)
             );
+            task.setLastUpdatedTime(fixedTime);
+            return task;
         }
         
         /**
@@ -970,6 +969,7 @@ public class LogicManagerTest {
         Task generateCompletedTask(int seed) throws Exception {
             Task newTask = generateTask(seed);
             newTask.markAsCompleted();
+            newTask.setLastUpdatedTime(fixedTime);
             return newTask;
         }
 
@@ -977,9 +977,11 @@ public class LogicManagerTest {
          * Generates a Task object with given name. Other fields will have some dummy values.
          */
         Task generateTaskWithName(String name) throws Exception {
-            return new Task(
+            Task namedTask = new Task(
                     new Name(name)
             );
+            namedTask.setLastUpdatedTime(fixedTime);
+            return namedTask;
         }
 
         /** Generates the correct add command based on the task given */
