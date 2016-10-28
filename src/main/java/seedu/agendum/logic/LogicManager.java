@@ -39,11 +39,4 @@ public class LogicManager extends ComponentManager implements Logic {
         return model.getFilteredTaskList();
     }
 
-    /**
-     * Requires implementation here
-     */
-    @Override
-    public ObservableList<ReadOnlyTask> getCompletedTaskList() {
-        return null;
-    }
 }
