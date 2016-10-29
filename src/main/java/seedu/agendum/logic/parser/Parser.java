@@ -73,9 +73,6 @@ public class Parser {
         case DeleteCommand.COMMAND_WORD:
             return prepareDelete(arguments);
 
-        case ClearCommand.COMMAND_WORD:
-            return new ClearCommand();
-
         case FindCommand.COMMAND_WORD:
             return prepareFind(arguments);
 
@@ -110,7 +107,7 @@ public class Parser {
             return new LoadCommand(arguments);
 
         default:
-            Optional<String> alternativeCommand = EditDistanceCalculator.parseString(commandWord);
+            Optional<String> alternativeCommand = EditDistanceCalculator.closestCommandMatch(commandWord);
             if (alternativeCommand.isPresent()) {
                 return new IncorrectCommand(String.format(MESSAGE_UNKNOWN_COMMAND_WITH_SUGGESTION, alternativeCommand.get()));
             } else {
