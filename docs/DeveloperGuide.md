@@ -655,7 +655,7 @@ Priority | As a ... | I want to ... | So that I can...
 
 ## Appendix C : Non Functional Requirements
 
-1.  Should work on any [mainstream OS](#mainstream-os) as long as it has Java `1.8.0_60` or higher installed.
+1.  	Should work on any [mainstream OS](#mainstream-os) as long as it has Java `1.8.0_60` or higher installed.
 2.	Should be able to hold up to 800 tasks in total (including completed tasks).
 3.	Should come with automated unit tests.
 4.	Should use a Continuous Integration server for real time status of master’s health.
@@ -663,13 +663,19 @@ Priority | As a ... | I want to ... | So that I can...
 6.	Should favour DOS style commands over Unix-style commands.
 7.	Should adopt an object oriented design.
 8.	Should not violate any copyrights.
-9.	Should have a response time of less than 1 second, for every action performed.
+9.	Should have a response time of less than 1 second for every action performed.
 10.	Should work offline without an internet connection.
 11.	Should work as a standalone application.
 12.	Should not use relational databases to store data.
 13.	Should store data in an editable text file.
 14.	Should not require an installer.
 15.	Should not use paid libraries and frameworks.
+16.	Should be a free software.
+17.	Should be easily transferrable between devices; only 1 folder needs to be transferred.
+18.	Should have documentation that matches the source code
+19.	Should not have unhandled exceptions from user input
+20.	Should be installable without assistance other than the user guide.
+21. 	Should have understandable code such that new members can start working on the project within 1 week.
 
 
 &nbsp;
