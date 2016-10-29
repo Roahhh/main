@@ -20,6 +20,7 @@ public class ChildRecurringTask extends RecurringTask {
         this.endDateTime = parent.getEndDateTime().orElse(null);
         this.parent = parent;
         parent.setChild(this);
+        setLastUpdatedTimeToNow();
     }
     
     public void setLatestChild() {

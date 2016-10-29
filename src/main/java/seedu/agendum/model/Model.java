@@ -6,7 +6,6 @@ import seedu.agendum.model.task.ReadOnlyTask;
 import seedu.agendum.model.task.Task;
 import seedu.agendum.model.task.UniqueTaskList;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -36,7 +35,7 @@ public interface Model {
     
     /** Unmarks the given task(s) */
     void unmarkTasks(List<ReadOnlyTask> targets) throws UniqueTaskList.TaskNotFoundException, 
-    UniqueTaskList.NotLatestRecurringTaskException, UniqueTaskList.CannotMarkRecurringTaskException;
+    UniqueTaskList.NotLatestRecurringTaskException;
 
 
     /** Restores the previous to do list saved. Returns true if successful; false if no previous saved list*/

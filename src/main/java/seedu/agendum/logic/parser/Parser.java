@@ -13,6 +13,7 @@ import java.util.stream.IntStream;
 
 import static seedu.agendum.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.agendum.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.agendum.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND_WITH_SUGGESTION;
 
 /**
  * Parses user input.
@@ -53,7 +54,6 @@ public class Parser {
     private static final String[] TIME_TOKENS = new String[] { ARGS_FROM, ARGS_TO, ARGS_BY, ARGS_EVERY};
 	
     //@@author
-    public Parser() {}
 
     /**
      * Parses user input into command for execution.
@@ -80,9 +80,6 @@ public class Parser {
 
         case DeleteCommand.COMMAND_WORD:
             return prepareDelete(arguments);
-
-        case ClearCommand.COMMAND_WORD:
-            return new ClearCommand();
 
         case FindCommand.COMMAND_WORD:
             return prepareFind(arguments);
@@ -118,7 +115,12 @@ public class Parser {
             return new LoadCommand(arguments);
 
         default:
-            return new IncorrectCommand(MESSAGE_UNKNOWN_COMMAND);
+            Optional<String> alternativeCommand = EditDistanceCalculator.closestCommandMatch(commandWord);
+            if (alternativeCommand.isPresent()) {
+                return new IncorrectCommand(String.format(MESSAGE_UNKNOWN_COMMAND_WITH_SUGGESTION, alternativeCommand.get()));
+            } else {
+                return new IncorrectCommand(MESSAGE_UNKNOWN_COMMAND);
+            }
         }
     }
 
@@ -148,11 +150,11 @@ public class Parser {
                     if (s.startsWith(token)) {
                         String time = s.substring(token.length(), s.length());
                         if (token.equals(ARGS_EVERY)) {
-                            dateTimeMap.put(token, DateTimeParser.parseString(RELATIVE_FROM + s).isPresent()
-                                    ? DateTimeParser.parseString(RELATIVE_FROM + s)
-                                    : DateTimeParser.parseString(RELATIVE_NEXT + s));
-                        } else if (DateTimeParser.containsTime(time)) {
-                            dateTimeMap.put(token, DateTimeParser.parseString(s));
+                            dateTimeMap.put(token, DateTimeUtils.parseNaturalLanguageDateTimeString(RELATIVE_FROM + s).isPresent()
+                                    ? DateTimeUtils.parseNaturalLanguageDateTimeString(RELATIVE_FROM + s)
+                                    : DateTimeUtils.parseNaturalLanguageDateTimeString(RELATIVE_NEXT + s));
+                        } else if (DateTimeUtils.containsTime(time)) {
+                            dateTimeMap.put(token, DateTimeUtils.parseNaturalLanguageDateTimeString(s));
                         } else {
                             taskTitle = taskTitle + s;
                         }
@@ -216,8 +218,8 @@ public class Parser {
                 String s = matcher.group(0).toLowerCase();
                 if (s.startsWith(token)) {
                     String time = s.substring(token.length(), s.length());
-                    if (DateTimeParser.containsTime(time)) {
-                        dateTimeMap.put(token, DateTimeParser.parseString(time));
+                    if (DateTimeUtils.containsTime(time)) {
+                        dateTimeMap.put(token, DateTimeUtils.parseNaturalLanguageDateTimeString(time));
                     }
                 }
             }

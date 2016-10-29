@@ -1,27 +1,5 @@
 package seedu.agendum.model;
 
-import javafx.collections.transformation.FilteredList;
-import javafx.collections.transformation.SortedList;
-import seedu.agendum.commons.core.LogsCenter;
-import seedu.agendum.commons.core.UnmodifiableObservableList;
-import seedu.agendum.commons.util.StringUtil;
-import seedu.agendum.model.task.ChildRecurringTask;
-import seedu.agendum.commons.util.XmlUtil;
-import seedu.agendum.model.task.ReadOnlyTask;
-import seedu.agendum.model.task.RecurringTask;
-import seedu.agendum.model.task.Task;
-import seedu.agendum.model.task.UniqueTaskList;
-import seedu.agendum.model.task.UniqueTaskList.CannotMarkRecurringTaskException;
-import seedu.agendum.model.task.UniqueTaskList.DuplicateTaskException;
-import seedu.agendum.model.task.UniqueTaskList.NotLatestRecurringTaskException;
-import seedu.agendum.model.task.UniqueTaskList.TaskNotFoundException;
-import seedu.agendum.commons.events.model.LoadDataRequestEvent;
-import seedu.agendum.commons.events.model.ChangeSaveLocationRequestEvent;
-import seedu.agendum.commons.events.model.ToDoListChangedEvent;
-import seedu.agendum.commons.events.storage.LoadDataCompleteEvent;
-import seedu.agendum.commons.core.ComponentManager;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -30,6 +8,26 @@ import java.util.Stack;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
+
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
+import seedu.agendum.commons.core.ComponentManager;
+import seedu.agendum.commons.core.LogsCenter;
+import seedu.agendum.commons.core.UnmodifiableObservableList;
+import seedu.agendum.commons.events.model.ChangeSaveLocationRequestEvent;
+import seedu.agendum.commons.events.model.LoadDataRequestEvent;
+import seedu.agendum.commons.events.model.ToDoListChangedEvent;
+import seedu.agendum.commons.events.storage.LoadDataCompleteEvent;
+import seedu.agendum.commons.util.StringUtil;
+import seedu.agendum.commons.util.XmlUtil;
+import seedu.agendum.model.task.ChildRecurringTask;
+import seedu.agendum.model.task.ReadOnlyTask;
+import seedu.agendum.model.task.RecurringTask;
+import seedu.agendum.model.task.Task;
+import seedu.agendum.model.task.UniqueTaskList;
+import seedu.agendum.model.task.UniqueTaskList.DuplicateTaskException;
+import seedu.agendum.model.task.UniqueTaskList.NotLatestRecurringTaskException;
+import seedu.agendum.model.task.UniqueTaskList.TaskNotFoundException;
 
 /**
  * Represents the in-memory model of the to do list data.
@@ -65,7 +63,7 @@ public class ModelManager extends ComponentManager implements Model {
         this(new ToDoList(), new UserPrefs());
     }
 
-    public ModelManager(ReadOnlyToDoList initialData, UserPrefs userPrefs) {
+    public ModelManager(ReadOnlyToDoList initialData) {
         toDoList = new ToDoList(initialData);
         filteredTasks = new FilteredList<>(toDoList.getTasks());
         sortedTasks = filteredTasks.sorted();
@@ -184,7 +182,7 @@ public class ModelManager extends ComponentManager implements Model {
     
     @Override
     public synchronized void unmarkTasks(List<ReadOnlyTask> targets) throws TaskNotFoundException, 
-    NotLatestRecurringTaskException, CannotMarkRecurringTaskException {
+    NotLatestRecurringTaskException {
         for (ReadOnlyTask target: targets) {
             if (target.isChild() && !target.isLatestChild()) {
                 throw new NotLatestRecurringTaskException();
@@ -194,8 +192,6 @@ public class ModelManager extends ComponentManager implements Model {
                 ArrayList<ReadOnlyTask> taskToDelete = new ArrayList<ReadOnlyTask>();
                 taskToDelete.add(target);
                 deleteTasks(taskToDelete);
-            } else if(target.isRecurring()) {
-                throw new CannotMarkRecurringTaskException();
             } else {
                 toDoList.unmarkTask(target);
             }

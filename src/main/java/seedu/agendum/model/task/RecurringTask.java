@@ -3,7 +3,8 @@ package seedu.agendum.model.task;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Optional;
-import seedu.agendum.logic.parser.DateTimeParser;
+
+import seedu.agendum.logic.parser.DateTimeUtils;
 
 //@@author A0148031R
 public class RecurringTask extends Task {
@@ -25,6 +26,7 @@ public class RecurringTask extends Task {
         this.startDateTime = startDateTime.orElse(null);
         this.endDateTime = endDateTime.orElse(null);
         this.period = period;
+        setLastUpdatedTimeToNow();
     }
     
     public RecurringTask(Name name, Optional<LocalDateTime> endDateTime, String period) {
@@ -33,6 +35,7 @@ public class RecurringTask extends Task {
         this.startDateTime = null;
         this.endDateTime = endDateTime.orElse(null);
         this.period = period;
+        setLastUpdatedTimeToNow();
     }
     
     public RecurringTask(ReadOnlyTask source) {
@@ -41,10 +44,12 @@ public class RecurringTask extends Task {
         this.startDateTime = source.getStartDateTime().orElse(null);
         this.endDateTime = source.getEndDateTime().orElse(null);
         this.period = source.getPeriod();
+        setLastUpdatedTimeToNow();
     }
     
     public RecurringTask(RecurringTask self) {
         super(self);
+        setLastUpdatedTimeToNow();
     }
     
     public void setChild(ChildRecurringTask child) {
@@ -57,20 +62,27 @@ public class RecurringTask extends Task {
     
     public void setNextDateTime() {
         if(this.startDateTime != null) {
-            this.startDateTime = DateTimeParser.parseString(period + FROM + this.startDateTime.toString()).get();
+            this.startDateTime = DateTimeUtils.parseNaturalLanguageDateTimeString(
+                    period + FROM + this.startDateTime.toString()).get();
         }
-        this.endDateTime = DateTimeParser.parseString(period + FROM + this.endDateTime.toString()).get();
+        this.endDateTime = DateTimeUtils.parseNaturalLanguageDateTimeString(
+                period + FROM + this.endDateTime.toString()).get();
     }
     
     public void setPreviousDateTime() {
         if(this.startDateTime != null) {
-            this.startDateTime = DateTimeParser.parseString(period + BEFORE + this.startDateTime.toString()).get();
-        } 
-        this.endDateTime = DateTimeParser.parseString(period + BEFORE + this.endDateTime.toString()).get();
+            this.startDateTime = DateTimeUtils.parseNaturalLanguageDateTimeString(
+                    period + BEFORE + this.startDateTime.toString()).get();
+        }
+        this.endDateTime = DateTimeUtils.parseNaturalLanguageDateTimeString(
+                period + BEFORE + this.endDateTime.toString()).get();
+        System.out.println("1: " + this.children.size());
         if(this.children.size() >= 2) {
             this.children.get(this.children.size() - 2).setLatestChild();
         }
+        System.out.println("2: " + this.children.size());
         this.children.remove(this.children.size() - 1);
+        System.out.println("3: " + this.children.size());
     }
     
     @Override
