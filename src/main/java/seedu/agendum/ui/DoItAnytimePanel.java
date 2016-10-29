@@ -16,16 +16,16 @@ import seedu.agendum.commons.core.LogsCenter;
 
 //@@author A0148031R
 /**
- * Panel contains the list of other tasks
+ * Panel contains the list of uncompleted floating tasks
  */
-public class OtherTasksPanel extends UiPart {
-    private static final String FXML = "OtherTasksPanel.fxml";
+public class DoItAnytimePanel extends UiPart {
+    private static final String FXML = "DoItAnytimePanel.fxml";
     private AnchorPane panel;
     private AnchorPane placeHolderPane;
     private static ObservableList<ReadOnlyTask> mainTaskList;
 
     @FXML
-    private ListView<ReadOnlyTask> otherTasksListView;
+    private ListView<ReadOnlyTask> anytimeTasksListView;
 
     @Override
     public void setNode(Node node) {
@@ -42,10 +42,10 @@ public class OtherTasksPanel extends UiPart {
         this.placeHolderPane = pane;
     }
 
-    public static OtherTasksPanel load(Stage primaryStage, AnchorPane OtherTasksPlaceholder,
+    public static DoItAnytimePanel load(Stage primaryStage, AnchorPane OtherTasksPlaceholder,
             ObservableList<ReadOnlyTask> taskList) {
         mainTaskList = taskList;
-        OtherTasksPanel otherTasksPanel = UiPartLoader.loadUiPart(primaryStage, OtherTasksPlaceholder, new OtherTasksPanel());
+        DoItAnytimePanel otherTasksPanel = UiPartLoader.loadUiPart(primaryStage, OtherTasksPlaceholder, new DoItAnytimePanel());
         otherTasksPanel.configure(taskList);
         return otherTasksPanel;
     }
@@ -56,8 +56,8 @@ public class OtherTasksPanel extends UiPart {
     }
 
     private void setConnections(ObservableList<ReadOnlyTask> otherTasks) {
-        otherTasksListView.setItems(otherTasks);
-        otherTasksListView.setCellFactory(listView -> new otherTasksListViewCell());
+        anytimeTasksListView.setItems(otherTasks);
+        anytimeTasksListView.setCellFactory(listView -> new otherTasksListViewCell());
     }
 
     private void addToPlaceholder() {
@@ -67,8 +67,8 @@ public class OtherTasksPanel extends UiPart {
 
     public void scrollTo(int index) {
         Platform.runLater(() -> {
-            otherTasksListView.scrollTo(index);
-            otherTasksListView.getSelectionModel().clearAndSelect(index);
+            anytimeTasksListView.scrollTo(index);
+            anytimeTasksListView.getSelectionModel().clearAndSelect(index);
         });
     }
 

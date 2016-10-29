@@ -16,19 +16,19 @@ import seedu.agendum.commons.core.LogsCenter;
 
 //@@author A0148031R
 /**
- * Panel contains the list of all tasks
+ * Panel contains the list of all uncompleted tasks with time
  */
-public class AllTasksPanel extends UiPart {
-    private final Logger logger = LogsCenter.getLogger(AllTasksPanel.class);
-    private static final String FXML = "AllTasksPanel.fxml";
+public class DoItSoonPanel extends UiPart {
+    private final Logger logger = LogsCenter.getLogger(DoItSoonPanel.class);
+    private static final String FXML = "DoItSoonPanel.fxml";
     private AnchorPane panel;
     private AnchorPane placeHolderPane;
     private static ObservableList<ReadOnlyTask> mainTaskList;
 
     @FXML
-    private ListView<ReadOnlyTask> allTasksListView;
+    private ListView<ReadOnlyTask> timeTasksListView;
 
-    public AllTasksPanel() {
+    public DoItSoonPanel() {
         super();
     }
 
@@ -47,10 +47,10 @@ public class AllTasksPanel extends UiPart {
         this.placeHolderPane = pane;
     }
 
-    public static AllTasksPanel load(Stage primaryStage, AnchorPane AllTasksPlaceholder,
+    public static DoItSoonPanel load(Stage primaryStage, AnchorPane AllTasksPlaceholder,
             ObservableList<ReadOnlyTask> taskList) {
         mainTaskList = taskList;
-        AllTasksPanel allTasksPanel = UiPartLoader.loadUiPart(primaryStage, AllTasksPlaceholder, new AllTasksPanel());
+        DoItSoonPanel allTasksPanel = UiPartLoader.loadUiPart(primaryStage, AllTasksPlaceholder, new DoItSoonPanel());
         allTasksPanel.configure(taskList);
         return allTasksPanel;
     }
@@ -61,8 +61,8 @@ public class AllTasksPanel extends UiPart {
     }
 
     private void setConnections(ObservableList<ReadOnlyTask> allTasks) {
-        allTasksListView.setItems(allTasks.filtered(task -> task.hasTime() && !task.isCompleted()));
-        allTasksListView.setCellFactory(listView -> new allTasksListViewCell());
+        timeTasksListView.setItems(allTasks.filtered(task -> task.hasTime() && !task.isCompleted()));
+        timeTasksListView.setCellFactory(listView -> new allTasksListViewCell());
     }
 
     private void addToPlaceholder() {
@@ -72,8 +72,8 @@ public class AllTasksPanel extends UiPart {
 
     public void scrollTo(int index) {
         Platform.runLater(() -> {
-            allTasksListView.scrollTo(index);
-            allTasksListView.getSelectionModel().clearAndSelect(index);
+            timeTasksListView.scrollTo(index);
+            timeTasksListView.getSelectionModel().clearAndSelect(index);
         });
     }
 
