@@ -192,7 +192,7 @@ public class ModelManager extends ComponentManager implements Model {
                 ArrayList<ReadOnlyTask> taskToDelete = new ArrayList<ReadOnlyTask>();
                 taskToDelete.add(target);
                 deleteTasks(taskToDelete);
-            } else {
+            } else if(!target.isRecurring()) {
                 toDoList.unmarkTask(target);
             }
         }

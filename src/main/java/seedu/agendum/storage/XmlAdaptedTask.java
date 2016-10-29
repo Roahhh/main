@@ -26,6 +26,7 @@ public class XmlAdaptedTask {
     private String isRecurring;
     @XmlElement(required = true)
     private String isChild;
+    @XmlElement(required = true)
     private String lastUpdatedTime;
     @XmlElement(required = false)
     private String startDateTime;
@@ -112,6 +113,7 @@ public class XmlAdaptedTask {
         } else {
             newRecurringTask = new RecurringTask(name, Optional.ofNullable(LocalDateTime.parse(this.endDateTime, formatter)), period);
         }
+        newRecurringTask.setLastUpdatedTime(LocalDateTime.parse(this.lastUpdatedTime, formatter));
         return newRecurringTask;
     }
     
@@ -127,6 +129,7 @@ public class XmlAdaptedTask {
             newChildRecurringTask.setStartDateTime(Optional.ofNullable(LocalDateTime.parse(this.startDateTime, formatter)));
         }
         newChildRecurringTask.setEndDateTime(Optional.ofNullable(LocalDateTime.parse(this.endDateTime, formatter)));
+        newChildRecurringTask.setLastUpdatedTime(LocalDateTime.parse(this.lastUpdatedTime, formatter));
         return newChildRecurringTask;
     }
     
