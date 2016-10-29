@@ -8,13 +8,13 @@
 
 ### Table of Contents
 
-* [Introduction](#1-introduction)
-* [Site Map](#2-site-map)
-* [Acknowledgements](#3-acknowledgements)
-* [License](#4-license)
+* [Introduction](#introduction)
+* [Site Map](#site-map)
+* [Acknowledgements](#acknowledgements)
+* [License](#license)
 
 
-### 1. Introduction
+### Introduction
 Hello! Do you have too many tasks and are unable to finish all of them? Are you looking for a hassle-free task manager which works swiftly?
 Enter Agendum.
 
@@ -22,14 +22,14 @@ This task manager will assist you in completing all your tasks on time. It will 
 
 With just one line of command, Agendum will carry out your wishes. You don’t ever have to worry about having to click multiple links. It is even capable of allowing you to create your own custom commands! This means that you can get things done even faster, your way.
   
-### 2. Site Map
+### Site Map
 * [User Guide](docs/UserGuide.md) 
 * [Developer Guide](docs/DeveloperGuide.md) 
 * [About Us](docs/AboutUs.md)
 * [Contact Us](docs/ContactUs.md)
 
 
-### 3. Acknowledgements
+### Acknowledgements
 
 * Some parts of this sample application were inspired by the excellent 
   [Java FX tutorial](http://code.makery.ch/library/javafx-8-tutorial/) by *Marco Jakob*. 
@@ -37,5 +37,5 @@ With just one line of command, Agendum will carry out your wishes. You don’t e
   [GitHub repo](https://github.com/nus-cs2103-AY1617S1/addressbook-level4) by *nus-cs2103-AY1617S1*. 
 
 
-### 4. License
+### License
 * [MIT](LICENSE)
