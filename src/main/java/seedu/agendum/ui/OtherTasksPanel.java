@@ -18,10 +18,6 @@ public class OtherTasksPanel extends TasksPanel {
     @FXML
     private ListView<ReadOnlyTask> otherTasksListView;
 
-    public OtherTasksPanel() {
-        super();
-    }
-
     @Override
     public String getFxmlPath() {
         return FXML;
@@ -56,7 +52,6 @@ public class OtherTasksPanel extends TasksPanel {
             } else {
                 setGraphic(TaskCard.load(task).getLayout());
             }
-//            EventsCenter.getInstance().post(new JumpToListRequestEvent(getIndex()));
         }
     }
 }

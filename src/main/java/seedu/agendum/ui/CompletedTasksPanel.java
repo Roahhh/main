@@ -57,7 +57,6 @@ public class CompletedTasksPanel extends TasksPanel {
             } else {
                 setGraphic(TaskCard.load(task).getLayout());
             }
-//            EventsCenter.getInstance().post(new JumpToListRequestEvent(getIndex()));
         }
     }
 }
