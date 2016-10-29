@@ -1,3 +1,5 @@
+//@@author A0133367E
+
 package seedu.agendum.logic.commands;
 
 import java.util.ArrayList;
@@ -24,6 +26,7 @@ public class CommandLibrary {
     // value as Agendum's reserved command keywords
     private Hashtable<String, String> aliasTable = new Hashtable<String, String>();
 
+    //@@author A0003878Y
     public CommandLibrary() {
         allCommandWords = new Reflections("seedu.agendum").getSubTypesOf(Command.class)
                 .stream()
@@ -41,12 +44,16 @@ public class CommandLibrary {
                 .collect(Collectors.toList());
     }
 
+    //@@author A0133367E
+    /**
+     * Replace the current commandLibrary aliasTable with the new aliasTable provided
+     */
     public void loadCommandTable(Hashtable<String, String> aliasTable) {
         this.aliasTable = aliasTable;
     }
 
     /**
-     * Returns true if key is already an alias to a command keyword
+     * Returns true if key is already an alias for a command keyword, false otherwise.
      */
     public boolean isExistingAliasKey(String key) {
         assert key != null;
@@ -56,8 +63,8 @@ public class CommandLibrary {
     }
 
     /**
-     * Precondition: key is an existing alias. Returns the reserved command
-     * keyword that is aliased by key
+     * Precondition: key is an existing alias.
+     * Returns the reserved command keyword that is aliased by key
      */
     public String getAliasedValue(String key) {
         assert isExistingAliasKey(key);
@@ -76,9 +83,9 @@ public class CommandLibrary {
     }
 
     /**
-     * Precondition: key is a new unique alias and not a command keyword; value
-     * is a reserved command keyword. Saves the new alias relationship (key can
-     * be used in place of value)
+     * Precondition: key is a new unique alias and not a command keyword;
+     * value is a reserved command keyword.
+     * Saves the new alias relationship (key can be used in place of value)
      */
     public void addNewAlias(String key, String value) {
         assert !isExistingAliasKey(key);
@@ -91,8 +98,8 @@ public class CommandLibrary {
     }
 
     /**
-     * Precondition: key is aliased to a command keyword Destroy the alias
-     * relationship (key cannot be used in place of value)
+     * Precondition: key is aliased to a command keyword.
+     * Destroy the alias relationship (key can no longer be used in place of the command keyword)
      */
     public void removeExistingAlias(String key) {
         assert isExistingAliasKey(key);
@@ -102,6 +109,7 @@ public class CommandLibrary {
         indicateCommandLibraryChanged(key + " unaliased");
     }
 
+    /** Raises an event to indicate that the aliasTable in the command library has changed */
     private void indicateCommandLibraryChanged(String keyChanged) {
         EventsCenter eventCenter = EventsCenter.getInstance();
         eventCenter.post(new CommandLibraryChangedEvent(keyChanged, aliasTable));

@@ -330,6 +330,7 @@ public class Parser {
         return new SelectCommand(index.get());
     }
 
+    //@@author A0133367E
     /**
      * Parses arguments in the context of the alias command.
      *
@@ -367,6 +368,7 @@ public class Parser {
         return new UnaliasCommand(aliasKey);
     }
 
+    //@@author
     /**
      * Returns the specified index in the {@code command} IF a positive unsigned integer is given as the index.
      *   Returns an {@code Optional.empty()} otherwise.
