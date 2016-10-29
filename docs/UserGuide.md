@@ -335,9 +335,9 @@ Similarly, you can also use the following command:
 
 #### Specifying the data storage location : `store`
 
-Are you considering moving Agendum’s data files to another file directory? <br>
-You might want to save your Agendum task list to a Cloud Storage service instead, so you can easily access from another device. <br>
-Agendum offers you the flexibility in choosing where the task list data will be stored. <br>
+Are you considering moving Agendum’s data files to another file directory?
+You might want to save your Agendum task list to a Cloud Storage service so you can easily access from another device.
+Agendum offers you the flexibility in choosing where the task list data will be stored.
 The task list data will be saved to the specific directory, and future data will be saved in that location.
 
 Format: `store PATH_TO_FILE`
@@ -352,7 +352,7 @@ Examples:
 
 #### Loading from another data storage location : `load`
 
-After relocating Agendum’s data files, you might want to load that exact copy of Agendum’s task list from that location, or from a Cloud Storage service. Agendum also offers you the flexibility to choose which data files to import. 
+After relocating Agendum’s data files, you might want to load that exact copy of Agendum’s task list from a certain location, or from a Cloud Storage service. Agendum also offers you the flexibility to choose which data files to import. 
 
 Format: `load PATH_TO_FILE`
 
@@ -367,7 +367,7 @@ Examples:
 #### Exiting the program : `exit`
 
 Are you done with organizing your tasks? Well done! <br>
-To leave Agendum, type `exit`. You do not have to worry about saving your data as Agendum automatically does it.
+To leave Agendum, type `exit`.
 
 Format: `exit`  
 
