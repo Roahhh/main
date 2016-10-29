@@ -7,6 +7,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -15,7 +16,9 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -34,6 +37,7 @@ public class MainWindow extends UiPart {
 
     private static final String ICON = "/images/agendum_icon.png";
     private static final String FXML = "MainWindow.fxml";
+    public static final String LIST_COMMAND = "list";
     public static final int MIN_HEIGHT = 600;
     public static final int MIN_WIDTH = 450;
 
@@ -75,6 +79,9 @@ public class MainWindow extends UiPart {
     
     @FXML
     private AnchorPane statusbarPlaceholder;
+    
+    @FXML
+    private StackPane messagePlaceHolder;
 
     public MainWindow() {
         super();
@@ -112,12 +119,10 @@ public class MainWindow extends UiPart {
         setWindowMinSize();
         setWindowDefaultSize(prefs);
         scene = new Scene(rootLayout);
-        
         primaryStage.setScene(scene);
-        
         primaryStage.setOnCloseRequest(e -> Platform.exit());
-
         setAccelerators();
+        handleEscape();
     }
 
     private void setAccelerators() {
@@ -134,11 +139,15 @@ public class MainWindow extends UiPart {
                 logic.getFilteredTaskList().filtered(p -> !p.isCompleted()), new OtherTasksPanel());
         resultPopUp = ResultPopUp.load(primaryStage);
         statusBarFooter = StatusBarFooter.load(primaryStage, getStatusbarPlaceholder(), config.getToDoListFilePath());
-        commandBox = CommandBox.load(primaryStage, getCommandBoxPlaceholder(), resultPopUp, logic);
+        commandBox = CommandBox.load(primaryStage, getCommandBoxPlaceholder(), messagePlaceHolder, resultPopUp, logic);
     }
 
     private AnchorPane getCommandBoxPlaceholder() {
         return commandBoxPlaceholder;
+    }
+    
+    public StackPane getMessagePlaceHolder() {
+        return messagePlaceHolder;
     }
 
     private AnchorPane getStatusbarPlaceholder() {
@@ -191,12 +200,26 @@ public class MainWindow extends UiPart {
                 (int) primaryStage.getX(), (int) primaryStage.getY());
     }
 
+    //@@author A0148031R
     @FXML
     public void handleHelp() {
         HelpWindow helpWindow = HelpWindow.load(primaryStage);
         if(helpWindow != null) {
             helpWindow.show();
         }
+    }
+    
+    private void handleEscape() {
+        scene.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent evt) {
+                if (evt.getCode().equals(KeyCode.ESCAPE) && messagePlaceHolder.getChildren().size() != 0) {
+                    messagePlaceHolder.getChildren().remove(0);
+                    messagePlaceHolder.setMaxHeight(0);
+                    logic.execute(LIST_COMMAND);
+                }
+            }
+        });
     }
 
     public void show() {
@@ -211,7 +234,6 @@ public class MainWindow extends UiPart {
         raise(new ExitAppRequestEvent());
     }
 
-    //@@author A0148031R
     public AllTasksPanel getAllTasksPanel() {
         return (AllTasksPanel)this.allTasksPanel;
     }
