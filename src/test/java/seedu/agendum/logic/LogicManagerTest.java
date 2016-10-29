@@ -151,19 +151,15 @@ public class LogicManagerTest {
     @Test
     public void execute_add_invalidArgsFormat() throws Exception {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE);
-        // TODO
-        // currently, there are no invalid add argument format
+        // no task name specified
+        assertCommandBehavior("add", expectedMessage, new ToDoList(), Collections.emptyList());
+        assertCommandBehavior("add from 5pm to 9pm", expectedMessage, new ToDoList(), Collections.emptyList());
+        // invalid date time format (only start time specified)
+        assertCommandBehavior("add smth from 8pm", expectedMessage, new ToDoList(), Collections.emptyList());        
     }
 
     @Test
-    public void execute_add_invalidTaskData() throws Exception {
-        // TODO
-        // check for invalid task data e.g. empty name invalid time
-
-    }
-
-    @Test
-    public void execute_add_successful() throws Exception {
+    public void execute_addFloatingTask_successful() throws Exception {
         // setup expectations
         TestDataHelper helper = new TestDataHelper();
         Task toBeAdded = helper.adam();
@@ -804,6 +800,8 @@ public class LogicManagerTest {
     public void execute_aliasInvalidArgsFormat_errorMessageShown() throws Exception {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AliasCommand.MESSAGE_USAGE);
         assertCommandBehavior("alias", expectedMessage, new ToDoList(), Collections.emptyList());
+        //alias should not contain symbols
+        assertCommandBehavior("alias add +", expectedMessage, new ToDoList(), Collections.emptyList());
         // new alias key has space
         assertCommandBehavior("alias add a 1", expectedMessage, new ToDoList(), Collections.emptyList());
     }

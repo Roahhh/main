@@ -40,9 +40,9 @@ public class Parser {
     private static final Pattern SCHEDULE_ARGS_FORMAT = Pattern.compile("(?:.+?(?=(?:(?:by|from|to)\\s|$)))+?");
 
     private static final Pattern ALIAS_ARGS_FORMAT = Pattern.compile(
-            "(?<commandword>[\\p{Alnum}\\p{Punct}]+)\\s+(?<shorthand>[\\p{Alnum}\\p{Punct}]+)");
+            "(?<commandword>[\\p{Alnum}]+)\\s+(?<shorthand>[\\p{Alnum}]+)");
 
-    private static final Pattern UNALIAS_ARGS_FORMAT = Pattern.compile("(?<shorthand>[\\p{Alnum}\\p{Punct}]+)");
+    private static final Pattern UNALIAS_ARGS_FORMAT = Pattern.compile("(?<shorthand>[\\p{Alnum}]+)");
 
     private static final String ARGS_FROM = "from";
     private static final String ARGS_BY = "by";
