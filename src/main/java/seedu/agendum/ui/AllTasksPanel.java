@@ -1,6 +1,5 @@
 package seedu.agendum.ui;
 
-import java.util.logging.Logger;
 
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
@@ -9,16 +8,12 @@ import javafx.scene.control.Control;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import seedu.agendum.model.task.ReadOnlyTask;
-import seedu.agendum.commons.core.EventsCenter;
-import seedu.agendum.commons.core.LogsCenter;
-import seedu.agendum.commons.events.ui.JumpToListRequestEvent;
 
 //@@author A0148031R
 /**
  * Panel contains the list of all tasks
  */
 public class AllTasksPanel extends TasksPanel {
-    private final Logger logger = LogsCenter.getLogger(AllTasksPanel.class);
     private static final String FXML = "AllTasksPanel.fxml";
 
     @FXML

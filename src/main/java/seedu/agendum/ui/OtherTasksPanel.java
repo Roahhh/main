@@ -6,8 +6,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Control;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import seedu.agendum.commons.core.EventsCenter;
-import seedu.agendum.commons.events.ui.JumpToListRequestEvent;
 import seedu.agendum.model.task.ReadOnlyTask;
 
 //@@author A0148031R
