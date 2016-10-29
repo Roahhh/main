@@ -18,7 +18,7 @@
 }
 
 .split-pane:horizontal .split-pane-divider {
-    -fx-border-color: transparent #1d1d1d transparent #1d1d1d;
+    -fx-border-color: transparent;
     -fx-background-color: transparent, derive(#1d1d1d, 10%);
 }
 
@@ -34,18 +34,19 @@
 
 .anchor-pane-with-border {
      -fx-background-color: derive(#1d1d1d, 20%);
-     -fx-border-color: derive(#1d1d1d, 10%);
+     -fx-border-color: transparent;
      -fx-border-top-width: 1px;
 }
 
 .stack-pane {
      -fx-background-color: derive(#1d1d1d, 20%);
-     -fx-border-color: derive(#1d1d1d, 10%);
+     -fx-border-color: transparent;
      -fx-border-top-width: 1px;
 }
 
 .status-bar {
     -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-border-color: transparent;
     -fx-text-fill: white;
 }
 
@@ -64,7 +65,7 @@
 
 .status-bar-with-border {
     -fx-background-color: derive(#1d1d1d, 30%);
-    -fx-border-color: derive(#1d1d1d, 25%);
+    -fx-border-color: transparent;
     -fx-border-width: 1px;
 }
 

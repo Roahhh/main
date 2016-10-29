@@ -27,7 +27,7 @@ import java.util.logging.Logger;
 public class CommandBox extends UiPart {
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private static final String FXML = "CommandBox.fxml";
-    private static final String FIND_COMMAND = "find";
+    private static final String FIND_COMMAND = "find ";
     private static final String HELP_COMMAND = "help";
     private static final String RESULT_FEEDBACK = "Result: ";
     private static final String FIND_COMMAND_REMINDER_MESSAGE = "Showing search results now, press ESC to go back and"
