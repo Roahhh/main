@@ -128,7 +128,6 @@ public class Parser {
      */
     private Command prepareAdd(String args) {
         
-        System.out.println(args);
         String period = null;
         Matcher matcher = ADD_ARGS_FORMAT.matcher(args.trim());
         if (!matcher.matches()) {
@@ -140,17 +139,13 @@ public class Parser {
             matcher.find();
             String taskTitle = matcher.group(0);
             HashMap<String, Optional<LocalDateTime>> dateTimeMap = new HashMap<>();
-            System.out.println(taskTitle);
 
             while (matcher.find()) {
                 for (String token : TIME_TOKENS) {
                     String s = matcher.group(0).toLowerCase();
-                    System.out.println(s);
                     if (s.startsWith(token)) {
                         String time = s.substring(token.length(), s.length());
-                        System.out.println("time: " + time + " || contains day: " + time.contains(ARGS_DAY) );
                         if (token.equals(ARGS_EVERY) && DateTimeUtils.containsTime(time)) {
-                            System.out.println("contains time");
                             dateTimeMap.put(token, 
                                     DateTimeUtils.parseNaturalLanguageDateTimeString(RELATIVE_FROM + s).isPresent()
                                     ? DateTimeUtils.parseNaturalLanguageDateTimeString(RELATIVE_FROM + s)
@@ -161,7 +156,6 @@ public class Parser {
                                 period = ARGS_DAY;
                             }
                         } else if (token.equals(ARGS_EVERY) && time.contains(ARGS_DAY)) {
-                            System.out.println("contains day");
                             dateTimeMap.put(token, 
                                     DateTimeUtils.parseNaturalLanguageDateTimeString(RELATIVE_NEXT + ARGS_DAY));
                             period = ARGS_DAY;
