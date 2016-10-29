@@ -37,12 +37,6 @@ public class Parser {
     //@@author A0003878Y
     private static final Pattern ADD_ARGS_FORMAT = Pattern.compile("(?:.+?(?=(?:(?:by|from|to|every)\\s|$)))+?");
     private static final Pattern SCHEDULE_ARGS_FORMAT = Pattern.compile("(?:.+?(?=(?:(?:by|from|to)\\s|$)))+?");
-
-    private static final String ADD_ARGS_FROM = "from";
-    private static final String ADD_ARGS_BY = "by";
-    private static final String ADD_ARGS_TO = "to";
-    
-    //@@author A0003878Y
     
     private static final String RELATIVE_FROM = "from ";
     private static final String RELATIVE_NEXT = "next ";
@@ -51,7 +45,8 @@ public class Parser {
     private static final String ARGS_BY = "by";
     private static final String ARGS_TO = "to";
     private static final String ARGS_EVERY = "every";
-    private static final String[] TIME_TOKENS = new String[] { ARGS_FROM, ARGS_TO, ARGS_BY, ARGS_EVERY};
+    private static final String ARGS_DAY = "day";
+    private static final String[] TIME_TOKENS = new String[] {ARGS_FROM, ARGS_TO, ARGS_BY, ARGS_EVERY};
 	
     //@@author
 
@@ -133,6 +128,8 @@ public class Parser {
      */
     private Command prepareAdd(String args) {
         
+        System.out.println(args);
+        String period = null;
         Matcher matcher = ADD_ARGS_FORMAT.matcher(args.trim());
         if (!matcher.matches()) {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
@@ -143,16 +140,31 @@ public class Parser {
             matcher.find();
             String taskTitle = matcher.group(0);
             HashMap<String, Optional<LocalDateTime>> dateTimeMap = new HashMap<>();
+            System.out.println(taskTitle);
 
             while (matcher.find()) {
                 for (String token : TIME_TOKENS) {
                     String s = matcher.group(0).toLowerCase();
+                    System.out.println(s);
                     if (s.startsWith(token)) {
                         String time = s.substring(token.length(), s.length());
-                        if (token.equals(ARGS_EVERY)) {
-                            dateTimeMap.put(token, DateTimeUtils.parseNaturalLanguageDateTimeString(RELATIVE_FROM + s).isPresent()
+                        System.out.println("time: " + time + " || contains day: " + time.contains(ARGS_DAY) );
+                        if (token.equals(ARGS_EVERY) && DateTimeUtils.containsTime(time)) {
+                            System.out.println("contains time");
+                            dateTimeMap.put(token, 
+                                    DateTimeUtils.parseNaturalLanguageDateTimeString(RELATIVE_FROM + s).isPresent()
                                     ? DateTimeUtils.parseNaturalLanguageDateTimeString(RELATIVE_FROM + s)
                                     : DateTimeUtils.parseNaturalLanguageDateTimeString(RELATIVE_NEXT + s));
+                            LocalDateTime timeToAdd = dateTimeMap.get(token).get();
+                            if(timeToAdd.getYear() == LocalDateTime.now().getYear() && 
+                                    timeToAdd.getDayOfYear() == LocalDateTime.now().getDayOfYear()) {
+                                period = ARGS_DAY;
+                            }
+                        } else if (token.equals(ARGS_EVERY) && time.contains(ARGS_DAY)) {
+                            System.out.println("contains day");
+                            dateTimeMap.put(token, 
+                                    DateTimeUtils.parseNaturalLanguageDateTimeString(RELATIVE_NEXT + ARGS_DAY));
+                            period = ARGS_DAY;
                         } else if (DateTimeUtils.containsTime(time)) {
                             dateTimeMap.put(token, DateTimeUtils.parseNaturalLanguageDateTimeString(s));
                         } else {
@@ -162,16 +174,17 @@ public class Parser {
                 }
             }
 
-            if (dateTimeMap.containsKey(ARGS_EVERY) && dateTimeMap.containsKey(ADD_ARGS_FROM)
-                    && dateTimeMap.containsKey(ADD_ARGS_TO)) {
-                return new AddCommand(taskTitle, dateTimeMap.get(ADD_ARGS_FROM), dateTimeMap.get(ADD_ARGS_TO),
+            if (dateTimeMap.containsKey(ARGS_EVERY) && dateTimeMap.containsKey(ARGS_FROM)
+                    && dateTimeMap.containsKey(ARGS_TO)) {
+                return new AddCommand(taskTitle, dateTimeMap.get(ARGS_FROM), dateTimeMap.get(ARGS_TO),
                         args.substring(args.toLowerCase().lastIndexOf(ARGS_EVERY) + 6));
-            } else if (dateTimeMap.containsKey(ARGS_EVERY) && dateTimeMap.containsKey(ADD_ARGS_BY)) {
-                return new AddCommand(taskTitle, dateTimeMap.get(ADD_ARGS_BY),
+            } else if (dateTimeMap.containsKey(ARGS_EVERY) && dateTimeMap.containsKey(ARGS_BY)) {
+                return new AddCommand(taskTitle, dateTimeMap.get(ARGS_BY),
                         args.substring(args.toLowerCase().lastIndexOf(ARGS_EVERY) + 6));
+            } else if (dateTimeMap.containsKey(ARGS_EVERY) && period != null) {
+                return new AddCommand(taskTitle, dateTimeMap.get(ARGS_EVERY), ARGS_DAY);
             } else if (dateTimeMap.containsKey(ARGS_EVERY)) {
-                return new AddCommand(taskTitle, dateTimeMap.get(ARGS_EVERY),
-                        args.substring(args.toLowerCase().lastIndexOf(ARGS_EVERY) + 6));
+                return new AddCommand(taskTitle, dateTimeMap.get(ARGS_EVERY), ARGS_DAY);
             } else if (dateTimeMap.containsKey(ARGS_BY)) {
                 return new AddCommand(taskTitle, dateTimeMap.get(ARGS_BY));
             } else if (dateTimeMap.containsKey(ARGS_FROM) && dateTimeMap.containsKey(ARGS_TO)) {
