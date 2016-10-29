@@ -301,14 +301,14 @@ Format: `alias ORIGINAL_COMMAND_NAME NEW_COMMAND_NAME`
 
 > * NEW_COMMAND_NAME must be a single word.
 > * ORIGINAL_COMMAND_NAME must be a command word that is specified in the Command Summary section
-> * When creating an alias for a command with a pre-existing alias, the pre-existing alias will be overriden.
+> * When creating an alias for a command with a pre-existing alias, it can also be used to carry out that command.
 
 Examples:
 
 * `alias mark m` <br>
   you can now use`m` or `mark` to mark a task as completed.<br>
   `alias mark mk`<br>
-  Now you can only use `mk` or `mark` to mark a task; `m` has been overriden.
+  Now you can use `m`, `mk` or `mark` to mark a task.
 
 
 #### Removing an alias command : `unalias`
@@ -317,20 +317,20 @@ Is a current alias inconvenient? Have you thought of a better one? <br>
 Or perhaps you are thinking of using an alias for another command. <br>
 To remove a previously defined alias, type:
 
-Format: `unalias NEW_COMMAND_NAME` or `unalias ORIGINAL_COMMAND_NAME`
+Format: `unalias ALIAS_FOR_COMMAND_NAME`
 
-> * NEW_COMMAND_NAME must be a user-defined command word.
-> * ORIGINAL_COMMAND_NAME must be a command word that is specified in the Command Summary section
+> * ALIAS_FOR_COMMAND_NAME must be one of the user-defined command words.
+> * Once it has been removed, you can still use the original command word or other unremoved aliases.
 
 Examples:
 
-Assume that mark has been aliased with m.
+Assume that mark has been aliased with `m` and `mk`.
 * `unalias m`<br>
-  `m` can no longer be used to mark tasks; now you can only use the original command `mark` to mark a task as completed.<br>
+  `m` can no longer be used to mark tasks; now you can only use the original command `mark` or `mk` to mark a task as completed.
 
 Similarly, you can also use the following command:
-* `unalias mark`<br>
-  The assigned alias for `mark` will be removed.
+* `unalias mk`<br>
+  `mk` can no longer be used to mark tasks; now you can only use the original command `mark` to mark a task as completed.
 
 
 #### Specifying the data storage location : `store`
