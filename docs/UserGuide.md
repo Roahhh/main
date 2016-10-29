@@ -250,6 +250,7 @@ Examples:
   Each of the above command will delete the 2nd, 3rd and 4th task in the task list.  
 
 
+[comment]: # (@@author A0148031R)
 #### Undo the last command : `undo`  
 
 If you have accidentally made a mistake in the previous command, you can use 'undo' to remedy it.<br>
@@ -264,7 +265,6 @@ Examples:
   The task "homework" which has been added previously, will be removed.
 
 
-[comment]: # (@@author A0148031R)
 #### Finding tasks containing keywords: `find`
 
 As your task list grows over time, it may become harder to locate a task.<br>
