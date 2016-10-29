@@ -19,7 +19,6 @@ import seedu.agendum.commons.core.LogsCenter;
  * Panel contains the list of other tasks
  */
 public class OtherTasksPanel extends UiPart {
-    private final Logger logger = LogsCenter.getLogger(OtherTasksPanel.class);
     private static final String FXML = "OtherTasksPanel.fxml";
     private AnchorPane panel;
     private AnchorPane placeHolderPane;
@@ -27,10 +26,6 @@ public class OtherTasksPanel extends UiPart {
 
     @FXML
     private ListView<ReadOnlyTask> otherTasksListView;
-
-    public OtherTasksPanel() {
-        super();
-    }
 
     @Override
     public void setNode(Node node) {
@@ -78,9 +73,6 @@ public class OtherTasksPanel extends UiPart {
     }
 
     class otherTasksListViewCell extends ListCell<ReadOnlyTask> {
-
-        public otherTasksListViewCell() {
-        }
 
         @Override
         protected void updateItem(ReadOnlyTask task, boolean empty) {
