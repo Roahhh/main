@@ -61,6 +61,8 @@ As shown below, Agendum has 3 panels: **"Do It Soon"**, **"Do It Anytime"** and 
 
 ## Features
 
+### Commands
+
 > **Command Format**
 > * Words in `UPPER_CASE` are the parameters.
 > * Parameters in `SQUARE_BRACKETS` are optional.
@@ -87,8 +89,9 @@ Format: `add TASK_NAME`
 
 Examples:  
 
-* `add Workout`
-* `add watch Star Wars`
+* `add Go to Cold Storage`
+* `add Watch Star Wars`
+* `add Read The Mythical Man-Month`
 
 You can add a task which must be done by a certain deadline. You can specify the deadline after the keyword `by`.
 
@@ -100,6 +103,7 @@ Examples:
 * `add watch Star Wars by Fri`
 * `add watch Star Wars by 9pm`
 * `add watch Star Wars by next Wed`
+* `add watch Star Wars by tonight`
 * `add watch Star Wars by 10 Oct, 9.30pm`
 
 If you need a task to be done within a specific date and time, you can specify the start and end time using `from` and `to`.
@@ -111,6 +115,7 @@ Examples:
 
 * `add movie marathon from today 12pm to friday 3pm`
 * `add project meeting from 10 oct 12pm to 10 oct 2pm`
+* `add clean my room from today 10pm to 12am
 
 The event “project meeting” will start at 12pm on 10 October and end at 2pm on 10 October.
 
@@ -319,16 +324,19 @@ Format: `unalias NEW_COMMAND_NAME` or `unalias ORIGINAL_COMMAND_NAME`
 
 Examples:
 
+Assume that mark has been aliased with m.
 * `unalias m`<br>
-  `m` can no longer be used to mark tasks.<br>
-  `unalias mark`<br>
-  The assigned alias for `mark` will be removed; Now you can only use the original command `mark` to mark a task as completed.
+  `m` can no longer be used to mark tasks; now you can only use the original command `mark` to mark a task as completed.<br>
+
+Similarly, you can also use the following command:
+* `unalias mark`<br>
+  The assigned alias for `mark` will be removed.
 
 
 #### Specifying the data storage location : `store`
 
 Are you considering moving Agendum’s data files to another file directory? <br>
-You might want to save your Agendum task list to Dropbox instead, so you can easily access from another device. <br>
+You might want to save your Agendum task list to a Cloud Storage service instead, so you can easily access from another device. <br>
 Agendum offers you the flexibility in choosing where the task list data will be stored. <br>
 The task list data will be saved to the specific directory, and future data will be saved in that location.
 
@@ -344,7 +352,7 @@ Examples:
 
 #### Loading from another data storage location : `load`
 
-After relocating Agendum’s data files on your desktop computer, you might want to load the exact same copy of Agendum’s task list from the Dropbox file on your laptop. Agendum also offers you the flexibility to choose which data files to import. 
+After relocating Agendum’s data files, you might want to load that exact copy of Agendum’s task list from that location, or from a Cloud Storage service. Agendum also offers you the flexibility to choose which data files to import. 
 
 Format: `load PATH_TO_FILE`
 
@@ -358,20 +366,20 @@ Examples:
 
 #### Exiting the program : `exit`
 
-Are you done with organizing your tasks? Well done! 
+Are you done with organizing your tasks? Well done! <br>
 To leave Agendum, type `exit`. You do not have to worry about saving your data as Agendum automatically does it.
 
 Format: `exit`  
 
 
-#### Keyboard Shortcuts
+### Keyboard Shortcuts
 
 1. Use the <kbd>UP ARROW</kbd> and <kbd>DOWN ARROW</kbd> to scroll through earlier commands.
 2. If you are entering a new command, use the <kbd>DOWN ARROW</kbd> to instantly clear the command line.
 3. Use <kbd>TAB</kbd> to switch between the various task lists e.g. uncompleted, overdue, upcoming
 
 
-#### Saving the data
+### Saving the data
 
 Agendum saves its data into the specified data storage location, or by default it saves into `todolist.xml`. This saving automatically happens whenever the task list is changed; There is no need to save manually.
 
