@@ -347,7 +347,7 @@ Format: `store PATH_TO_FILE`
 > * The previous data storage file will not be deleted.
 
 Examples:
-* `store C:/Dropbox/ToDo/mytasklist.xml`
+* `store C:/Dropbox/mytasklist.xml`
 
 
 #### Loading from another data storage location : `load`
@@ -362,7 +362,7 @@ Format: `load PATH_TO_FILE`
 > * Future data will be stored in PATH_TO_FILE.
 
 Examples:
-* `load data/mytasklist.xml`
+* `load C:/Dropbox/mytasklist.xml`
 
 #### Exiting the program : `exit`
 
