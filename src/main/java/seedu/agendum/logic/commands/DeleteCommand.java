@@ -16,8 +16,8 @@ public class DeleteCommand extends Command {
 
     // COMMAND_WORD, COMMAND_FORMAT, COMMAND_DESCRIPTION are for display in help window
     public static final String COMMAND_WORD = "delete";
-    public static String COMMAND_FORMAT = "delete <index> \ndelete <index> <more-indexes>";
-    public static String COMMAND_DESCRIPTION = "delete task(s) from Agendum";
+    public static final String COMMAND_FORMAT = "delete <index> \ndelete <index> <more-indexes>";
+    public static final String COMMAND_DESCRIPTION = "delete task(s) from Agendum";
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes the tasks(s) identified by their index numbers used in the last task listing.\n"
             + "Parameters: INDEX... (must be a positive number)\n"
@@ -29,14 +29,12 @@ public class DeleteCommand extends Command {
 
     public ArrayList<ReadOnlyTask> tasksToDelete;
 
-    public DeleteCommand() {}
-    
+    //@@author A0133367E
     public DeleteCommand(Set<Integer> targetIndexes) {
         this.targetIndexes = new ArrayList<Integer>(targetIndexes);
         Collections.sort(this.targetIndexes);
         this.tasksToDelete = new ArrayList<ReadOnlyTask>();
     }
-
 
     @Override
     public CommandResult execute() {
@@ -67,18 +65,16 @@ public class DeleteCommand extends Command {
         return targetIndexes.stream().anyMatch(index -> index > lastShownList.size());
     }
 
-    @Override
-    public String getName() {
+  //@@author
+    public static String getName() {
         return COMMAND_WORD;
     }
 
-    @Override
-    public String getFormat() {
+    public static String getFormat() {
         return COMMAND_FORMAT;
     }
 
-    @Override
-    public String getDescription() {
+    public static String getDescription() {
         return COMMAND_DESCRIPTION;
     }
 

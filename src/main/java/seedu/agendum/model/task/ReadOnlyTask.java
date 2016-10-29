@@ -16,6 +16,7 @@ public interface ReadOnlyTask {
     boolean hasTime();
     Optional<LocalDateTime> getStartDateTime();
     Optional<LocalDateTime> getEndDateTime();
+    LocalDateTime getLastUpdatedTime();
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
@@ -39,6 +40,7 @@ public interface ReadOnlyTask {
         return builder.toString();
     }
 
+    //@@author A0133367E
     /**
      * Format the tasks as text, showing all details including name, 
      * completion status, start and end time if any
@@ -56,7 +58,9 @@ public interface ReadOnlyTask {
                .append(" Start Time: ")
                .append(startTime)
                .append(" End Time: ")
-               .append(endTime);
+               .append(endTime)
+               .append(" Last Updated Time: ")
+               .append(getLastUpdatedTime().toString());
          return builder.toString();      
     }
 }

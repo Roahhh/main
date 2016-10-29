@@ -1,6 +1,7 @@
 package seedu.agendum.logic.commands;
 
 import seedu.agendum.commons.exceptions.IllegalValueException;
+import seedu.agendum.logic.parser.DateTimeUtils;
 import seedu.agendum.model.task.*;
 
 import java.time.LocalDateTime;
@@ -15,8 +16,8 @@ public class AddCommand extends Command {
 
     public static final String COMMAND_WORD = "add";
 
-    public static String COMMAND_FORMAT = "add <name> \nadd <name> by <deadline> \nadd <name> from <start-time> to <end-time>";
-    public static String COMMAND_DESCRIPTION = "adds a task to Agendum";
+    public static final String COMMAND_FORMAT = "add <name> \nadd <name> by <deadline> \nadd <name> from <start-time> \nto <end-time>";
+    public static final String COMMAND_DESCRIPTION = "adds a task to Agendum";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a task with no time and date. \n"
             + "Parameters: NAME\n"
@@ -28,8 +29,7 @@ public class AddCommand extends Command {
 
     private Task toAdd = null;
 
-    public AddCommand() {}
-
+	//@@author A0003878Y
     /**
      * Convenience constructor using name
      *
@@ -62,6 +62,9 @@ public class AddCommand extends Command {
      */
     public AddCommand(String name, Optional<LocalDateTime> startDateTime, Optional<LocalDateTime> endDateTime)
             throws IllegalValueException {
+        if (startDateTime.isPresent() && endDateTime.isPresent()) {
+            endDateTime = Optional.of(DateTimeUtils.balanceStartAndEndDateTime(startDateTime.get(), endDateTime.get()));
+        }
         this.toAdd = new Task(
                 new Name(name),
                 startDateTime,
@@ -80,19 +83,16 @@ public class AddCommand extends Command {
         }
 
     }
-	
-    @Override
-    public String getName() {
+
+    public static String getName() {
         return COMMAND_WORD;
     }
-	
-    @Override
-    public String getFormat() {
+
+    public static String getFormat() {
         return COMMAND_FORMAT;
     }
-	
-    @Override
-    public String getDescription() {
+
+    public static String getDescription() {
         return COMMAND_DESCRIPTION;
     }
 

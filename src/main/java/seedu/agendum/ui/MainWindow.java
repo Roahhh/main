@@ -3,28 +3,23 @@ package seedu.agendum.ui;
 import com.sun.javafx.stage.StageHelper;
 
 import javafx.application.Platform;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import seedu.agendum.commons.core.Config;
 import seedu.agendum.commons.core.GuiSettings;
 import seedu.agendum.commons.events.ui.ExitAppRequestEvent;
 import seedu.agendum.logic.Logic;
 import seedu.agendum.model.UserPrefs;
-import seedu.agendum.model.task.ReadOnlyTask;
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -52,8 +47,7 @@ public class MainWindow extends UiPart {
     // Handles to elements of this Ui container
     private VBox rootLayout;
     private Scene scene;
-
-    private String toDoListName;
+    private Stage helpWindowStage = null;
 
     @FXML
     private AnchorPane browserPlaceholder;
@@ -96,12 +90,12 @@ public class MainWindow extends UiPart {
         return mainWindow;
     }
 
+    //@@author A0148031R
     private void configure(String appTitle, String toDoListName, Config config, UserPrefs prefs,
                            Logic logic) {
 
         //Set dependencies
         this.logic = logic;
-        this.toDoListName = toDoListName;
         this.config = config;
         this.userPrefs = prefs;
 
@@ -117,12 +111,30 @@ public class MainWindow extends UiPart {
         primaryStage.setOnCloseRequest(e -> Platform.exit());
 
         setAccelerators();
+        configureHelpWindowToggle();
     }
 
     private void setAccelerators() {
         helpMenuItem.setAccelerator(KeyCombination.valueOf("F5"));
     }
+    
+    private void configureHelpWindowToggle() {
+        scene.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+            KeyCombination toggleHelpWindow = new KeyCodeCombination(KeyCode.H, KeyCombination.CONTROL_DOWN);
+            @Override
+            public void handle(KeyEvent evt) {
+                if(toggleHelpWindow.match(evt) && helpWindowStage != null) {
+                    if(helpWindowStage.isFocused()) {
+                        primaryStage.requestFocus();
+                    } else {
+                        helpWindowStage.requestFocus();
+                    }
+                }
+            }
+        });
+    }
 
+  //@@author A0148031R
     void fillInnerParts() {
         allTasksPanel = AllTasksPanel.load(primaryStage, getAllTasksPlaceHolder(), logic.getFilteredTaskList());
         completedTasksPanel = CompletedTasksPanel.load(primaryStage, getCompletedTasksPlaceHolder(), logic.getFilteredTaskList());
@@ -185,11 +197,11 @@ public class MainWindow extends UiPart {
                 (int) primaryStage.getX(), (int) primaryStage.getY());
     }
 
-    @SuppressWarnings("restriction")
     @FXML
     public void handleHelp() {
         HelpWindow helpWindow = HelpWindow.load(primaryStage);
         if(helpWindow != null) {
+            this.helpWindowStage = helpWindow.getStage();
             helpWindow.show();
         }
     }
