@@ -22,6 +22,7 @@
 &nbsp;
 
 
+[comment]: # (@@author A0148031R)
 ## Introduction
 
 Agendum is a task manager for busy users to manage their schedules and tasks via keyboard commands. It is a Java desktop application that has a **GUI** implemented with JavaFX.
@@ -86,6 +87,8 @@ This guide describes the design and implementation of Agendum. It will help deve
 
 ## Design
 
+
+[comment]: # (@@author A0133367E)
 ### 1. Architecture
 
 <img src="images/Architecture.png" width="600"><br>
@@ -151,6 +154,7 @@ The diagram below shows what happens after a `ToDoListChangedEvent` is raised. `
 The following sections will then give more details of each individual component.
 
 
+[comment]: # (@@author A0148031R)
 ### 2. UI component
 
 <img src="images/UiClassDiagram.png" width="800"><br>
@@ -172,6 +176,7 @@ The `UI` component has the following functions:
 * Responds to events raised from various parts of the App and updates the UI accordingly.
 
 
+[comment]: # (@@author A0003878Y)
 ### 3. Logic component
 
 <img src="images/LogicClassDiagram.png" width="800"><br>
@@ -188,6 +193,7 @@ You can view the Sequence Diagram below for interactions within the `Logic` comp
 <img src="images/DeleteTaskSdForLogic.png" width="800"><br>
 
 
+[comment]: # (@@author A0133367E)
 ### 4. Model component
 
 As mentioned above, the `Model` component stores and manage Agendum's task list data and user's preferences. It also exposes a `UnmodifiableObservableList<ReadOnlyTask>` that can be 'observed' by other components e.g. the UI can be bound to this list and will automatically update when the data in the list change. It does not depend on other components such as `Logic` and `Storage`.  
@@ -216,6 +222,7 @@ The identified task is removed from the `UniqueTaskList`. The `ModelManager` rai
 > `Model`’s _deleteTasks_ methods actually take in `ArrayList<ReadOnlyTask>` instead of a single task. We use _deleteTasks(task)_ for simplicity in the sequence diagram.
 
 
+[comment]: # (@@author A0148095X)
 ### 5. Storage component
 
 <img src="images/StorageClassDiagram.png" width="800"><br>
@@ -252,6 +259,7 @@ They are further separated into sub-packages - namely `core`, `events`, `excepti
 &nbsp;
 
 
+[comment]: # (@@author A0133367E)
 ## Implementation
 
 ### 1. Logging
@@ -287,6 +295,7 @@ You can alter certain properties of our Agendum application (e.g. logging level)
 &nbsp;
 
 
+[comment]: # (@@author A0148095X)
 ## Testing
 
 You can find all the test files in the `./src/test/java` folder.
@@ -341,6 +350,7 @@ See [UsingGradle.md](UsingGradle.md#running-tests)  for instructions on how to r
 &nbsp;
 
 
+[comment]: # (@@author A0133367E)
 ## Dev Ops
 
 ### 1. Build Automation
@@ -369,6 +379,7 @@ Agendum depends on third-party libraries, such as the
 &nbsp;
 
 
+[comment]: # (@@author A0148095X)
 ## Appendix A : User Stories
 
 >Priorities: High (must have) - `* * *`, Medium (nice to have)  - `* *`,  Low (unlikely to have) - `*`
@@ -421,6 +432,7 @@ Priority | As a ... | I want to ... | So that I can...
 &nbsp;
 
 
+[comment]: # (@@author A0148031R)
 ## Appendix B : Use Cases
 
 >For all use cases below, the **System** is `Agendum` and the **Actor** is the `user`, unless specified otherwise
@@ -608,6 +620,7 @@ Priority | As a ... | I want to ... | So that I can...
 > Use case ends
 
 
+[comment]: # (@@author A0148095X)
 ### Use case 09 - Remove alias commands
 
 **MSS**
@@ -683,9 +696,10 @@ Priority | As a ... | I want to ... | So that I can...
 &nbsp;
 
 
+[comment]: # (@@author A0003878Y)
 ## Appendix C : Non Functional Requirements
 
-1.  	Should work on any [mainstream OS](#mainstream-os) as long as it has Java `1.8.0_60` or higher installed.
+1.  Should work on any [mainstream OS](#mainstream-os) as long as it has Java `1.8.0_60` or higher installed.
 2.	Should be able to hold up to 800 tasks in total (including completed tasks).
 3.	Should come with automated unit tests.
 4.	Should use a Continuous Integration server for real time status of master’s health.
@@ -705,12 +719,13 @@ Priority | As a ... | I want to ... | So that I can...
 18.	Should have documentation that matches the source code
 19.	Should not have unhandled exceptions from user input
 20.	Should be installable without assistance other than the user guide.
-21. 	Should have understandable code such that new members can start working on the project within 1 week.
+21. Should have understandable code such that new members can start working on the project within 1 week.
 
 
 &nbsp;
 
 
+[comment]: # (@@author A0148095X)
 ## Appendix D : Glossary
 
 ##### Mainstream OS:
@@ -726,6 +741,7 @@ This means you can do other things on the Computer while the tests are running.
 &nbsp;
 
 
+[comment]: # (@@author A0133367E)
 ## Appendix E : Product Survey
 
 We conducted a product survey on other task managers. Here is a summary of the strengths and weaknesses of each application. The criteria used for evaluation are own preferences and Jim's requirements.

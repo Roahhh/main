@@ -7,6 +7,7 @@
 
 &nbsp;
 
+[comment]: # (@@author A0148095X)
 ## Introduction
 Hi there! Do you have too many tasks and are unable to keep track of all of them? Are you looking for a hassle-free task manager which works swiftly?
 
@@ -23,7 +24,7 @@ As shown below, Agendum has 3 panels: **"Do It Soon"**, **"Do It Anytime"** and 
 
 &nbsp;
 
-
+[comment]: # (@@author A0003878Y)
 ## Quick Start
 
 0. Ensure you have Java version `1.8.0_60` or above installed in your Computer.
@@ -115,18 +116,12 @@ Examples:
 
 * `add movie marathon from today 12pm to friday 3pm`
 * `add project meeting from 10 oct 12pm to 10 oct 2pm`
-* `add clean my room from today 10pm to 12am
+* `add clean my room from today 10pm to 12am`
 
 The event “project meeting” will start at 12pm on 10 October and end at 2pm on 10 October.
 
 
-#### Retrieving task list : `list`
-
-After you are done searching for tasks, you can use the following command to return to the default view of task lists:
-
-Format: `list`
-
-
+[comment]: # (@@author A0133367E)
 #### Renaming a task : `rename`
 
 Agendum understands that plans and tasks change all the time. <br>
@@ -269,11 +264,11 @@ Examples:
   The task "homework" which has been added previously, will be removed.
 
 
+[comment]: # (@@author A0148031R)
 #### Finding tasks containing keywords: `find`
 
 As your task list grows over time, it may become harder to locate a task.<br>
-Fortunately, Agendum can search and bring up these tasks to you. Enter the following command:
-
+Fortunately, Agendum can search and bring up these tasks to you. Enter the following command: <br>
 Format: `find KEYWORD``...`  
 
   > * The search is not case sensitive. e.g `assignment` will match `Assignment`
@@ -290,7 +285,14 @@ Examples:
 * `find Nemo Dory` <br>
   Returns all tasks that contain `Dory` or `Nemo`  
 
+  
+#### Retrieving task list : `list`
 
+After you are done searching for tasks, you can use the following command to return to the default view of task lists: <br>
+Format: `list`
+
+
+[comment]: # (@@author A0148095X)
 #### Creating an alias for a command : `alias`
 
 Perhaps you want to type a command faster, or change the name of a command to suit your needs; <br>
@@ -376,7 +378,6 @@ Format: `exit`
 
 1. Use the <kbd>UP ARROW</kbd> and <kbd>DOWN ARROW</kbd> to scroll through earlier commands.
 2. If you are entering a new command, use the <kbd>DOWN ARROW</kbd> to instantly clear the command line.
-3. Use <kbd>TAB</kbd> to switch between the various task lists e.g. uncompleted, overdue, upcoming
 
 
 ### Saving the data
@@ -408,7 +409,7 @@ Agendum saves its data into the specified data storage location, or by default i
 
 &nbsp;
 
-
+[comment]: # (@@author A0133367E)
 ## Command Summary
 
 Command  | Format  
