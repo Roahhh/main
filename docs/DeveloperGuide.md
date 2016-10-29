@@ -604,13 +604,13 @@ Priority | As a ... | I want to ... | So that I can...
 
 1. Actor enters store command followed by a path to file
 2. System updates data storage location to the specified path to file
-3. System shows a feedback message ("New save location: `path-to-file`")
-4. Use case ends.
+3. System saves task list to the new data storage location
+4. System shows a feedback message ("New save location: `path-to-file`")
+5. Use case ends.
 
 **Extensions**
 
 1a. Path to file is input as 'default'
-
 > 1a1. System updates data storage location to default <br>
 > 1a2. System shows a feedback message ("Save location set to default: `path-to-file`") <br>
 > Use case ends
@@ -619,11 +619,13 @@ Priority | As a ... | I want to ... | So that I can...
 > 1b1. System shows an error message ("The specified file exists; would you like to use LOAD instead?") <br>
 > Use case ends
 
-1c. Path to file is invalid
-
-> 1c1. System shows an error message ("The specified path to file is invalid.") <br>
+1c. Path to file is in the wrong format
+> 1c1. System shows an error message ("The specified path is in the wrong format. Example: store agendum/todolist.xml") <br>
 > Use case ends
 
+1d. Path to file is not accessible
+> 1d1. System shows an error message ("The specified location is inaccessible; try running Agendum as administrator.") <br>
+> Use case ends
 
 
 ### Use case 09 - Load from data file
@@ -640,12 +642,14 @@ Priority | As a ... | I want to ... | So that I can...
 **Extensions**
 
 1a. Path to file is invalid
+> 1a1. System shows an error message ("The specified path to file is invalid: path-to-file") <br>
+> Use case ends
 
-> 1a1. System shows an error message ("The specified path to file is invalid.") <br>
+2a. File does not exist
+> 1a1. System shows an error message ("The specified file does not exist: path-to-file") <br>
 > Use case ends
 
 3a. File is in the wrong format
-
 > 3a1. System shows an error message ("File is in the wrong format.")<br>
 > Use case ends
 
