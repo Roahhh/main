@@ -29,6 +29,9 @@ Agendum is a task manager for busy users to manage their schedules and tasks via
 This guide describes the design and implementation of Agendum. It will help developers (like you) understand how Agendum works and how to further contribute to its development. We have organized this guide in a top-down manner so that you can understand the big picture before moving on to the more detailed sections. Each sub-section is mostly self-contained to provide ease of reference.
 
 
+&nbsp;
+
+
 ## Setting up
 
 ### Prerequisites
@@ -283,6 +286,7 @@ You can alter certain properties of our Agendum application (e.g. logging level)
 
 &nbsp;
 
+
 ## Testing
 
 You can find all the test files in the `./src/test/java` folder.
@@ -371,30 +375,32 @@ Agendum depends on third-party libraries, such as the
 
 Priority | As a ... | I want to ... | So that I can...
 -------- | :-------- | :--------- | :-----------
-`* * *` | New user | See usage instructions | Refer to instructions when I forget how to use the App
+`* * *` | User | See usage instructions | Refer to instructions when I forget how to use the App
 `* * *` | User | Add a task | Keep track of tasks which I need to do
-`* * *` | User | Delete a task/multiple tasks | Remove tasks that I no longer need to keep track of
-`* * *` | User | Edit a task name | Update task details to reflect the latest changes
+`* * *` | User | Delete task(s) | Remove task(s) that I no longer want to keep track of
+`* * *` | User | Rename a task | Update task description to reflect thechanges I want
 `* * *` | User | View all my tasks | Have a quick and clear reference of everything I need to do
-`* * *` | User | Mark a task/multiple tasks as completed | Know that it is completed without deleting it, distinguish between completed and uncompleted tasks
-`* * *` | User | Unmark a task from completed | Update the status of my task
+`* * *` | User | Mark task(s) as completed | Know that it is completed without deleting it, distinguish between completed and uncompleted tasks
+`* * *` | User | Unmark task(s) from completed | Update the status of my task if there are new changes
 `* * *` | User | Undo my last action(s) | Easily correct any accidental mistakes in the last command(s)
 `* * *` | User | Search based on task name | Find a task without going through the entire list if I remember a few key words
-`* * *` | User | Specify my data storage location | Easily locate the raw text file for editing and sync the file to a cloud storage service
-`* * *` | User | Clear all existing tasks | Easily start afresh with a new task list
+`* * *` | User | Specify my data storage location | Easily locate the raw text file for editing and/or sync the file to a cloud storage service
 `* * *` | User | Exit the application by typing a command | Close the app easily
 `* * *` | Busy user | Specify start and end time when creating tasks | Keep track of events with defined start and end dates
 `* * *` | Busy User | Specify deadlines when creating tasks | Keep track of tasks which must be done by a certain and date and time
 `* * *` | Busy User | Edit and remove start and end time of tasks | Update events with defined start and end dates
 `* * *` | Busy User | Edit and remove deadlines of tasks | Update tasks which must be done by a certain and date and time
-`* *` | User | Sort tasks by alphabetical order and date | Organise and easily locate tasks
+
 `* *` | User | Filter overdue tasks and upcoming tasks (due within a week) | Decide on what needs to be done soon
-`* *` | User | Filter tasks based on whether they are marked/unmarked | View my tasks grouped by their state of completion. Review my completed tasks and decide on what I should do next
+`* *` | User | Filter tasks based on marked/unmarked | Review my completed tasks and decide on what I should do next
 `* *` | User | See the count/statistics for upcoming/ overdue and pending tasks | Know how many tasks I need to do
+
+`*` | User | Sort tasks by alphabetical order and date | Organise and easily locate tasks
 `*` | User | Clear the command I am typing with a key | Enter a new command without having to backspace the entire command line
 `*` | Advanced user | Specify my own short-hand alias commands | Enter commands faster
 `*` | Advanced user | Remove or edit the short-hand alias commands | Update to use more suitable command aliases
 `*` | Advanced user | Scroll through my past few commands | Check what I have done and redo actions easily
+
 `* Unlikely` | Google calendar user | Sync my tasks with Google calendar | Keep track of my tasks online
 `* Unlikely` | User | Add multiple time slots for a task | “Block” multiple time slots when the exact timing of a task is certain
 `* Unlikely` | User | Add tags for my tasks | Group tasks together and organise my task list
@@ -402,6 +408,7 @@ Priority | As a ... | I want to ... | So that I can...
 `* Unlikely` | User | Add/Remove tags for existing tasks | Update the grouping of tasks
 `* Unlikely` | User | Be notified of deadline/time clashes | Resolve these conflicts manually
 `* Unlikely` | User | Key in emojis/symbols and characters from other languages e.g. Mandarin | Capture information in other languages
+`* Unlikely` | User | Clear all existing tasks | Easily start afresh with a new task list
 `* Unlikely` | Advanced User | Import tasks from an existing text file | Add multiple tasks efficiently without relying on multiple commands
 `* Unlikely` | Advanced User | Save a backup of the application in a custom file | Restore it any time at a later date
 `* Unlikely` | Busy user | Add recurring events or tasks | Keep the same tasks in my task list without adding them manually
