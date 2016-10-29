@@ -567,13 +567,32 @@ Priority | As a ... | I want to ... | So that I can...
 > 3a1. System shows an error message (“Please select a task on the list with a valid index”) <br>
 > Use case resumes at step 2
 
-### Use case 07 - Add short hand commands
+### Use case 07 - Unmark a task
+
+**MSS**:
+
+1. Actor requests to unmark a task followed by its index
+2. System updates the task
+3. System shows a feedback message (“Task `index` has been unmarked”) and moves the task to the correct list.
+4. Use case ends
+
+**Extensions**
+
+1a. The list is empty
+> Use case ends
+
+2a. The given index is invalid
+> 2a1. System shows an error message (“Please select a task on the list with a valid index”) <br>
+> Use case ends
+
+
+### Use case 08 - Add alias commands
 
 **MSS**
 
 1. Actor enters a alias command and specify the name and new alias name of the command
 2. System alias the command
-3. System shows a feedback message (“The command `original-command` can now be keyed in as <new-command>”)
+3. System shows a feedback message (“The command `original-command` can now be keyed in as `alias-command`”)
 4. Use case ends.
 
 **Extensions**
@@ -585,21 +604,27 @@ Priority | As a ... | I want to ... | So that I can...
 
 1b. The new alias name is already reserved/used for other commands
 
-> 1b1. System shows an error message (“The name is already in use”) <br>
+> 1b1. System shows an error message ("The alias `alias-command` is already in use") <br>
 > Use case ends
 
-*a. At any time, Actor choose to exit System
 
-> *a1. System displays a goodbye message <br>
-> *a2. System closes the program
+### Use case 09 - Remove alias commands
 
-*b. At any time, Actor enters a invalid command
+**MSS**
 
-> *b1.  System gives an error message (“We do not understand the command: `invalid-command`”)<br>
-> *b2. System displays a short list of valid commands
+1. Actor enters the unalias command followed by `alias-command`
+2. System removes the alias for the command
+3. System shows a feedback message ("The alias `alias-command` for `original-command` has been removed.")
+4. Use case ends.
+
+**Extensions**
+
+1a. There is no existing alias
+> 1a1. System shows an error message (“There is no such existing alias”) <br>
+> Use case ends
 
 
-### Use case 08 - Specify data storage location
+### Use case 10 - Specify data storage location
 
 **MSS**
 
@@ -629,7 +654,7 @@ Priority | As a ... | I want to ... | So that I can...
 > Use case ends
 
 
-### Use case 09 - Load from data file
+### Use case 11 - Load from data file
 
 **MSS**
 
