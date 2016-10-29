@@ -375,21 +375,22 @@ Agendum depends on third-party libraries, such as the
 
 Priority | As a ... | I want to ... | So that I can...
 -------- | :-------- | :--------- | :-----------
-`* * *` | User | See usage instructions | Refer to instructions when I forget how to use the App
-`* * *` | User | Add a task | Keep track of tasks which I need to do
-`* * *` | User | Delete task(s) | Remove task(s) that I no longer want to keep track of
-`* * *` | User | Rename a task | Update task description to reflect thechanges I want
-`* * *` | User | View all my tasks | Have a quick and clear reference of everything I need to do
-`* * *` | User | Mark task(s) as completed | Know that it is completed without deleting it, distinguish between completed and uncompleted tasks
-`* * *` | User | Unmark task(s) from completed | Update the status of my task if there are new changes
+`* * *` | User | See usage instructions | View more information about the features and commands available
+`* * *` | User | Add a task | Keep track of tasks which I need work on
+`* * *` | User | Add a task with start and end time | Keep track of events that need to be completed within a certain time-frame
+`* * *` | User | Add a task with a deadline | Keep track of a task to be done by a specific date and time
+`* * *` | User | Rename a task | update or enhance the description of a task
+`* * *` | User | Edit or remove start and end time of tasks | Reschedule events with defined start and end dates
+`* * *` | User | Edit or remove deadlines of tasks | Reschedule tasks which must be done by a certain date and time
+`* * *` | User | Mark task(s) as completed | Keep record of tasks that have been completed without deleting, to distinguish between completed and uncompleted tasks
+`* * *` | User | Unmark task(s) from completed | Update the status of my task(s) if there are new changes or I want to continue working on a recently completed task(s).
+`* * *` | User | Delete task(s) | Remove task(s) that will never get done or are no longer relevant
 `* * *` | User | Undo my last action(s) | Easily correct any accidental mistakes in the last command(s)
-`* * *` | User | Search based on task name | Find a task without going through the entire list if I remember a few key words
-`* * *` | User | Specify my data storage location | Easily locate the raw text file for editing and/or sync the file to a cloud storage service
+`* * *` | User | Search based on task name | Find a task without going through the entire list using a few key words.
+`* * *` | User | View all my tasks | Return to the default view of task lists after I am done searching for tasks
+`* * *` | User | Specify my data storage location | Easily relocate the raw file for editing and/or sync the file to a Cloud Storage service
+`* * *` | User | Load from a file | Load Agendum’s task list from a certain location or a Cloud Storage service
 `* * *` | User | Exit the application by typing a command | Close the app easily
-`* * *` | Busy user | Specify start and end time when creating tasks | Keep track of events with defined start and end dates
-`* * *` | Busy User | Specify deadlines when creating tasks | Keep track of tasks which must be done by a certain and date and time
-`* * *` | Busy User | Edit and remove start and end time of tasks | Update events with defined start and end dates
-`* * *` | Busy User | Edit and remove deadlines of tasks | Update tasks which must be done by a certain and date and time
 
 `* *` | User | Filter overdue tasks and upcoming tasks (due within a week) | Decide on what needs to be done soon
 `* *` | User | Filter tasks based on marked/unmarked | Review my completed tasks and decide on what I should do next
@@ -397,8 +398,8 @@ Priority | As a ... | I want to ... | So that I can...
 
 `*` | User | Sort tasks by alphabetical order and date | Organise and easily locate tasks
 `*` | User | Clear the command I am typing with a key | Enter a new command without having to backspace the entire command line
-`*` | Advanced user | Specify my own short-hand alias commands | Enter commands faster
-`*` | Advanced user | Remove or edit the short-hand alias commands | Update to use more suitable command aliases
+`*` | Advanced user | Specify my own alias commands | Enter commands faster or change the name of a command to suit my needs
+`*` | Advanced user | Remove the alias commands | Update to use another command aliases
 `*` | Advanced user | Scroll through my past few commands | Check what I have done and redo actions easily
 
 `* Unlikely` | Google calendar user | Sync my tasks with Google calendar | Keep track of my tasks online
