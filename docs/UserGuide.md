@@ -227,11 +227,9 @@ Here are the *acceptable format(s)*:
 * `schedule <id> by <deadline>` - set or update the deadline for the task identified. Note the keyword `by`.
 * `schedule <id> from <start-time> to <end-time>` - update the start/end time of the task identified by id. Note the keyword `from` and `to`.
 
-> Again, `<id>` must be a positive number and in the most recent to-do list displayed.
-
-> `<deadline>`, `<start-time>` and `<end-time>` must follow the format previously defined in [Date Time Format](#date-time-format)
-
-> A task cannot have a deadline and a event time at the same time. A wrong start and end time might be saved.  
+  > * Again, `<id>` must be a positive number and in the most recent to-do list displayed.
+  > * `<deadline>`, `<start-time>` and `<end-time>` must follow the format previously defined in [Date Time Format](#date-time-format)
+  > * A task cannot have a deadline and a event time at the same time. A wrong start and end time might be saved.  
 
 Here are some *examples*:<br>
 <img src="images/userguide/beforeScheduling.png" width="300"><br>
@@ -325,12 +323,27 @@ The tasks with display ids 1, 2 and 3 will be deleted.
 
 
 [comment]: # (@@author A0148031R)
-#### Undo the last command : `undo`  
+### Undo the last command : `undo`  
 
+Agendum understands that you might make mistakes and change your mind. Hence, Agendum does offer some flexibility and allow you to reverse the effects of a few commands by simply typing `undo`. Multiple and successive `undo` are supported.
+
+The commands include:
+* `add`
+* `rename`
+* `schedule`
+* `mark`
+* `unmark`
+* `delete`
+
+However, some commands are not reversible but you can still reverse the effect manually.
+* `store` - choose to `store` in your previous location again
+* `load` - choose to `load` data from your previous location
+* `alias` - `unalias` the shorthand command you just defined
+* `unalias` - `alias` the shorthand command you just removed
 If you have accidentally made a mistake in the previous command, you can use 'undo' to remedy it.<br>
 Multiple undo actions are also supported.
-
-Format: `undo`
+* `undo` - scroll through your previous commands using the <kbd>↑</kbd> and <kbd>↓</kbd> again and enter the command to execute it again
+* `list`/`find` - there is only a change in your view but no change in the task data. To go back to the previous view, use <kbd>ESC</kbd>
 
 Examples:
 
@@ -339,31 +352,27 @@ Examples:
   The task "homework" which has been added previously, will be removed.
 
 
-#### Finding tasks containing keywords: `find`
+### Finding tasks containing keywords: `find`
 
 As your task list grows over time, it may become harder to locate a task.<br>
-Fortunately, Agendum can search and bring up these tasks to you. Enter the following command: <br>
-Format: `find KEYWORD``...`  
+Fortunately, Agendum can search and bring up these tasks to you (if only you remember some of the keywords): <br>
 
+Here is the *format*:
+* `find <keyword>...` - filter out all tasks containing any of the keyword(s) given
   > * The search is not case sensitive. e.g `assignment` will match `Assignment`
   > * The order of the keywords does not matter. e.g. `2 essay` will match `essay 2`
   > * Only the name is searched
   > * Only full words will be matched e.g. `work` will not match `homework`
   > * Tasks matching at least one keyword will be returned (i.e. `OR` search). e.g. `2103` will match `2101 and 2103 assignment`
 
-Examples:  
-
-* `find Dory` <br>
-  Returns `Shark & Dory` and `dory`  
-
-* `find Nemo Dory` <br>
-  Returns all tasks that contain `Dory` or `Nemo`  
+Here is an *example*:<br>
+ <img src="images/userguide/findResult.png" width="800"><br>
 
 
-#### Retrieving task list : `list`
+### Retrieving task list : `list`
 
-After you are done searching for tasks, you can use the following command to return to the default view of task lists: <br>
-Format: `list`
+After you are done searching for tasks, you can use the following command to return to the default view of all your tasks: <br>
+The format is simply `list`.
 
 
 [comment]: # (@@author A0148095X)
