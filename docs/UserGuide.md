@@ -167,7 +167,7 @@ How do you specify the `<deadline>`, `<start-time>` and `<end-time>`? Agendum su
  > The day of the week refers to the following week. For example, today is Sunday (30 Oct). Agendum will interpret Wednesday and Sunday as 2 Nov and 6 Nov respectively (a week from now).
 
 *Time Format*
-Time Format       | Example(s)                              |
+| Time Format     | Example(s)                              |
 |-----------------|-----------------------------------------|
 | Hour            | 10, 22                                  |
 | Hour:Minute     | 10:30                                   |
@@ -280,7 +280,7 @@ The tasks with display ids 1, 2 and 3 will be marked as completed.
 ```
 
 The changes are as shown below. <br>
-<img src="images/userguide/markMultiple.png" width="800"><br>
+<img src="images/userguide/markMultiple.png" width="600"><br>
 
 
 ### Unmarking a task as completed : `unmark`
@@ -452,17 +452,15 @@ Examples:
 #### Exiting the program : `exit`
 
 Are you done with organizing your tasks? Well done! <br>
-To leave Agendum, type `exit`.
-
-Format: `exit`  
+To leave Agendum, type `exit`. See you soon!
 
 
 ### Keyboard Shortcuts
 
 To work even faster,
-1. Use the <kbd>↑</kbd> and <kbd>↓</kbd> to scroll through your past commands. You don't need to remember or enter them again
-2. If you are entering a new command, use the <kbd>DOWN ARROW</kbd> to instantly clear the command line and start afresh.
-3. <kbd>Tab</kbd> will autocomplete the command word for you.
+1. Use the <kbd>↑</kbd> and <kbd>↓</kbd> to scroll through your past commands. You don't need to remember or enter them again <br>
+2. If you are entering a new command, use the <kbd>DOWN ARROW</kbd> to instantly clear the command line and start afresh. <br>
+3. <kbd>Tab</kbd> will autocomplete the command word for you. <br>
 
 
 
