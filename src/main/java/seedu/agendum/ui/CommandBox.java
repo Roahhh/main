@@ -95,39 +95,35 @@ public class CommandBox extends UiPart {
     }
 
     private void registerArrowKeyEventFilter() {
-        commandTextField.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
-            public void handle(KeyEvent event) {
-                KeyCode keyCode = event.getCode();
-                if (keyCode.equals(KeyCode.UP)) {
-                    String previousCommand = commandBoxHistory.getPreviousCommand();
-                    commandTextField.setText(previousCommand);
-                } else if (keyCode.equals(KeyCode.DOWN)) {
-                    String nextCommand = commandBoxHistory.getNextCommand();
-                    commandTextField.setText(nextCommand);
-                } else {
-                    return;
-                }
-                commandTextField.end();
-                event.consume();
+        commandTextField.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+            KeyCode keyCode = event.getCode();
+            if (keyCode.equals(KeyCode.UP)) {
+                String previousCommand = commandBoxHistory.getPreviousCommand();
+                commandTextField.setText(previousCommand);
+            } else if (keyCode.equals(KeyCode.DOWN)) {
+                String nextCommand = commandBoxHistory.getNextCommand();
+                commandTextField.setText(nextCommand);
+            } else {
+                return;
             }
-        });  
+            commandTextField.end();
+            event.consume();
+        });
     }
     
     private void registerTabKeyEventFilter() {
-        commandTextField.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
-            public void handle(KeyEvent event) {
-                KeyCode keyCode = event.getCode();
-                if (keyCode.equals(KeyCode.TAB)) {
-                    Optional<String> parsedString = EditDistanceCalculator.commandCompletion(commandTextField.getText());
-                    if(parsedString.isPresent()) {
-                        commandTextField.setText(parsedString.get());
-                    }
-                } else {
-                    return;
+        commandTextField.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+            KeyCode keyCode = event.getCode();
+            if (keyCode.equals(KeyCode.TAB)) {
+                Optional<String> parsedString = EditDistanceCalculator.commandCompletion(commandTextField.getText());
+                if(parsedString.isPresent()) {
+                    commandTextField.setText(parsedString.get());
                 }
-                commandTextField.end();
-                event.consume();
+            } else {
+                return;
             }
+            commandTextField.end();
+            event.consume();
         });
     }
 

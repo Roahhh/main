@@ -1,8 +1,6 @@
 package seedu.agendum.commons.util;
 
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 import java.io.FileNotFoundException;
 

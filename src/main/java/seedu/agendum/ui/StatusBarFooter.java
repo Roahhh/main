@@ -141,14 +141,12 @@ class DigitalClock extends Label {
     
     private void bindToTime() {
         Timeline timeline = new Timeline(
-                new KeyFrame(Duration.seconds(0), 
-                        new EventHandler<ActionEvent>() {
-                            @Override public void handle(ActionEvent actionEvent) {
-                                Calendar time = Calendar.getInstance();
-                                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss, EEE d MMM yyyy");
-                                setText(simpleDateFormat.format(time.getTime()));
-                                setTextFill(Color.web("#ffffff"));
-            }
+                new KeyFrame(Duration.seconds(0),
+                        actionEvent -> {
+                            Calendar time = Calendar.getInstance();
+                            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss, EEE d MMM yyyy");
+                            setText(simpleDateFormat.format(time.getTime()));
+                            setTextFill(Color.web("#ffffff"));
         }), new KeyFrame(Duration.seconds(1)));
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();

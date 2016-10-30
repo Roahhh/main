@@ -44,7 +44,7 @@ public class EditDistanceCalculator {
     }
 
     public static Optional<String> commandCompletion(String input) {
-        ArrayList<String> matchedCommands = new ArrayList<String>();
+        ArrayList<String> matchedCommands = new ArrayList<>();
 
         Consumer<String> consumer = (commandWord) -> {
             if (commandWord.startsWith(input)) {

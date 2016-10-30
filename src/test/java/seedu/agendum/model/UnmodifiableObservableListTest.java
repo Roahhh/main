@@ -2,9 +2,7 @@ package seedu.agendum.model;
 
 import javafx.collections.FXCollections;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import seedu.agendum.commons.core.UnmodifiableObservableList;
 
 import java.util.*;

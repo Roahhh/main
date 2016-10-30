@@ -335,7 +335,7 @@ public class Parser {
      */
     private Set<Integer> parseIndexes(String args) {
         final Matcher matcher = TASK_INDEXES_ARGS_FORMAT.matcher(args.trim());
-        Set<Integer> taskIds = new HashSet<Integer>();
+        Set<Integer> taskIds = new HashSet<>();
 
         if (!matcher.matches()) {
             return taskIds;
@@ -357,7 +357,7 @@ public class Parser {
         }
 
         if (taskIds.remove(0)) {
-            return new HashSet<Integer>();
+            return new HashSet<>();
         }
 
         return taskIds;

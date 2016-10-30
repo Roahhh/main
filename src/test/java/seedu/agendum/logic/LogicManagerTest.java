@@ -996,13 +996,10 @@ public class LogicManagerTest {
 
         /** Generates the correct add command based on the task given */
         private String generateAddCommand(Task p) {
-            StringBuffer cmd = new StringBuffer();
+            String cmd = "add " +
+                    p.getName().toString();
 
-            cmd.append("add ");
-
-            cmd.append(p.getName().toString());
-
-            return cmd.toString();
+            return cmd;
         }
 
         /**
@@ -1085,9 +1082,9 @@ public class LogicManagerTest {
          * Generate a sorted UnmodifiableObservableList from expectedShownList
          */
         private UnmodifiableObservableList<Task> generateSortedList(List<? extends ReadOnlyTask> expectedShownList) throws Exception {
-            List<Task> taskList = new ArrayList<Task>();
-            for (int i = 0; i < expectedShownList.size(); i++) {
-                taskList.add(new Task(expectedShownList.get(i)));
+            List<Task> taskList = new ArrayList<>();
+            for (ReadOnlyTask anExpectedShownList : expectedShownList) {
+                taskList.add(new Task(anExpectedShownList));
             }
             ToDoList toDoList = generateToDoList(taskList); 
             return new UnmodifiableObservableList<>(toDoList.getTasks().sorted());
