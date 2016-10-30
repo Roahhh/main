@@ -25,9 +25,9 @@ public class MarkCommand extends Command {
 
     public static final String MESSAGE_MARK_TASK_SUCCESS = "Marked Task(s): %1$s";
 
-    private final ArrayList<Integer> targetIndexes;
+    private ArrayList<Integer> targetIndexes;
 
-    private final ArrayList<ReadOnlyTask> tasksToMark;
+    private ArrayList<ReadOnlyTask> tasksToMark;
 
     //@@author A0133367E
     public MarkCommand(Set<Integer> targetIndexes) {

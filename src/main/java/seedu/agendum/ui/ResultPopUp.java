@@ -29,7 +29,7 @@ public class ResultPopUp extends UiPart {
     private static Stage root;
     
     @FXML
-    private final Label resultDisplay;
+    private Label resultDisplay;
     
     public static ResultPopUp load(Stage primaryStage) {
         logger.fine("Showing command execution result.");

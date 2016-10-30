@@ -7,7 +7,7 @@ import seedu.agendum.commons.events.BaseEvent;
  */
 public class DataSavingExceptionEvent extends BaseEvent {
 
-    public final Exception exception;
+    public Exception exception;
 
     public DataSavingExceptionEvent(Exception exception) {
         this.exception = exception;

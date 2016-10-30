@@ -11,7 +11,7 @@ import seedu.agendum.model.ToDoList;
  */
 public class ToDoListBuilder {
 
-    private final ToDoList toDoList;
+    private ToDoList toDoList;
 
     public ToDoListBuilder(ToDoList toDoList){
         this.toDoList = toDoList;

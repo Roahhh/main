@@ -6,7 +6,7 @@ import seedu.agendum.commons.events.BaseEvent;
 /** Indicates an exception during a file loading **/
 public class DataLoadingExceptionEvent extends BaseEvent {
 
-    public final Exception exception;
+    public Exception exception;
 
     public DataLoadingExceptionEvent(Exception exception) {
         this.exception = exception;

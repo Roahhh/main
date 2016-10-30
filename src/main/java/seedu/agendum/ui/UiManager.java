@@ -27,9 +27,9 @@ public class UiManager extends ComponentManager implements Ui {
     private static final Logger logger = LogsCenter.getLogger(UiManager.class);
     private static final String ICON_APPLICATION = "/images/agendum_icon.png";
 
-    private final Logic logic;
-    private final Config config;
-    private final UserPrefs prefs;
+    private Logic logic;
+    private Config config;
+    private UserPrefs prefs;
     private MainWindow mainWindow;
 
     public UiManager(Logic logic, Config config, UserPrefs prefs) {

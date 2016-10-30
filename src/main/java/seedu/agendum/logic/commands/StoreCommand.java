@@ -25,7 +25,7 @@ public class StoreCommand extends Command {
             + "Example: " 
             + COMMAND_EXAMPLE;
     
-    private final String pathToFile;
+    private String pathToFile;
 
     public StoreCommand(String location) {
         this.pathToFile = location.trim();

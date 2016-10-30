@@ -34,7 +34,7 @@ public class StorageManagerTest {
     private StorageManager storageManager;
 
     @Rule
-    public final TemporaryFolder testFolder = new TemporaryFolder();
+    public TemporaryFolder testFolder = new TemporaryFolder();
 
     @Before
     public void setup() {

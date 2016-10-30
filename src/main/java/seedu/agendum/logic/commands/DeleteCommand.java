@@ -25,9 +25,9 @@ public class DeleteCommand extends Command {
 
     public static final String MESSAGE_DELETE_TASK_SUCCESS = "Deleted Task(s): %1$s";
 
-    private final ArrayList<Integer> targetIndexes;
+    private ArrayList<Integer> targetIndexes;
 
-    private final ArrayList<ReadOnlyTask> tasksToDelete;
+    private ArrayList<ReadOnlyTask> tasksToDelete;
 
     //@@author A0133367E
     public DeleteCommand(Set<Integer> targetIndexes) {

@@ -31,7 +31,7 @@ public abstract class ToDoListGuiTest {
 
     private TestApp testApp;
 
-    final TypicalTestTasks td = new TypicalTestTasks();
+    TypicalTestTasks td = new TypicalTestTasks();
 
     /*
      *   Handles to GUI elements present at the start up are created in advance

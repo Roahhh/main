@@ -17,10 +17,10 @@ import static org.junit.Assert.assertFalse;
 
 public class JsonUserPrefsStorageTest {
 
-    private static final String TEST_DATA_FOLDER = FileUtil.getPath("./src/test/data/JsonUserPrefsStorageTest/");
+    private static String TEST_DATA_FOLDER = FileUtil.getPath("./src/test/data/JsonUserPrefsStorageTest/");
 
     @Rule
-    public final TemporaryFolder testFolder = new TemporaryFolder();
+    public TemporaryFolder testFolder = new TemporaryFolder();
 
     @Test(expected = AssertionError.class)
     public void readUserPrefsNullFilePathSssertionFailure() throws DataConversionException {

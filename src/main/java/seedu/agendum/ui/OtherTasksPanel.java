@@ -21,7 +21,7 @@ public class OtherTasksPanel extends UiPart {
     private AnchorPane placeHolderPane;
 
     @FXML
-    private final ListView<ReadOnlyTask> otherTasksListView;
+    private ListView<ReadOnlyTask> otherTasksListView;
 
     @Override
     public void setNode(Node node) {

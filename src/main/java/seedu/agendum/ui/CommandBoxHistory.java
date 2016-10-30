@@ -15,7 +15,7 @@ class CommandBoxHistory {
     private static final String NEXT_QUERY = "next";
     private static final String EMPTY_QUERY = "";
     private static final String EMPTY_COMMAND = "";
-    private final LinkedList<String> pastCommands;
+    private LinkedList<String> pastCommands;
     private ListIterator<String> iterator;
     private String lastCommand = "";
     private String lastQuery = EMPTY_QUERY;

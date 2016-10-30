@@ -11,7 +11,7 @@ import java.util.List;
  * A class that collects events raised by other classes.
  */
 public class EventsCollector{
-    private final List<BaseEvent> events = new ArrayList<>();
+    private List<BaseEvent> events = new ArrayList<>();
 
     public EventsCollector(){
         EventsCenter.getInstance().registerHandler(this);

@@ -57,7 +57,7 @@ public class TestUtil {
     /**
      * Folder used for temp files created during testing. Ignored by Git.
      */
-    private static final String SANDBOX_FOLDER = FileUtil.getPath("./src/test/data/sandbox/");
+    private static String SANDBOX_FOLDER = FileUtil.getPath("./src/test/data/sandbox/");
 
     private static final Task[] sampleTaskData = getSampleTaskData();
 
