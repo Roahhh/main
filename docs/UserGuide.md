@@ -31,7 +31,7 @@ Agendum is simple, efficient, flexible and phenomenally keyboard friendly. With 
 ### Download
 
 1. Ensure that you have Java version `1.8.0_60` or above installed on your computer.
-2. Download the latest `Agendum.jar` from [here](../../../releases).
+2. Download the latest `Agendum.jar` from [here](../../../releases).<br>
 <img src="images/userguide/releases.png" width="300"><br>
 3. Copy the jar file to the folder that you intend to use as the root directory of Agendum.
 
@@ -58,7 +58,7 @@ Notice how Agendum has 3 panels: **"Do It Soon"**, **"Do It Anytime"** and **"Do
 Agendum will clearly display the name and time associated with each task. Notice that each task is displayed with a ID. For example, the task *drop by grocery store* has a ID *5* now. We will use this ID to refer to the task for some Agendum commands.
 
 The **Command Box** is located at the top of Agendum. Enter your keyboard commands into the box!
-Just in case, there is a **Status Bar** located at the bottom of Agendum. You can check today's date and time, where your Agendum's to-do list data is located and when was the data last saved.
+Just in case, there is a **Status Bar** located at the bottom of Agendum. You can check today's date and time, where your Agendum's to-do list data is located and when the data was last saved.
 
 Agendum also has a pretty **Help Window** which summarizes the commands you can use and pop-ups after each commands for you to review your changes.
 
@@ -69,26 +69,26 @@ Agendum also has a pretty **Help Window** which summarizes the commands you can 
 
 **Step 1 - Get some help**
 
-Feeling lost or clueless? To see a summary of Agendum commands, use the keyboard shortcut <kbd>F5</kbd> or type **`help`** to bring up the help screen as shown below.
+Feeling lost or clueless? To see a summary of Agendum commands, use the keyboard shortcut <kbd>F5</kbd> to bring up the help screen as shown below. Press <kbd>ESC</kbd> to close the window when done.
 
 **Step 2 - Add a task**
 
-Perhaps, you can start by adding a task to your empty Agendum to-do list. For example, you might remember you have to return your library books. Type the following line in the command box:
+Perhaps, you can start by adding a task to your empty Agendum to-do list. For example, you might remember you have to return your library books. Type the following line in the command box:  
 `> add return library books`
 Since you did not specify a time to return the books, Agendum will add this task to the **Do It Anytime** panel. The task *return library books* has a ID *1* now.
 
 **Step 3 - Update your task (if needed)**
 
-You might change your mind and want to update the details of the task. For example, you might only want to return a single book "Animal Farm" instead. Type the following line in the command box:
-`> rename 1 return "Animal Farm"`
-Agendum will promptly update the changes. What if you suddenly discover the book is due within a week? You will want to return "Animal Farm" by Friday night. To (re)schedule the task, type the following command:
-`> schedule 1 by friday 8pm`
+You might change your mind and want to update the details of the task. For example, you might only want to return a single book "Animal Farm" instead. Type the following line in the command box:  
+`> rename 1 return "Animal Farm"`  
+Agendum will promptly update the changes. What if you suddenly discover the book is due within a week? You will want to return "Animal Farm" by Friday night. To (re)schedule the task, type the following command:  
+`> schedule 1 by friday 8pm`  
 Since you will have to return your books by a specific time, Agendum will move this task to the **Do It Soon** panel.
 
 **Step 4 - Mark a task as completed**
 
-With the help of Agendum, you remembered to return "Animal Farm" punctually on Friday. Celebrate by marking the task as completed. Type the following line in the command box:
-`> mark 1`
+With the help of Agendum, you remembered to return "Animal Farm" punctually on Friday. Celebrate by marking the task as completed. Type the following line in the command box:  
+`> mark 1`  
 Agendum will move the task _return "Animal Farm"_ to the **Done** panel.
 
 **Step 5 - Good to go**
