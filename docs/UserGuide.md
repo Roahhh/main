@@ -101,17 +101,15 @@ Here is a **summary of all the visual changes** you should see at every step:
 &nbsp;
 
 
+[comment]: # (@@author A0003878Y)
 ## Features
 
 ### Commands
 
-> **Command Format**
-> * Words in `UPPER_CASE` are the parameters.
-> * Parameters in `SQUARE_BRACKETS` are optional.
-> * Parameters with `...` after them can have multiple instances (separated by whitespace).
-> * The order of parameters is fixed.
-> * Commands and parameters are not case-sensitive e.g `list` will match `List`  
-
+> **Here are some general things to note**
+> * All command words are case-insensitive. e.g. `Add` will match `add`
+> * Words enclosed in angle brackets, e.g.`<name>` are the parameters. You can freely decide what to replace them by.
+> * Parameters with `...` after them can have multiple instances (separated by whitespace). For example, `<index>...` means that you can specify multiple indices such as `3 5 7`.
 
 #### Viewing help : `help`
 
