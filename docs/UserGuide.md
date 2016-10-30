@@ -346,11 +346,11 @@ Multiple undo actions are also supported.
 * `list`/`find` - there is only a change in your view but no change in the task data. To go back to the previous view, use <kbd>ESC</kbd>
 
 Examples:
-
-* `add homework`<br>
-  `undo`<br>
-  The task "homework" which has been added previously, will be removed.
-
+```
+> add homework
+> undo
+Result: The task "homework" which has been added previously, will be removed.
+```
 
 ### Finding tasks containing keywords: `find`
 
@@ -365,7 +365,7 @@ Here is the *format*:
   > * Only full words will be matched e.g. `work` will not match `homework`
   > * Tasks matching at least one keyword will be returned (i.e. `OR` search). e.g. `2103` will match `2101 and 2103 assignment`
 
-Here is an *example*:<br>
+Here is an *example*: <br>
  <img src="images/userguide/findResult.png" width="800"><br>
 
 
@@ -376,56 +376,47 @@ The format is simply `list`.
 
 
 [comment]: # (@@author A0148095X)
-#### Creating an alias for a command : `alias`
+### Creating an alias for a command : `alias`
 
+Is `schedule` too long to type?  <br>
 Perhaps you want to type a command faster, or change the name of a command to suit your needs; <br>
 fret not, Agendum allows you to define your own aliases for commands. <br>
-You can use both new and old command aliases to carry out the same action.
+You can use both the original command and your own alias to carry out the same action.
 
-Format: `alias ORIGINAL_COMMAND_NAME NEW_COMMAND_NAME`  
+To create an alias, here is the *format*:
+* `alias <original-command> <shorthand>`
 
-> * NEW_COMMAND_NAME must be a single word.
-> * ORIGINAL_COMMAND_NAME must be a command word that is specified in the Command Summary section
-> * When creating an alias for a command with a pre-existing alias, it can also be used to carry out that command.
+> * `<shorthand>` must be a single alphanumeric word. It cannnot be a original command and already aliased to another command.
+> * `<original-command>` must be a command word that is specified in the Command Summary section
 
 Examples:
+```
+> alias mark m <br>
+Result: you can now use m or mark to mark a task as completed.
+> alias mark mk <br>
+Result: Now you can use m, mk or mark to mark a task.
+```
 
-* `alias mark m` <br>
-  you can now use`m` or `mark` to mark a task as completed.<br>
-  `alias mark mk`<br>
-  Now you can use `m`, `mk` or `mark` to mark a task.
-
-
-#### Removing an alias command : `unalias`
+### Removing an alias command : `unalias`
 
 Is a current alias inconvenient? Have you thought of a better one? <br>
 Or perhaps you are thinking of using an alias for another command. <br>
-To remove a previously defined alias, type:
 
-Format: `unalias ALIAS_FOR_COMMAND_NAME`
-
-> * ALIAS_FOR_COMMAND_NAME must be one of the user-defined command words.
-> * Once it has been removed, you can still use the original command word or other unremoved aliases.
+To remove a previously defined alias, here is the *format*:
+* `unalias <shorthand>`
+> * `<shorthand>` should be an alias you previously defined.
+> * After removing this particular alias, you can still use the original command word or other unremoved aliases.
 
 Examples:
+```
+If mark is aliased with `m` and `mk`.
+> unalias mk
+Result m can no longer be used to mark tasks; now you can only use the original command (mark) or (m) to mark a task as completed.
+```
 
-Assume that mark has been aliased with `m` and `mk`.
-* `unalias m`<br>
-  `m` can no longer be used to mark tasks; now you can only use the original command `mark` or `mk` to mark a task as completed.
+### Viewing help : `help`
 
-Similarly, you can also use the following command:
-* `unalias mk`<br>
-  `mk` can no longer be used to mark tasks; now you can only use the original command `mark` to mark a task as completed.
-
-
-#### Viewing help : `help`
-
-  If you need some reminder or more information about the features available, you can use the `help` command.
-
-  Format: `help`  
-  > Help is also shown if an incorrect command is entered e.g. `run`
-
-
+If you need some reminder or more information about the features available, you can use the `help` command.
 
 #### Specifying the data storage location : `store`
 
@@ -468,8 +459,11 @@ Format: `exit`
 
 ### Keyboard Shortcuts
 
-1. Use the <kbd>UP ARROW</kbd> and <kbd>DOWN ARROW</kbd> to scroll through earlier commands.
-2. If you are entering a new command, use the <kbd>DOWN ARROW</kbd> to instantly clear the command line.
+To work even faster,
+1. Use the <kbd>↑</kbd> and <kbd>↓</kbd> to scroll through your past commands. You don't need to remember or enter them again
+2. If you are entering a new command, use the <kbd>DOWN ARROW</kbd> to instantly clear the command line and start afresh.
+3. <kbd>Tab</kbd> will autocomplete the command word for you.
+
 
 
 ### Saving the data
