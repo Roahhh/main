@@ -13,9 +13,6 @@ import static org.junit.Assert.assertTrue;
 
 public class StringUtilTest {
 
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
-
     @Test
     public void isUnsignedPositiveInteger() {
         assertFalse(StringUtil.isUnsignedInteger(null));
@@ -41,9 +38,8 @@ public class StringUtilTest {
                    containsString("java.io.FileNotFoundException: file not found"));
     }
 
-    @Test
+    @Test(expected = AssertionError.class)
     public void getDetailsNullGivenAssertionError(){
-        thrown.expect(AssertionError.class);
         StringUtil.getDetails(null);
     }
     

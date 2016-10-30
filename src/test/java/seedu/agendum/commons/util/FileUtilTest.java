@@ -19,11 +19,6 @@ import static org.junit.Assert.assertTrue;
 public class FileUtilTest {
     private static final File SERIALIZATION_FILE = new File(TestUtil.getFilePathInSandboxFolder("serialize.json"));
 
-
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
-
-
     //@@author A0148095X
     @Test
     public void isFileExists() throws IOException, FileDeletionException {
@@ -68,22 +63,19 @@ public class FileUtilTest {
         validFileWithParentDirectories.delete();
     }
     
-    @Test
-    public void deleteFileAtPath() throws FileDeletionException, IOException {
-        
+    @Test(expected = AssertionError.class)
+    public void deleteFileAtPathInvalidFilePath() throws FileDeletionException, IOException {
         // invalid filepath
-        thrown.expect(AssertionError.class);
         FileUtil.deleteFile(null);
-        
+    }
+
+    @Test
+    public void deleteFileAtPathValid() throws FileDeletionException, IOException {
         // able to delete
         File file = new File("test.file");
         FileUtil.createFile(file);
         FileUtil.deleteFile(file.getPath());
         assertTrue(FileUtil.isFileExists(file));
-        
-        // unable to delete file
-        thrown.expect(FileDeletionException.class);
-        FileUtil.deleteFile(file.getPath());
     }
     
     @Test
@@ -103,18 +95,21 @@ public class FileUtilTest {
     }
 
     //@@author
-    @Test
-    public void getPath(){
-
+    @Test(expected = AssertionError.class)
+    public void getPathNullParameter(){
         // valid case
         assertEquals("folder" + File.separator + "sub-folder", FileUtil.getPath("folder/sub-folder"));
 
         // null parameter -> assertion failure
-        thrown.expect(AssertionError.class);
         FileUtil.getPath(null);
+    }
+
+    @Test(expected = AssertionError.class)
+    public void getPathNoForwardSlash(){
+        // valid case
+        assertEquals("folder" + File.separator + "sub-folder", FileUtil.getPath("folder/sub-folder"));
 
         // no forwards slash -> assertion failure
-        thrown.expect(AssertionError.class);
         FileUtil.getPath("folder");
     }
 

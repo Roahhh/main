@@ -143,19 +143,19 @@ public class LogicManagerTest {
         assertCommandBehavior("exit", ExitCommand.MESSAGE_EXIT_ACKNOWLEDGEMENT);
     }
 
-    @Test
-    public void executeAddInvalidArgsFormat() throws Exception {
-        // String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE);
-        // TODO
-        // currently, there are no invalid add argument format
-    }
-
-    @Test
-    public void executeAddInvalidTaskData() throws Exception {
-        // TODO
-        // check for invalid task data e.g. empty name invalid time
-
-    }
+//    @Test
+//    public void executeAddInvalidArgsFormat() throws Exception {
+//        // String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE);
+//        // TODO
+//        // currently, there are no invalid add argument format
+//    }
+//
+//    @Test
+//    public void executeAddInvalidTaskData() throws Exception {
+//        // TODO
+//        // check for invalid task data e.g. empty name invalid time
+//
+//    }
 
     @Test
     public void executeAddSuccessful() throws Exception {
@@ -1027,14 +1027,14 @@ public class LogicManagerTest {
          * Adds auto-generated Task objects to the given ToDoList
          * @param toDoList The ToDoList to which the Tasks will be added
          */
-        void addToToDoList(ToDoList toDoList, int numGenerated) throws Exception{
+        private void addToToDoList(ToDoList toDoList, int numGenerated) throws Exception{
             addToToDoList(toDoList, generateTaskList(numGenerated));
         }
 
         /**
          * Adds the given list of Tasks to the given ToDoList
          */
-        void addToToDoList(ToDoList toDoList, List<Task> tasksToAdd) throws Exception{
+        private void addToToDoList(ToDoList toDoList, List<Task> tasksToAdd) throws Exception{
             for(Task p: tasksToAdd){
                 toDoList.addTask(p);
             }
@@ -1044,14 +1044,14 @@ public class LogicManagerTest {
          * Adds auto-generated Task objects to the given model
          * @param model The model to which the Tasks will be added
          */
-        void addToModel(Model model, int numGenerated) throws Exception{
+        private void addToModel(Model model, int numGenerated) throws Exception{
             addToModel(model, generateTaskList(numGenerated));
         }
 
         /**
          * Adds the given list of Tasks to the given model
          */
-        void addToModel(Model model, List<Task> tasksToAdd) throws Exception{
+        private void addToModel(Model model, List<Task> tasksToAdd) throws Exception{
             for(Task p: tasksToAdd){
                 model.addTask(p);
             }

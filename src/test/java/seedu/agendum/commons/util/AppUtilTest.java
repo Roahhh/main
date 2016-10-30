@@ -8,20 +8,14 @@ import static org.junit.Assert.assertNotNull;
 
 public class AppUtilTest {
 
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
-
-
-
     @Test
     public void getImageExitingImage(){
         assertNotNull(AppUtil.getImage("/images/agendum_icon.png"));
     }
 
 
-    @Test
+    @Test(expected = AssertionError.class)
     public void getImageNullGivenAssertionError(){
-        thrown.expect(AssertionError.class);
         AppUtil.getImage(null);
     }
 

@@ -170,7 +170,7 @@ public class HelpWindow extends UiPart {
     }
     
     public Stage getStage() {
-        return this.dialogStage;
+        return dialogStage;
     }
 
     //@@author A0003878Y

@@ -68,13 +68,13 @@ public class EditDistanceCalculator {
                     try {
                         return s.getMethod("getName").invoke(null).toString();
                     } catch (NullPointerException e) {
-                        return null;
+                        return "";
                     } catch (Exception e) {
                         logger.severe("Java reflection for Command class failed");
                         throw new RuntimeException();
                     }
                 })
-                .filter(p -> p != null) // remove nulls
+                .filter(p -> p != "") // remove empty
                 .forEach(f); // execute given lambda on each nonnull String.
     }
 

@@ -8,8 +8,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class VersionTest {
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
 
     @Test
     public void versionParsingAcceptableVersionStringParsedVersionCorrectly() {
@@ -18,9 +16,8 @@ public class VersionTest {
         verifyVersionParsedCorrectly("V100.100.100ea", 100, 100, 100, true);
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void versionParsingWrongVersionStringThrowIllegalArgumentException() {
-        thrown.expect(IllegalArgumentException.class);
         Version.fromString("This is not a version string");
     }
 

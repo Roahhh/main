@@ -36,9 +36,6 @@ public class StorageManagerTest {
 
     @Rule
     public TemporaryFolder testFolder = new TemporaryFolder();
-    
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
 
     @Before
     public void setup() {
@@ -115,20 +112,26 @@ public class StorageManagerTest {
         assertTrue(dlee.exception instanceof DataConversionException);
         FileUtil.deleteFile(validPath);
     }
-    
-    public void setToDoListFilePath() {
+
+    @Test(expected = AssertionError.class)
+    public void setToDoListFilePathNull() {
         // null
-        thrown.expect(AssertionError.class);
         storageManager.setToDoListFilePath(null);
+    }
 
+    @Test(expected = AssertionError.class)
+    public void setToDoListFilePathEmpty() {
         // empty string
-        thrown.expect(AssertionError.class);
         storageManager.setToDoListFilePath("");
+    }
 
+    @Test(expected = AssertionError.class)
+    public void setToDoListFilePathInvalid() {
         // invalid file path
-        thrown.expect(AssertionError.class);
         storageManager.setToDoListFilePath("1:/.xml");
-        
+    }
+
+    public void setToDoListFilePathValid() {
         // valid file path
         String validPath = "test/test.xml";
         storageManager.setToDoListFilePath(validPath);

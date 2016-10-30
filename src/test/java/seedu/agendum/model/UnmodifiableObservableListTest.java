@@ -14,9 +14,6 @@ import static seedu.agendum.testutil.TestUtil.assertThrows;
 
 public class UnmodifiableObservableListTest {
 
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
-
     private List<Integer> backing;
     private UnmodifiableObservableList<Integer> list;
 

@@ -9,8 +9,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class ConfigTest {
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
 
     @Test
     public void toString_defaultObject_stringReturned() {        
