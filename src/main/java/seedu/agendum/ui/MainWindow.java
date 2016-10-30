@@ -1,10 +1,6 @@
 package seedu.agendum.ui;
 
 import javafx.application.Platform;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -33,8 +29,6 @@ public class MainWindow extends UiPart {
     private static final String ICON = "/images/agendum_icon.png";
     private static final String FXML = "MainWindow.fxml";
     public static final String LIST_COMMAND = "list";
-    public static final int MIN_HEIGHT = 600;
-    public static final int MIN_WIDTH = 450;
 
     private Logic logic;
     
@@ -109,7 +103,6 @@ public class MainWindow extends UiPart {
         //Configure the UI
         setTitle(appTitle);
         setIcon(ICON);
-        setWindowMinSize();
         setWindowDefaultSize(prefs);
         scene = new Scene(rootLayout);
         primaryStage.setScene(scene);
@@ -190,15 +183,11 @@ public class MainWindow extends UiPart {
     protected void setWindowDefaultSize(UserPrefs prefs) {
         primaryStage.setHeight(prefs.getGuiSettings().getWindowHeight());
         primaryStage.setWidth(prefs.getGuiSettings().getWindowWidth());
+        
         if (prefs.getGuiSettings().getWindowCoordinates() != null) {
             primaryStage.setX(prefs.getGuiSettings().getWindowCoordinates().getX());
             primaryStage.setY(prefs.getGuiSettings().getWindowCoordinates().getY());
         }
-    }
-
-    private void setWindowMinSize() {
-        primaryStage.setMinHeight(MIN_HEIGHT);
-        primaryStage.setMinWidth(MIN_WIDTH);
     }
 
     /**

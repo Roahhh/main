@@ -4,6 +4,9 @@ import seedu.agendum.commons.core.GuiSettings;
 
 import java.util.Objects;
 
+import javafx.geometry.Rectangle2D;
+import javafx.stage.Screen;
+
 /**
  * Represents User's preferences.
  */
@@ -19,14 +22,18 @@ public class UserPrefs {
         this.guiSettings = guiSettings;
     }
 
+    //@@author A0148031R
     public UserPrefs(){
-        this.setGuiSettings(500, 500, 0, 0);
+        Screen screen = Screen.getPrimary();
+        Rectangle2D bounds = screen.getVisualBounds();
+        this.setGuiSettings(bounds.getWidth(), bounds.getHeight(), 0, 0);
     }
 
     public void setGuiSettings(double width, double height, int x, int y) {
         guiSettings = new GuiSettings(width, height, x, y);
     }
 
+    //@@author
     @Override
     public boolean equals(Object other) {
         if (other == this){
