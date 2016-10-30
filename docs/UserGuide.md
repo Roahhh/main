@@ -32,7 +32,7 @@ Agendum is simple, efficient, flexible and phenomenally keyboard friendly. With 
 
 1. Ensure that you have Java version `1.8.0_60` or above installed on your computer.
 2. Download the latest `Agendum.jar` from [here](../../../releases).
-<img src="images/userguide/releases.png"><br>
+<img src="images/userguide/releases.png" width="300"><br>
 3. Copy the jar file to the folder that you intend to use as the root directory of Agendum.
 
 ### Launch
@@ -67,46 +67,35 @@ Agendum also has a pretty **Help Window** which summarizes the commands you can 
 ### Start using Agendum
 *This is only a brief introduction and suggestion on how to get started with Agendum. Refer to our [Features](#features) section, for a more extensive coverage on what Agendum can do.*
 
-_Step 1 - Get some help_
+**Step 1 - Get some help**
 
 Feeling lost or clueless? To see a summary of Agendum commands, use the keyboard shortcut <kbd>F5</kbd> or type **`help`** to bring up the help screen as shown below.
 
-_Step 2 - Add some tasks_
+**Step 2 - Add a task**
 
 Perhaps, you can start by adding a task to your empty Agendum to-do list. For example, you might remember you have to return your library books. Type the following line in the command box:
-
 `> add return library books`
+Since you did not specify a time to return the books, Agendum will add this task to the **Do It Anytime** panel. The task *return library books* has a ID *1* now.
 
-Since you did not specify a time to return the books, Agendum will add this task to the **Do It Anytime** panel as follows.
-<img src="images/userguide/startAgendum1.png"><br>
-The task *return library books* has a ID *1* now.
-
-_Step 3 - Update your tasks (if needed)_
+**Step 3 - Update your task (if needed)**
 
 You might change your mind and want to update the details of the task. For example, you might only want to return a single book "Animal Farm" instead. Type the following line in the command box:
-
 `> rename 1 return "Animal Farm"`
-
 Agendum will promptly update the changes. What if you suddenly discover the book is due within a week? You will want to return "Animal Farm" by Friday night. To (re)schedule the task, type the following command:
-
 `> schedule 1 by friday 8pm`
-
 Since you will have to return your books by a specific time, Agendum will move this task to the **Do It Soon** panel.
 
-_Step 4 - Mark a task as completed_
+**Step 4 - Mark a task as completed**
 
 With the help of Agendum, you remembered to return "Animal Farm" punctually on Friday. Celebrate by marking the task as completed. Type the following line in the command box:
-
 `> mark 1`
-
 Agendum will move the task _return "Animal Farm"_ to the **Done** panel.
 
-_Step 5 - Good to go_
+**Step 5 - Good to go**
 
 Continue exploring Agendum. Add more tasks to your Agendum to-do list and try out the various convenient commands given in the next section. Do note that the ID of the task might change as new tasks are added, updated and marked. Agendum takes care of it for you but you should always refer to the current ID displayed.
 
-Here is a summary of all the visual changes you should see at every step:
-
+Here is a **summary of all the visual changes** you should see at every step:
 <img src="images/userguide/startAgendum.png" width="800"><br>
 
 &nbsp;
@@ -177,7 +166,7 @@ The event “project meeting” will start at 12pm on 10 October and end at 2pm 
 #### Renaming a task : `rename`
 
 Agendum understands that plans and tasks change all the time. <br>
-If you wish to update or enhance the description of a task, you can use the following commandt.
+If you wish to update or enhance the description of a task, you can use the following command.
 
 Format: `rename INDEX NEW_TASK_NAME`  
 
