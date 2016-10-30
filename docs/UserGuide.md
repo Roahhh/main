@@ -73,22 +73,30 @@ Feeling lost or clueless? To see a summary of Agendum commands, use the keyboard
 
 **Step 2 - Add a task**
 
-Perhaps, you can start by adding a task to your empty Agendum to-do list. For example, you might remember you have to return your library books. Type the following line in the command box:  
+Perhaps, you can start by adding a task to your empty Agendum to-do list. For example, you might remember you have to return your library books. Type the following line in the command box:
+
 `> add return library books`
+
 Since you did not specify a time to return the books, Agendum will add this task to the **Do It Anytime** panel. The task *return library books* has a ID *1* now.
 
 **Step 3 - Update your task (if needed)**
 
-You might change your mind and want to update the details of the task. For example, you might only want to return a single book "Animal Farm" instead. Type the following line in the command box:  
-`> rename 1 return "Animal Farm"`  
-Agendum will promptly update the changes. What if you suddenly discover the book is due within a week? You will want to return "Animal Farm" by Friday night. To (re)schedule the task, type the following command:  
-`> schedule 1 by friday 8pm`  
+You might change your mind and want to update the details of the task. For example, you might only want to return a single book "Animal Farm" instead. Type the following line in the command box:
+
+`> rename 1 return "Animal Farm"`
+
+Agendum will promptly update the changes. What if you suddenly discover the book is due within a week? You will want to return "Animal Farm" by Friday night. To (re)schedule the task, type the following command:
+
+`> schedule 1 by friday 8pm`
+
 Since you will have to return your books by a specific time, Agendum will move this task to the **Do It Soon** panel.
 
 **Step 4 - Mark a task as completed**
 
-With the help of Agendum, you remembered to return "Animal Farm" punctually on Friday. Celebrate by marking the task as completed. Type the following line in the command box:  
-`> mark 1`  
+With the help of Agendum, you remembered to return "Animal Farm" punctually on Friday. Celebrate by marking the task as completed. Type the following line in the command box:
+
+`> mark 1`
+
 Agendum will move the task _return "Animal Farm"_ to the **Done** panel.
 
 **Step 5 - Good to go**
@@ -106,12 +114,12 @@ Here is a **summary of all the visual changes** you should see at every step:
 
 ### Commands
 
-> **Here are some general things to note**
+> **Here are some general things to note:**
 > * All command words are case-insensitive. e.g. `Add` will match `add`
 > * Words enclosed in angle brackets, e.g.`<name>` are the parameters. You can freely decide what to replace them by.
 > * Parameters with `...` after them can have multiple instances (separated by whitespace). For example, `<index>...` means that you can specify multiple indices such as `3 5 7`.
 
-#### Adding a task: `add`
+### Adding a task: `add`
 
 If you have a task to work on, add it to the Agendum to start keeping track! <br>
 
@@ -130,18 +138,20 @@ Result: Agendum will add a task to the "Do It Anytime" panel.
 
 Description: I need to return my library books by the end of this week. There is a deadline!
 > add return library books by Friday 8pm
-Result: Agendum will add a task "return library books" to the "Do It Soon" panel. It will have a deadline set to the nearest upcoming Friday and with time 8pm.
+Result: Agendum will add a task "return library books" to the "Do It Soon" panel.
+It will have a deadline set to the nearest upcoming Friday and with time 8pm.
 
 Description: I have a wedding dinner which will take place on the night of 30 Oct.
 > add attend wedding dinner from 30 Oct 7pm to 9.30pm
-Result: Agendum will add a task "attend wedding dinner" to the "Do It Soon" panel. It will have a start time 30 Oct 7pm and end time 30 Oct 9.30pm.
+Result: Agendum will add a task "attend wedding dinner" to the "Do It Soon" panel.
+It will have a start time 30 Oct 7pm and end time 30 Oct 9.30pm.
 ```
 
 ##### Date Time Format
 How do you specify the `<deadline>`, `<start-time>` and `<end-time>`? Agendum supports a wide variety of date time formats. Combine any of the date format and time format below. Note that the date/time formats are not case sensitive.
 
 *Date Format*
-Date Format     | Example(s)
+Date Format     | Example(s)  
 :--------------:| :--------
 Month/day       | 1/23
 Day Month       | 1 Oct
@@ -153,25 +163,29 @@ Relative date   | today, tmr, next wed
  > The day of the week refers to the next week. For example, today is Sunday (30 Oct). Agendum will interpret Wednesday and Sunday as 2 Nov and 6 Nov respectively (a week from now).
 
 *Time Format*
-Time Format           | Example(s)
+Time Format           | Example(s)  
 :--------------------:| :--------
 Hour                  | 10, 22
 Hour:Minute           | 10:30
 Hour.Minute           | 10.30
 HourMinute            | 2200
 Relative time         | this morning, this afternoon, tonight
+
 > By default, we use the 24 hour time format but we do support the meridian format as well e.g. 10am, 10pm
 
 Here are some examples of the results if these formats are used in conjunction with the `add` command.  
 ```
 > add submit homework by 9pm
-Result: The day is not specified. Agendum will create a task "submit homework" with deadline today (the date of creation) and time 9pm
+Result: The day is not specified. Agendum will create a task "submit homework"
+with deadline today (the date of creation) and time 9pm
 
 > add use coupons by next Wed
-Result: The time is not specified. Agendum will create a task "use coupons" with deadline the upcoming week and time now.
+Result: The time is not specified. Agendum will create a task "use coupons"
+with deadline the upcoming Wednesday and time now.
 
 > add attend wedding dinner from 10 Nov 8pm to 10 Nov 9pm
-Result: All the date and time are specified and there is no ambiguity at all. However, Agendum does allow you to skip typing the second date. This will work well too:
+Result: All the date and time are specified and there is no ambiguity at all.
+However, Agendum does allow you to skip typing the second date. This will work as well:
 > add attend wedding dinner from 10 Nov 8pm to 9pm
 ```
 
