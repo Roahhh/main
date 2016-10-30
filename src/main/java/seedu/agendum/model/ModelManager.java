@@ -168,6 +168,10 @@ public class ModelManager extends ComponentManager implements Model {
         previousLists.push(latestList);
     }
 
+    private void clearPreviousToDoLists() {
+        previousLists.clear();
+    }
+
 
     //=========== Storage Methods ==========================================================================
     
@@ -269,6 +273,8 @@ public class ModelManager extends ComponentManager implements Model {
     public void handleLoadDataCompleteEvent(LoadDataCompleteEvent event) {
         this.toDoList.resetData(event.data);
         indicateToDoListChanged();
+        clearPreviousToDoLists();
+        backupNewToDoList();
         logger.info("Loading completed - Todolist updated.");
     }
 }
