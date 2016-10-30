@@ -949,7 +949,7 @@ public class LogicManagerTest {
      */
     class TestDataHelper{
 
-        private LocalDateTime fixedTime = LocalDateTime.of(2016, 10, 10, 10, 10);
+        private final LocalDateTime fixedTime = LocalDateTime.of(2016, 10, 10, 10, 10);
 
         private Task adam() throws Exception {
             Name name = new Name("Adam Brown");

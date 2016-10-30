@@ -25,9 +25,9 @@ public class UnmarkCommand extends Command {
 
     public static final String MESSAGE_UNMARK_TASK_SUCCESS = "Ununmarked Task(s): %1$s";
 
-    private ArrayList<Integer> targetIndexes;
+    private final ArrayList<Integer> targetIndexes;
 
-    private ArrayList<ReadOnlyTask> tasksToUnmark;
+    private final ArrayList<ReadOnlyTask> tasksToUnmark;
 
     //@@author A0133367E    
     public UnmarkCommand(Set<Integer> targetIndexes) {

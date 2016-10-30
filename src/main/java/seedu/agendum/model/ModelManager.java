@@ -244,7 +244,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     private class NameQualifier implements Qualifier {
-        private Set<String> nameKeyWords;
+        private final Set<String> nameKeyWords;
 
         NameQualifier(Set<String> nameKeyWords) {
             this.nameKeyWords = nameKeyWords;

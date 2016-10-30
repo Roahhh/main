@@ -22,7 +22,7 @@ public class LoadCommand extends Command {
             + "Example: " + COMMAND_WORD 
             + "agendum/todolist.xml";
     
-    private String pathToFile;
+    private final String pathToFile;
 
     public LoadCommand(String pathToFile) {
         this.pathToFile = pathToFile.trim();

@@ -17,7 +17,7 @@ public class JsonUserPrefsStorage implements UserPrefsStorage{
 
     private static final Logger logger = LogsCenter.getLogger(JsonUserPrefsStorage.class);
 
-    private String filePath;
+    private final String filePath;
 
     public JsonUserPrefsStorage(String filePath){
         this.filePath = filePath;

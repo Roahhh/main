@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 public class XmlSerializableToDoList implements ReadOnlyToDoList {
 
     @XmlElement
-    private List<XmlAdaptedTask> tasks;
+    private final List<XmlAdaptedTask> tasks;
 
     {
         tasks = new ArrayList<>();

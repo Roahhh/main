@@ -8,7 +8,7 @@ import seedu.agendum.commons.events.BaseEvent;
  * Registers the class' event handlers in eventsCenter
  */
 public abstract class ComponentManager {
-    private EventsCenter eventsCenter;
+    private final EventsCenter eventsCenter;
 
     /**
      * Uses default {@link EventsCenter}

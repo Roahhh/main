@@ -12,7 +12,7 @@ import seedu.agendum.model.task.ReadOnlyTask;
 public class TaskCardHandle extends GuiHandle {
     private static final String NAME_FIELD_ID = "#name";
 
-    private Node node;
+    private final Node node;
 
     public TaskCardHandle(GuiRobot guiRobot, Stage primaryStage, Node node){
         super(guiRobot, primaryStage, null);

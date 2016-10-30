@@ -33,7 +33,7 @@ public class CommandBox extends UiPart {
     private Logic logic;
 
     @FXML
-    private TextField commandTextField;
+    private final TextField commandTextField;
     private CommandResult mostRecentResult;
 
     public static CommandBox load(Stage primaryStage, AnchorPane commandBoxPlaceholder,

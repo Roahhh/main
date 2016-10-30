@@ -47,7 +47,7 @@ class JsonUtil {
         }
     }
 
-    private static ObjectMapper objectMapper = new ObjectMapper().findAndRegisterModules()
+    private static final ObjectMapper objectMapper = new ObjectMapper().findAndRegisterModules()
             .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
             .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
             .setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.NONE)

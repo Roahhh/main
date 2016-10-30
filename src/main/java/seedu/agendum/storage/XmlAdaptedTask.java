@@ -14,7 +14,7 @@ import java.util.Optional;
  */
 class XmlAdaptedTask {
 
-    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     @XmlElement(required = true)
     private String name;
     @XmlElement(required = true)

@@ -38,13 +38,13 @@ public class StatusBarFooter extends UiPart {
     private GridPane mainPane;
 
     @FXML
-    private AnchorPane saveLocStatusBarPane;
+    private final AnchorPane saveLocStatusBarPane;
 
     @FXML
-    private AnchorPane syncStatusBarPane;
+    private final AnchorPane syncStatusBarPane;
     
     @FXML
-    private AnchorPane timeStatusBarPane;
+    private final AnchorPane timeStatusBarPane;
 
     private AnchorPane placeHolder;
 

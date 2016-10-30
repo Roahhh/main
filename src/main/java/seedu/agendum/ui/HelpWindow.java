@@ -42,7 +42,7 @@ public class HelpWindow extends UiPart {
     private static final int HEIGHT = 600;
     private double xOffset = 0;
     private double yOffset = 0;
-    private ObservableList<Map<CommandColumns, String>> commandList = FXCollections.observableArrayList();
+    private final ObservableList<Map<CommandColumns, String>> commandList = FXCollections.observableArrayList();
 
     private AnchorPane mainPane;
 
@@ -53,19 +53,19 @@ public class HelpWindow extends UiPart {
     }
     
     @FXML
-    private TableView<Map<CommandColumns, String>> commandTable;
+    private final TableView<Map<CommandColumns, String>> commandTable;
     
     @FXML
-    private TableColumn<Map<CommandColumns, String>, String> commandColumn;
+    private final TableColumn<Map<CommandColumns, String>, String> commandColumn;
     
     @FXML
-    private TableColumn<Map<CommandColumns, String>, String> descriptionColumn;
+    private final TableColumn<Map<CommandColumns, String>, String> descriptionColumn;
     
     @FXML
-    private TableColumn<Map<CommandColumns, String>, String> formatColumn;
+    private final TableColumn<Map<CommandColumns, String>, String> formatColumn;
     
     @FXML
-    private Button backButton;
+    private final Button backButton;
     
     /**
      * Initializes the controller class. This method is automatically called
@@ -137,7 +137,7 @@ public class HelpWindow extends UiPart {
     private void handleKeyInput(Scene scene) {
         scene.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
             
-            KeyCombination toggleHelpWindow = new KeyCodeCombination(KeyCode.H, KeyCombination.CONTROL_DOWN);
+            final KeyCombination toggleHelpWindow = new KeyCodeCombination(KeyCode.H, KeyCombination.CONTROL_DOWN);
 
             @Override
             public void handle(KeyEvent evt) {

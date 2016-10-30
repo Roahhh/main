@@ -118,7 +118,7 @@ public class MainWindow extends UiPart {
     
     private void configureHelpWindowToggle() {
         scene.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
-            KeyCombination toggleHelpWindow = new KeyCodeCombination(KeyCode.H, KeyCombination.CONTROL_DOWN);
+            final KeyCombination toggleHelpWindow = new KeyCodeCombination(KeyCode.H, KeyCombination.CONTROL_DOWN);
             @Override
             public void handle(KeyEvent evt) {
                 if(toggleHelpWindow.match(evt) && helpWindowStage != null) {

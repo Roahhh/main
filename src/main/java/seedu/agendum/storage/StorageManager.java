@@ -28,9 +28,9 @@ import seedu.agendum.model.UserPrefs;
 public class StorageManager extends ComponentManager implements Storage {
 
     private static final Logger logger = LogsCenter.getLogger(StorageManager.class);
-    private ToDoListStorage toDoListStorage;
-    private UserPrefsStorage userPrefsStorage;
-    private Config config;
+    private final ToDoListStorage toDoListStorage;
+    private final UserPrefsStorage userPrefsStorage;
+    private final Config config;
 
     public StorageManager(ToDoListStorage toDoListStorage, UserPrefsStorage userPrefsStorage, Config config) {
         super();

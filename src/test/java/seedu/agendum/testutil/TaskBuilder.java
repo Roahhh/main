@@ -10,8 +10,8 @@ import seedu.agendum.model.task.*;
  */
 public class TaskBuilder {
 
-    private TestTask task;
-    private LocalDateTime fixedTime = LocalDateTime.of(2016, 10, 10, 10, 10);
+    private final TestTask task;
+    private final LocalDateTime fixedTime = LocalDateTime.of(2016, 10, 10, 10, 10);
 
     public TaskBuilder() {
         this.task = new TestTask();
