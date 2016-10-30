@@ -147,6 +147,7 @@ Result: Agendum will add a task "attend wedding dinner" to the "Do It Soon" pane
 It will have a start time 30 Oct 7pm and end time 30 Oct 9.30pm.
 ```
 
+
 ##### Date Time Format
 How do you specify the `<deadline>`, `<start-time>` and `<end-time>`? Agendum supports a wide variety of date time formats. Combine any of the date format and time format below. Note that the date/time formats are not case sensitive.
 
@@ -191,29 +192,26 @@ However, Agendum does allow you to skip typing the second date. This will work a
 
 
 [comment]: # (@@author A0133367E)
-#### Renaming a task : `rename`
+### Renaming a task : `rename`
 
 Agendum understands that plans and tasks change all the time. <br>
 If you wish to update or enhance the description of a task, you can use the following command.
 
-Format: `rename INDEX NEW_TASK_NAME`  
+Here is the *format*:
 
-> * Renames the task at the specified `INDEX`.
-> * Index refers to the index number shown in the most recent listing.
-> * The index **must be a positive integer** 1, 2, 3, ...
+* `rename <id> <new-name>` - give a new name to the task identified by <id>. The <id> must be a positive number and in the most recent to-do list displayed.
 
+Here is an *example*:<br>
+<img src="images/userguide/beforeRenaming.png" width="500"><br>
 
-> * Note that it is not possible to rename a task name to its original name and it might not be possible for the task to have the same name as another existing task
+```
+Description: I just realized there is a typo for the task with id #2 "Watch Hary Potter".
+To update the name of the task,
+> rename 2 Watch Harry Potter
+```
 
-Examples:  
-
-* `list` <br>
-  `rename 2 Star Wars II` <br>
-  Renames the 2nd task in the list to “Star Wars II”
-
-* `find Star Trek`   <br>
-  `rename 1 Star Wars II` <br>
-  Renames the 1st task in the results of the `find` command to “Star Wars II”
+Agendum will promptly update the displayed <br>
+<img src="images/userguide/afterRenaming.png" width="500"><br>
 
 
 #### Updating the date/time of a task : `schedule`
@@ -478,6 +476,9 @@ Agendum saves its data into the specified data storage location, or by default i
 
    <dt> Q: Can Agendum remind me when my task is due soon? </dt>
    <dd> Agendum will always show the tasks that are due soon at the top of list. However, Agendum will not show you a reminder. </dd>
+
+   <dt> Q: Why did Agendum complain that the task already exists? </dt>
+   <dd> You have previously created a task with the same name, start and end time. The tasks have the same completion status too! Save the trouble of creating one or it will be helpful to distinguish them by renaming instead.
 
    <dt> Q: Why did Agendum reject my alias for a command? </dt>
    <dd> The short-hand command cannot be one of Agendum’s command keywords (e.g. add, delete) and cannot be concurrently used to alias            another command (e.g. m cannot be used for both mark and unmark). </dd>
