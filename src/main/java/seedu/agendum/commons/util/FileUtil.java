@@ -96,7 +96,7 @@ public class FileUtil {
     /**
      * Creates parent directories of file if it has a parent directory
      */
-    private static void createParentDirsOfFile(File file) throws IOException {
+    public static void createParentDirsOfFile(File file) throws IOException {
         File parentDir = file.getParentFile();
 
         if (parentDir != null) {

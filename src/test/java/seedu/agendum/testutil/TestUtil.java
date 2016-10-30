@@ -57,9 +57,9 @@ public class TestUtil {
     /**
      * Folder used for temp files created during testing. Ignored by Git.
      */
-    private static String SANDBOX_FOLDER = FileUtil.getPath("./src/test/data/sandbox/");
+    public static String SANDBOX_FOLDER = FileUtil.getPath("./src/test/data/sandbox/");
 
-    private static final Task[] sampleTaskData = getSampleTaskData();
+    public static final Task[] sampleTaskData = getSampleTaskData();
 
     private static Task[] getSampleTaskData() {
         try {
@@ -100,7 +100,7 @@ public class TestUtil {
         return SANDBOX_FOLDER + fileName;
     }
 
-    private static void createDataFileWithSampleData(String filePath) {
+    public static void createDataFileWithSampleData(String filePath) {
         createDataFileWithData(generateSampleStorageToDoList(), filePath);
     }
 
@@ -122,7 +122,7 @@ public class TestUtil {
         return new ToDoList(new UniqueTaskList());
     }
 
-    private static XmlSerializableToDoList generateSampleStorageToDoList() {
+    public static XmlSerializableToDoList generateSampleStorageToDoList() {
         return new XmlSerializableToDoList(generateEmptyToDoList());
     }
 
@@ -236,11 +236,11 @@ public class TestUtil {
      * @param node
      * @return
      */
-    private static Bounds getScenePos(Node node) {
+    public static Bounds getScenePos(Node node) {
         return node.localToScene(node.getBoundsInLocal());
     }
 
-    private static Bounds getScreenPos(Node node) {
+    public static Bounds getScreenPos(Node node) {
         return node.localToScreen(node.getBoundsInLocal());
     }
 
@@ -262,7 +262,7 @@ public class TestUtil {
      * @param tasksToRemove The subset of tasks.
      * @return The modified tasks after removal of the subset from tasks.
      */
-    private static TestTask[] removeTasksFromList(final TestTask[] tasks, TestTask... tasksToRemove) {
+    public static TestTask[] removeTasksFromList(final TestTask[] tasks, TestTask... tasksToRemove) {
         List<TestTask> listOfTasks = asList(tasks);
         listOfTasks.removeAll(asList(tasksToRemove));
         return listOfTasks.toArray(new TestTask[listOfTasks.size()]);

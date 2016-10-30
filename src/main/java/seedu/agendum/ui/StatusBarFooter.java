@@ -56,7 +56,7 @@ public class StatusBarFooter extends UiPart {
         return statusBarFooter;
     }
 
-    private void configure(String saveLocation) {
+    public void configure(String saveLocation) {
         addMainPane();
         addSyncStatus();
         setSyncStatus("Not updated yet in this session");

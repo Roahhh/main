@@ -13,18 +13,18 @@ import seedu.agendum.commons.util.AppUtil;
  * Base class for UI parts.
  * A 'UI part' represents a distinct part of the UI. e.g. Windows, dialogs, panels, status bars, etc.
  */
-abstract class UiPart {
+public abstract class UiPart {
 
     /**
      * The primary stage for the UI Part.
      */
-    Stage primaryStage;
+    protected Stage primaryStage;
 
     /**
      * Raises the event via {@link EventsCenter#post(BaseEvent)}
      * @param event
      */
-    void raise(BaseEvent event){
+    protected void raise(BaseEvent event){
         EventsCenter.getInstance().post(event);
     }
 
@@ -32,7 +32,7 @@ abstract class UiPart {
      * Registers the object as an event handler at the {@link EventsCenter}
      * @param handler usually {@code this}
      */
-    void registerAsAnEventHandler(Object handler) {
+    protected void registerAsAnEventHandler(Object handler) {
         EventsCenter.getInstance().registerHandler(handler);
     }
 
@@ -60,7 +60,7 @@ abstract class UiPart {
      * @param scene The scene that will contain the dialog.
      * @return the created dialog, not yet made visible.
      */
-    Stage createDialogStage(String title, Stage parentStage, Scene scene) {
+    protected Stage createDialogStage(String title, Stage parentStage, Scene scene) {
         Stage dialogStage = new Stage();
         dialogStage.setTitle(title);
         dialogStage.initModality(Modality.WINDOW_MODAL);
@@ -73,7 +73,7 @@ abstract class UiPart {
      * Sets the given image as the icon for the primary stage of this UI Part.
      * @param iconSource e.g. {@code "/images/help_icon.png"}
      */
-    void setIcon(String iconSource) {
+    protected void setIcon(String iconSource) {
         primaryStage.getIcons().add(AppUtil.getImage(iconSource));
     }
 
@@ -82,7 +82,7 @@ abstract class UiPart {
      * @param stage
      * @param iconSource e.g. {@code "/images/help_icon.png"}
      */
-    void setIcon(Stage stage, String iconSource) {
+    protected void setIcon(Stage stage, String iconSource) {
         stage.getIcons().add(AppUtil.getImage(iconSource));
     }
 

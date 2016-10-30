@@ -9,8 +9,8 @@ import seedu.agendum.commons.util.XmlUtil;
 public class LoadCommand extends Command {
     
     public static final String COMMAND_WORD = "load";
-    private static final String COMMAND_FORMAT = "load <location>";
-    private static final String COMMAND_DESCRIPTION = "loads task list from specified location";
+    public static final String COMMAND_FORMAT = "load <location>";
+    public static final String COMMAND_DESCRIPTION = "loads task list from specified location";
     
     public static final String MESSAGE_SUCCESS = "Data successfully loaded from: %1$s";
     public static final String MESSAGE_PATH_INVALID = "The specified path to file is invalid: %1$s";

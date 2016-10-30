@@ -39,7 +39,7 @@ public class ModelManager extends ComponentManager implements Model {
      * Initializes a ModelManager with the given ToDoList
      * ToDoList and its variables should not be null
      */
-    private ModelManager(ToDoList src, UserPrefs userPrefs) {
+    public ModelManager(ToDoList src, UserPrefs userPrefs) {
         super();
         assert src != null;
         assert userPrefs != null;

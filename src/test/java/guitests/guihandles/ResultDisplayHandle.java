@@ -11,7 +11,7 @@ import seedu.agendum.TestApp;
  */
 public class ResultDisplayHandle extends GuiHandle {
 
-    private static final String RESULT_DISPLAY_ID = "#resultDisplay";
+    public static final String RESULT_DISPLAY_ID = "#resultDisplay";
 
     public ResultDisplayHandle(GuiRobot guiRobot, Stage primaryStage) {
         super(guiRobot, primaryStage, TestApp.APP_TITLE);

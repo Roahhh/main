@@ -8,7 +8,7 @@ import java.util.ListIterator;
  * Stores previous valid and invalid commands in a linked list with a max size
  * New commands are added to the head of the linked list
  */
-class CommandBoxHistory {
+public class CommandBoxHistory {
     
     private static final int MAX_PREVIOUS_LINES = 15;
     private static final String PREVIOUS_QUERY = "previous";

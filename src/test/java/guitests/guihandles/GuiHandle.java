@@ -16,20 +16,20 @@ import java.util.logging.Logger;
  * Base class for all GUI Handles used in testing.
  */
 public class GuiHandle {
-    final GuiRobot guiRobot;
-    final Stage primaryStage;
-    private final String stageTitle;
+    protected final GuiRobot guiRobot;
+    protected final Stage primaryStage;
+    protected final String stageTitle;
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
-    GuiHandle(GuiRobot guiRobot, Stage primaryStage, String stageTitle) {
+    public GuiHandle(GuiRobot guiRobot, Stage primaryStage, String stageTitle) {
         this.guiRobot = guiRobot;
         this.primaryStage = primaryStage;
         this.stageTitle = stageTitle;
         focusOnSelf();
     }
 
-    private void focusOnWindow(String stageTitle) {
+    public void focusOnWindow(String stageTitle) {
         logger.info("Focusing " + stageTitle);
         java.util.Optional<Window> window = guiRobot.listTargetWindows()
                 .stream()
@@ -45,29 +45,29 @@ public class GuiHandle {
         logger.info("Finishing focus " + stageTitle);
     }
 
-    Node getNode(String query) {
+    protected Node getNode(String query) {
         return guiRobot.lookup(query).tryQuery().get();
     }
 
-    String getTextFieldText(String filedName) {
+    protected String getTextFieldText(String filedName) {
         return ((TextField) getNode(filedName)).getText();
     }
 
-    void setTextField(String textFieldId, String newText) {
+    protected void setTextField(String textFieldId, String newText) {
         guiRobot.clickOn(textFieldId);
         ((TextField)guiRobot.lookup(textFieldId).tryQuery().get()).setText(newText);
         guiRobot.sleep(500); // so that the texts stays visible on the GUI for a short period
     }
 
-    void pressEnter() {
+    public void pressEnter() {
         guiRobot.type(KeyCode.ENTER).sleep(500);
     }
 
-    String getTextFromLabel(String fieldId, Node parentNode) {
+    protected String getTextFromLabel(String fieldId, Node parentNode) {
         return ((Label) guiRobot.from(parentNode).lookup(fieldId).tryQuery().get()).getText();
     }
 
-    private void focusOnSelf() {
+    public void focusOnSelf() {
         if (stageTitle != null) {
             focusOnWindow(stageTitle);
         }
@@ -77,7 +77,7 @@ public class GuiHandle {
         this.focusOnWindow(TestApp.APP_TITLE);
     }
 
-    void closeWindow() {
+    public void closeWindow() {
         java.util.Optional<Window> window = guiRobot.listTargetWindows()
                 .stream()
                 .filter(w -> w instanceof Stage && ((Stage) w).getTitle().equals(stageTitle)).findAny();

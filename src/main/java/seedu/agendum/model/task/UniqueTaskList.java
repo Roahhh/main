@@ -25,7 +25,7 @@ public class UniqueTaskList implements Iterable<Task> {
      * Signals that an operation would have violated the 'no duplicates' property of the list.
      */
     public static class DuplicateTaskException extends DuplicateDataException {
-        DuplicateTaskException() {
+        protected DuplicateTaskException() {
             super("Operation would result in duplicate tasks");
         }
     }
@@ -44,7 +44,7 @@ public class UniqueTaskList implements Iterable<Task> {
     /**
      * Returns true if the list contains an equivalent task as the given argument.
      */
-    private boolean contains(ReadOnlyTask toCheck) {
+    public boolean contains(ReadOnlyTask toCheck) {
         assert toCheck != null;
         return internalList.contains(toCheck);
     }

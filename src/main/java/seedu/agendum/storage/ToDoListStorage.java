@@ -9,7 +9,7 @@ import seedu.agendum.model.ReadOnlyToDoList;
 /**
  * Represents a storage for {@link seedu.agendum.model.ToDoList}.
  */
-interface ToDoListStorage {
+public interface ToDoListStorage {
 
     /**
      * Returns the file path of the data file.

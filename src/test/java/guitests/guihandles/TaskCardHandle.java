@@ -19,11 +19,11 @@ public class TaskCardHandle extends GuiHandle {
         this.node = node;
     }
 
-    private String getTextFromLabel(String fieldId) {
+    protected String getTextFromLabel(String fieldId) {
         return getTextFromLabel(fieldId, node);
     }
 
-    private String getFullName() {
+    public String getFullName() {
         return getTextFromLabel(NAME_FIELD_ID);
     }
 

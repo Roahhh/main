@@ -27,7 +27,7 @@ public class AllTasksPanel extends UiPart {
     @FXML
     private ListView<ReadOnlyTask> allTasksListView;
 
-    private AllTasksPanel() {
+    public AllTasksPanel() {
         super();
     }
 
@@ -75,7 +75,7 @@ public class AllTasksPanel extends UiPart {
         });
     }
 
-    private class allTasksListViewCell extends ListCell<ReadOnlyTask> {
+    class allTasksListViewCell extends ListCell<ReadOnlyTask> {
 
         @Override
         protected void updateItem(ReadOnlyTask task, boolean empty) {

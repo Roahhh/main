@@ -10,8 +10,8 @@ public class ExitCommand extends Command {
 
     // COMMAND_WORD, COMMAND_FORMAT, COMMAND_DESCRIPTION are for display in help window
     public static final String COMMAND_WORD = "exit";
-    private static final String COMMAND_FORMAT = "exit";
-    private static final String COMMAND_DESCRIPTION = "exit Agendum";
+    public static final String COMMAND_FORMAT = "exit";
+    public static final String COMMAND_DESCRIPTION = "exit Agendum";
     public static final String MESSAGE_EXIT_ACKNOWLEDGEMENT = "Exiting Agendum as requested ...";
 
     @Override

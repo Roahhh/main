@@ -17,7 +17,7 @@ public class CommandBoxHandle extends GuiHandle{
         super(guiRobot, primaryStage, stageTitle);
     }
 
-    private void enterCommand(String command) {
+    public void enterCommand(String command) {
         setTextField(COMMAND_INPUT_FIELD_ID, command);
     }
 

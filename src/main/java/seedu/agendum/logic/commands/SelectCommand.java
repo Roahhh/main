@@ -11,7 +11,7 @@ import seedu.agendum.commons.core.UnmodifiableObservableList;
  */
 public class SelectCommand extends Command {
 
-    private final int targetIndex;
+    public final int targetIndex;
 
     public static final String COMMAND_WORD = "select";
 

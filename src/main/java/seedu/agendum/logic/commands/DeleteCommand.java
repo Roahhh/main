@@ -16,8 +16,8 @@ public class DeleteCommand extends Command {
 
     // COMMAND_WORD, COMMAND_FORMAT, COMMAND_DESCRIPTION are for display in help window
     public static final String COMMAND_WORD = "delete";
-    private static final String COMMAND_FORMAT = "delete <index> \ndelete <index> <more-indexes>";
-    private static final String COMMAND_DESCRIPTION = "delete task(s) from Agendum";
+    public static final String COMMAND_FORMAT = "delete <index> \ndelete <index> <more-indexes>";
+    public static final String COMMAND_DESCRIPTION = "delete task(s) from Agendum";
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes the tasks(s) identified by their index numbers used in the last task listing.\n"
             + "Parameters: INDEX... (must be a positive number)\n"
@@ -25,9 +25,9 @@ public class DeleteCommand extends Command {
 
     public static final String MESSAGE_DELETE_TASK_SUCCESS = "Deleted Task(s): %1$s";
 
-    private ArrayList<Integer> targetIndexes;
+    public ArrayList<Integer> targetIndexes;
 
-    private ArrayList<ReadOnlyTask> tasksToDelete;
+    public ArrayList<ReadOnlyTask> tasksToDelete;
 
     //@@author A0133367E
     public DeleteCommand(Set<Integer> targetIndexes) {

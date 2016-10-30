@@ -22,7 +22,7 @@ public class CompletedTaskCard extends UiPart {
     private ReadOnlyTask task;
     private int displayedIndex;
 
-    private CompletedTaskCard(){
+    public CompletedTaskCard(){
 
     }
 

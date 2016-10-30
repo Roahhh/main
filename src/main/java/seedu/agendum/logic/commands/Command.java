@@ -9,7 +9,7 @@ import seedu.agendum.model.Model;
  * Represents a command with hidden internal logic and the ability to be executed.
  */
 public abstract class Command {
-    Model model;
+    protected Model model;
     
     /**
      * Return the name of this command.
@@ -60,7 +60,7 @@ public abstract class Command {
     /**
      * Raises an event to indicate an attempt to execute an incorrect command
      */
-    void indicateAttemptToExecuteIncorrectCommand() {
+    protected void indicateAttemptToExecuteIncorrectCommand() {
         EventsCenter.getInstance().post(new IncorrectCommandAttemptedEvent());
     }
 }

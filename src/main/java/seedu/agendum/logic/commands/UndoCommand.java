@@ -7,8 +7,8 @@ package seedu.agendum.logic.commands;
 public class UndoCommand extends Command {
 
     public static final String COMMAND_WORD = "undo";
-	private static final String COMMAND_FORMAT = "undo";
-	private static final String COMMAND_DESCRIPTION = "Undo last command!";
+	public static final String COMMAND_FORMAT = "undo";
+	public static final String COMMAND_DESCRIPTION = "Undo last command!";
 	
     public static final String MESSAGE_SUCCESS = "Previous command undone!";
     public static final String MESSAGE_FAILURE = "Nothing to undo!";

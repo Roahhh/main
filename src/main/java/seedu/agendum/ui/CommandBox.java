@@ -45,7 +45,7 @@ public class CommandBox extends UiPart {
         return commandBox;
     }
 
-    private void configure(ResultPopUp resultPopUp, Logic logic) {
+    public void configure(ResultPopUp resultPopUp, Logic logic) {
         this.resultPopUp = resultPopUp;
         this.logic = logic;
         registerAsAnEventHandler(this);

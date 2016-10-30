@@ -46,11 +46,11 @@ public class ToDoList implements ReadOnlyToDoList {
         return tasks.getInternalList();
     }
 
-    private void setTasks(List<Task> tasks) {
+    public void setTasks(List<Task> tasks) {
         this.tasks.getInternalList().setAll(tasks);
     }
 
-    private void resetData(Collection<? extends ReadOnlyTask> newTasks) {
+    public void resetData(Collection<? extends ReadOnlyTask> newTasks) {
         setTasks(newTasks.stream().map(Task::new).collect(Collectors.toList()));
     }
 

@@ -17,10 +17,10 @@ import java.util.logging.Level;
 /**
  * Converts a Java object instance to JSON and vice versa
  */
-class JsonUtil {
+public class JsonUtil {
     private static class LevelDeserializer extends FromStringDeserializer<Level> {
 
-        LevelDeserializer(Class<?> vc) {
+        protected LevelDeserializer(Class<?> vc) {
             super(vc);
         }
 

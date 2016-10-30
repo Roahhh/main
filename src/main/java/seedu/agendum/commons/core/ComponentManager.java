@@ -8,16 +8,16 @@ import seedu.agendum.commons.events.BaseEvent;
  * Registers the class' event handlers in eventsCenter
  */
 public abstract class ComponentManager {
-    private EventsCenter eventsCenter;
+    protected EventsCenter eventsCenter;
 
     /**
      * Uses default {@link EventsCenter}
      */
-    protected ComponentManager(){
+    public ComponentManager(){
         this(EventsCenter.getInstance());
     }
 
-    private ComponentManager(EventsCenter eventsCenter) {
+    public ComponentManager(EventsCenter eventsCenter) {
         this.eventsCenter = eventsCenter;
         eventsCenter.registerHandler(this);
     }

@@ -10,7 +10,7 @@ import java.io.FileNotFoundException;
 /**
  * Stores to do list data in an XML file
  */
-class XmlFileStorage {
+public class XmlFileStorage {
     /**
      * Saves the given to do list data to the specified file.
      */

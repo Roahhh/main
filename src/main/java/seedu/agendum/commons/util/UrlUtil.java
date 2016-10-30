@@ -5,7 +5,7 @@ import java.net.URL;
 /**
  * A utility class for URL
  */
-class UrlUtil {
+public class UrlUtil {
 
     /**
      * Returns true if both URLs have the same base URL

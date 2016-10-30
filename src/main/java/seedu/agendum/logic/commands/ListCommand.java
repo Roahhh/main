@@ -8,8 +8,8 @@ public class ListCommand extends Command {
 
  // COMMAND_WORD, COMMAND_FORMAT, COMMAND_DESCRIPTION are for display in help window
     public static final String COMMAND_WORD = "list";
-    private static final String COMMAND_FORMAT = "list \n";
-    private static final String COMMAND_DESCRIPTION = "list all your tasks";
+    public static final String COMMAND_FORMAT = "list \n";
+    public static final String COMMAND_DESCRIPTION = "list all your tasks";
     public static final String MESSAGE_SUCCESS = "Listed all tasks";
 
     @Override

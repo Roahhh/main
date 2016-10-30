@@ -8,8 +8,8 @@ import java.util.logging.Level;
  */
 public class Config {
 
-    private static final String DEFAULT_DATA_DIR = "data/";
-    private static final String DEFAULT_JSON_DIR = "json/";
+    public static final String DEFAULT_DATA_DIR = "data/";
+    public static final String DEFAULT_JSON_DIR = "json/";
     public static final String DEFAULT_CONFIG_FILE = DEFAULT_DATA_DIR + DEFAULT_JSON_DIR + "config.json";
     public static final String DEFAULT_USER_PREFS_FILE = DEFAULT_DATA_DIR + DEFAULT_JSON_DIR + "preferences.json";
     public static final String DEFAULT_SAVE_LOCATION = DEFAULT_DATA_DIR + "todolist.xml";
