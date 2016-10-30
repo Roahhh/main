@@ -1,6 +1,5 @@
 package seedu.agendum.ui;
 
-
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
