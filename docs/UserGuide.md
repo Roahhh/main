@@ -1,6 +1,10 @@
 # User Guide
 * [Introduction](#introduction)
-* [Quick Start](#quick-start)
+* [Getting Started](#getting-started)
+    * [Download](#download)
+    * [Launch](#launch)
+    * [Visual Introduction](#visual-introduction)
+    * [Start using Agendum](#start-using-agendum)
 * [Features](#features)
 * [FAQ](#faq)
 * [Command Summary](#command-summary)
@@ -13,31 +17,97 @@ Hi there! Do you have too many tasks and are unable to keep track of all of them
 
 Enter Agendum.
 
-This task manager will assist you in completing all your tasks on time. It will automatically sort your tasks by date so you can always see the most urgent tasks standing out at the top of the list! 
+This task manager will assist you in completing all your tasks on time. It will automatically sort your tasks by date so you can always see the most urgent tasks standing out at the top of the list!
 
-With just one line of command, Agendum will carry out your wishes. You don’t ever have to worry about having to click multiple buttons and links. Agendum is even capable of allowing you to create your own custom commands! This means that you can get things done even faster, your way.
-
-As shown below, Agendum has 3 panels: **"Do It Soon"**, **"Do It Anytime"** and **"Done"**. These panels show tasks with time restrictions, tasks without any time restrictions and completed tasks respectively. Initially, the panels will be empty. Fill them up with tasks soon!
-
-<img src="images/UiScreenshot.png" width="800"><br>
+Agendum is simple, efficient, flexible and phenomenally keyboard friendly. With just one line of command, Agendum will carry out your wishes. You don’t ever have to worry about having to click multiple buttons and links. Agendum is even capable of supporting your own custom command words! This means that you can get things done even faster, your way.
 
 
 &nbsp;
 
 
 [comment]: # (@@author A0003878Y)
-## Quick Start
+## Getting Started
 
-0. Ensure you have Java version `1.8.0_60` or above installed in your Computer.
-1. Download the latest `Agendum.jar` from [here](../../../releases).
-2. Launch Agendum!
-3. Type a command in the command box and press <kbd>Enter</kbd> to execute it. Tip: type **`help`** to learn some new commands.
-4. Go ahead and try some of the commands listed below!
-   * **`add`**` Go to shopping mall` : adds a task with description `Go to shopping mall` to Agendum.
-   * **`delete`**` 3` : deletes the 3rd task shown in the current
-   * **`exit`** : exits Agendum
-5. You can refer to the [Features](#features) section below for more details of each command.
+### Download
 
+1. Ensure that you have Java version `1.8.0_60` or above installed on your computer.
+2. Download the latest `Agendum.jar` from [here](../../../releases).
+<img src="images/userguide/releases.png"><br>
+3. Copy the jar file to the folder that you intend to use as the root directory of Agendum.
+
+### Launch
+
+To launch Agendum, double-click on `Agendum.jar` to launch Agendum. Welcome! Here is the main window you will be greeted with. Initially the task panels are empty but fill them up with tasks soon.
+
+<img src="images/userguide/launch.png" width="800"><br>
+
+[comment]: # (@@author A013367E)
+### Visual Introduction
+
+Here is what Agendum may look like with some tasks added and completed.
+
+<img src="images/userguide/mainui.png" width="800"><br>
+
+Notice how Agendum has 3 panels: **"Do It Soon"**, **"Do It Anytime"** and **"Done"**.
+* **"Do It Soon"** panel will show your **uncompleted** tasks with deadlines and events. Those tasks demand your attention at or by some specific time! Agendum has helpfully sorted these tasks by their deadline or happening time.
+    * **Overdue** tasks _(e.g. buy Jim's present)_ will stand out in pink at the top of the list.
+    * **Upcoming** tasks (happening/due within a week) _(e.g. attend yoga class)_ will stand out in yellow next.
+* **"Do It Anytime"** panel will show your **uncompleted** tasks which you did not specify a deadline or happening time. Do these tasks anytime.
+* **"Done"** panel will show all your completed tasks. To make it easier for you to keep track of what you have done recently, Agendum will always show the latest completed tasks at the top of the list.
+
+Agendum will clearly display the name and time associated with each task. Notice that each task is displayed with a ID. For example, the task *drop by grocery store* has a ID *5* now. We will use this ID to refer to the task for some Agendum commands.
+
+The **Command Box** is located at the top of Agendum. Enter your keyboard commands into the box!
+Just in case, there is a **Status Bar** located at the bottom of Agendum. You can check today's date and time, where your Agendum's to-do list data is located and when was the data last saved.
+
+Agendum also has a pretty **Help Window** which summarizes the commands you can use and pop-ups after each commands for you to review your changes.
+
+
+[comment]: # (@@author A0148031R)
+### Start using Agendum
+*This is only a brief introduction and suggestion on how to get started with Agendum. Refer to our [Features](#features) section, for a more extensive coverage on what Agendum can do.*
+
+_Step 1 - Get some help_
+
+Feeling lost or clueless? To see a summary of Agendum commands, use the keyboard shortcut <kbd>F5</kbd> or type **`help`** to bring up the help screen as shown below.
+
+_Step 2 - Add some tasks_
+
+Perhaps, you can start by adding a task to your empty Agendum to-do list. For example, you might remember you have to return your library books. Type the following line in the command box:
+
+`> add return library books`
+
+Since you did not specify a time to return the books, Agendum will add this task to the **Do It Anytime** panel as follows.
+<img src="images/userguide/startAgendum1.png"><br>
+The task *return library books* has a ID *1* now.
+
+_Step 3 - Update your tasks (if needed)_
+
+You might change your mind and want to update the details of the task. For example, you might only want to return a single book "Animal Farm" instead. Type the following line in the command box:
+
+`> rename 1 return "Animal Farm"`
+
+Agendum will promptly update the changes. What if you suddenly discover the book is due within a week? You will want to return "Animal Farm" by Friday night. To (re)schedule the task, type the following command:
+
+`> schedule 1 by friday 8pm`
+
+Since you will have to return your books by a specific time, Agendum will move this task to the **Do It Soon** panel.
+
+_Step 4 - Mark a task as completed_
+
+With the help of Agendum, you remembered to return "Animal Farm" punctually on Friday. Celebrate by marking the task as completed. Type the following line in the command box:
+
+`> mark 1`
+
+Agendum will move the task _return "Animal Farm"_ to the **Done** panel.
+
+_Step 5 - Good to go_
+
+Continue exploring Agendum. Add more tasks to your Agendum to-do list and try out the various convenient commands given in the next section. Do note that the ID of the task might change as new tasks are added, updated and marked. Agendum takes care of it for you but you should always refer to the current ID displayed.
+
+Here is a summary of all the visual changes you should see at every step:
+
+<img src="images/userguide/startAgendum.png" width="800"><br>
 
 &nbsp;
 
@@ -267,7 +337,7 @@ Examples:
 * `find Nemo Dory` <br>
   Returns all tasks that contain `Dory` or `Nemo`  
 
-  
+
 #### Retrieving task list : `list`
 
 After you are done searching for tasks, you can use the following command to return to the default view of task lists: <br>
@@ -336,7 +406,7 @@ Examples:
 
 #### Loading from another data storage location : `load`
 
-After relocating Agendum’s data files, you might want to load that exact copy of Agendum’s task list from a certain location, or from a Cloud Storage service. Agendum also offers you the flexibility to choose which data files to import. 
+After relocating Agendum’s data files, you might want to load that exact copy of Agendum’s task list from a certain location, or from a Cloud Storage service. Agendum also offers you the flexibility to choose which data files to import.
 
 Format: `load PATH_TO_FILE`
 
@@ -382,7 +452,7 @@ Agendum saves its data into the specified data storage location, or by default i
 
    <dt> Q: Can Agendum remind me when my task is due soon? </dt>
    <dd> Agendum will always show the tasks that are due soon at the top of list. However, Agendum will not show you a reminder. </dd>
-   
+
    <dt> Q: Why did Agendum reject my alias for a command? </dt>
    <dd> The short-hand command cannot be one of Agendum’s command keywords (e.g. add, delete) and cannot be concurrently used to alias            another command (e.g. m cannot be used for both mark and unmark). </dd>
 
