@@ -34,9 +34,8 @@ public interface ReadOnlyTask {
      * Formats the task as text, showing task name only.
      */
     default String getAsText() {
-        String builder = String.valueOf(getName()) +
+        return String.valueOf(getName()) +
                 "\n";
-        return builder;
     }
 
     //@@author A0133367E
@@ -49,7 +48,7 @@ public interface ReadOnlyTask {
         String startTime = getStartDateTime().isPresent() ? getStartDateTime().get().toString() : "None";
         String endTime = getEndDateTime().isPresent() ? getEndDateTime().get().toString() : "None";
 
-        String builder = "Task name: " +
+        return "Task name: " +
                 getName() +
                 " Status: " +
                 completionStatus +
@@ -59,6 +58,5 @@ public interface ReadOnlyTask {
                 endTime +
                 " Last Updated Time: " +
                 getLastUpdatedTime().toString();
-        return builder;
     }
 }

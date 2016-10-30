@@ -254,7 +254,6 @@ public class LogicManagerTest {
      * This (overloaded) method is created for rename/schedule
      */
     private void assertIndexNotFoundBehaviorForCommand(String commandWord, String wordsAfterIndex) throws Exception {
-        String expectedMessage = MESSAGE_INVALID_TASK_DISPLAYED_INDEX;
         TestDataHelper helper = new TestDataHelper();
         List<Task> taskList = helper.generateTaskList(2);
 
@@ -264,7 +263,7 @@ public class LogicManagerTest {
             model.addTask(p);
         }
         // test boundary value (one-based index is 3 when list is of size 2)
-        assertCommandBehavior(commandWord + " 3 " + wordsAfterIndex, expectedMessage, model.getToDoList(), taskList);
+        assertCommandBehavior(commandWord + " 3 " + wordsAfterIndex, MESSAGE_INVALID_TASK_DISPLAYED_INDEX, model.getToDoList(), taskList);
     }
     
     /**
@@ -841,13 +840,12 @@ public class LogicManagerTest {
 
         List<Task> fourTasks = helper.generateTaskList(p3, p1, p4, p2);
         ToDoList expectedTDL = helper.generateToDoList(fourTasks);
-        List<Task> expectedList = fourTasks;
         helper.addToModel(model, fourTasks);
 
         assertCommandBehavior("find KEY",
-                Command.getMessageForTaskListShownSummary(expectedList.size()),
+                Command.getMessageForTaskListShownSummary(fourTasks.size()),
                 expectedTDL,
-                expectedList);
+                fourTasks);
     }
 
     @Test
@@ -996,10 +994,9 @@ public class LogicManagerTest {
 
         /** Generates the correct add command based on the task given */
         private String generateAddCommand(Task p) {
-            String cmd = "add " +
-                    p.getName().toString();
 
-            return cmd;
+            return "add " +
+                    p.getName().toString();
         }
 
         /**

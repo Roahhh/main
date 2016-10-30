@@ -87,12 +87,11 @@ public class Config {
 
     @Override
     public String toString(){
-        String sb = "App title : " + appTitle +
+        return "App title : " + appTitle +
                 "\nCurrent log level : " + logLevel +
                 "\nPreference file Location : " + userPrefsFilePath +
                 "\nLocal data file location : " + toDoListFilePath +
                 "\nToDoList name : " + toDoListName;
-        return sb;
     }
 
 }
