@@ -117,7 +117,7 @@ Here is a **summary of all the visual changes** you should see at every step:
 > **Here are some general things to note:**
 > * All command words are case-insensitive. e.g. `Add` will match `add`
 > * Words enclosed in angle brackets, e.g.`<name>` are the parameters. You can freely decide what to replace them by.
-> * Parameters with `...` after them can have multiple instances (separated by whitespace). For example, `<index>...` means that you can specify multiple indices such as `3 5 7`.
+> * Parameters with `...` after them can have multiple instances (separated by whitespace). For example, `<id>...` means that you can specify multiple indices such as `3 5 7`.
 
 ### Adding a task: `add`
 
@@ -150,7 +150,7 @@ It will have a start time 30 Oct 7pm and end time 30 Oct 9.30pm.
 > A task cannot have a deadline and a event time at the same time. A wrong start and end time might be saved.
 
 
-##### Date Time Format
+#### Date Time Format
 How do you specify the `<deadline>`, `<start-time>` and `<end-time>`? Agendum supports a wide variety of date time formats. Combine any of the date format and time format below. Note that the date/time formats are not case sensitive.
 
 *Date Format*
@@ -254,80 +254,74 @@ end time to today 11pm.
 ```
 
 
-#### Marking a task as completed : `mark`
+### Marking a task as completed : `mark`
 
 Have you completed a task? Well done! <br>
-Now record this in Agendum by identifying the index of the task and type in the following command:
+Celebrate the achievement by recording this in Agendum.
 
-Format: `mark INDEX...`
+Here is the *format*:
+* `mark <id>...` - mark all the tasks identified by `<id>`s as completed. Each `<id>` must be a positive number and in the most recent to-do list displayed.
 
-> * Mark the task at the specified `INDEX`.
-> * The index refers to the index number shown in the most recent listing.
-> * The index **must be a positive integer** 1, 2, 3, ...
-> * The index can be in any order.
+Are you confused? Here are some *examples*:<br>
+<img src="images/userguide/beforeMarking.png" width="300"><br>
 
-Examples:  
+```
+Description: I just walked my dog!
+> mark 4
+Result: Agendum will move "walk the dog" to the "Done" panel
 
-* `list`<br>
-  `mark 5`<br>
-  Marks the 5nd task in the list. Task 5 will then be moved to the **"Done"** panel as described below<br>
-  <img src="images/UiMarkTask.png" width="800"><br>
+Description: I had a really productive day and did all the other tasks too.
+> mark 1 2 3
+Result: Agendum will save you the hassle of marking each individual task as
+completed one by one. It is satisfying to watch how all the tasks move to the
+"Done" panel together.
+You can also try out any of the following examples:
+> mark 1,2,3
+> mark 1-3
+The tasks with display ids 1, 2 and 3 will be marked as completed.
+```
 
-
-* `find Homework`<br>
-  `mark 1`<br>
-  Marks the 1st task in the list of results of the `find` command.
-
-Sometimes, you might have had a productive day; Agendum saves you the hassle of marking multiple tasks one by one. <br>
-To mark multiple tasks, try out any of the following examples:
-
-* `list`<br>
-  `mark 2 3 4`<br>
-  `mark 2,3,4` <br>
-  `mark 2-4` <br>
-  Each of the above command will mark the 2nd, 3rd and 4th task as completed.  
+The changes are as shown below. <br>
+<img src="images/userguide/markMultiple.png" width="800"><br>
 
 
-#### Unmarking a task as completed : `unmark`
+### Unmarking a task as completed : `unmark`
 
 You might change your mind and want to continue working on a recently completed task.
-To reflect these changes in Agendum, follow this command:
+They will conveniently be located at the top of the done panel.
 
-Format: `unmark INDEX...`
+To reflect the change in completion status in Agendum, here is the *format*:
+* `unmark <id>...` - unmark all the tasks identified by `<id>`s as completed. Each `<id>` must be a positive number and in the most recent to-do list displayed.
 
 This works in the same way as the `mark` command. The tasks will then be moved to the **"Do It Soon"** or **"Do It Anytime"** panel accordingly. <br>
 
 
-#### Deleting a task : `delete`
+### Deleting a task : `delete`
 
-There are some tasks which will never get done and are perhaps no longer relevant. <br>
-You can remove these tasks from the task list by using the following command:
+We understand that there are some tasks which will never get done and are perhaps no longer relevant. <br>
+You can remove these tasks from the task list to keep these tasks out of sight and out of mind.
 
-Format: `delete INDEX...`  
+Here is the *format*:
+* `delete <id>...` - delete all the tasks identified by `<id>`s as completed. Each `<id>` must be a positive number and in the most recent to-do list displayed.
 
-> * Deletes the task at the specified `INDEX`.
-> * The index refers to the index number shown in the most recent listing.
-> * The index **must be a positive integer** 1, 2, 3, ...
+Here are some *examples*:<br>
+<img src="images/userguide/beforeMarking.png" width="300"><br>
 
-Examples:  
+```
+Description: I just walked my dog and no longer want to view this task anymore.
+> delete 4
+Result: Agendum will delete the task "walk the dog" and it will no longer
+appear in any of the 3 panels.
 
-* `list` <br>
-  `delete 2` <br>
-  Deletes the 2nd task in the task list.
-
-* `find movie` <br>
-  `delete 1` <br>
-  Deletes the 1st task in the results of the `find` command.
-
-You can also delete multiple tasks in the task list with a single command.
-
-Examples:
-
-* `list` <br>
-  `delete 2 3 4` <br>
-  `delete 2,3,4` <br>
-  `delete 2-4` <br>
-  Each of the above command will delete the 2nd, 3rd and 4th task in the task list.  
+Description: I do not want to do any work at all.
+> delete 1 2 3
+Result: Agendum will save you the hassle of deleting each individual task but
+still allows you to selectively choose what to delete.
+You can also try out any of the following examples:
+> delete 1,2,3
+> delete 1-3
+The tasks with display ids 1, 2 and 3 will be deleted.
+```
 
 
 [comment]: # (@@author A0148031R)
