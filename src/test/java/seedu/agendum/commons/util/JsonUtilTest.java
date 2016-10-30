@@ -3,7 +3,7 @@ package seedu.agendum.commons.util;
 /**
  * Tests JSON Read and Write
  */
-public class JsonUtilTest {
+class JsonUtilTest {
 
     //TODO: @Test jsonUtil_readJsonStringToObjectInstance_correctObject()
 

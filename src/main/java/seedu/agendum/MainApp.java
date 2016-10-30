@@ -31,14 +31,14 @@ import java.util.logging.Logger;
 public class MainApp extends Application {
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
 
-    public static final Version VERSION = new Version(1, 0, 0, true);
+    private static final Version VERSION = new Version(1, 0, 0, true);
 
-    protected Ui ui;
-    protected Logic logic;
-    protected Storage storage;
-    protected Model model;
-    protected Config config;
-    protected UserPrefs userPrefs;
+    Ui ui;
+    private Logic logic;
+    private Storage storage;
+    private Model model;
+    private Config config;
+    private UserPrefs userPrefs;
 
     public MainApp() {}
 
@@ -92,7 +92,7 @@ public class MainApp extends Application {
         LogsCenter.init(config);
     }
 
-    protected Config initConfig(String configFilePath) {
+    Config initConfig(String configFilePath) {
         Config initializedConfig;
         String configFilePathUsed;
 
@@ -123,7 +123,7 @@ public class MainApp extends Application {
         return initializedConfig;
     }
 
-    protected UserPrefs initPrefs(Config config) {
+    UserPrefs initPrefs(Config config) {
         assert config != null;
 
         String prefsFilePath = config.getUserPrefsFilePath();

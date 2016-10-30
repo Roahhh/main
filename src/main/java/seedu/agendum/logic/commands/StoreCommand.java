@@ -9,14 +9,14 @@ import seedu.agendum.commons.util.StringUtil;
 public class StoreCommand extends Command {
     
     public static final String COMMAND_WORD = "store";
-    public static final String COMMAND_FORMAT = "store <path-to-file>";
-    public static final String COMMAND_DESCRIPTION = "stores task list at specified location";
-    public static final String COMMAND_EXAMPLE = "store agendum/todolist.xml";
+    private static final String COMMAND_FORMAT = "store <path-to-file>";
+    private static final String COMMAND_DESCRIPTION = "stores task list at specified location";
+    private static final String COMMAND_EXAMPLE = "store agendum/todolist.xml";
 	
     public static final String MESSAGE_SUCCESS = "New save location: %1$s";
     public static final String MESSAGE_LOCATION_DEFAULT = "Save location set to default: %1$s";
 
-    public static final String MESSAGE_LOCATION_INACCESSIBLE = "The specified location is inaccessible; try running Agendum as administrator.";
+    private static final String MESSAGE_LOCATION_INACCESSIBLE = "The specified location is inaccessible; try running Agendum as administrator.";
     public static final String MESSAGE_FILE_EXISTS = "The specified file exists; would you like to use LOAD instead?";
     public static final String MESSAGE_PATH_WRONG_FORMAT = "The specified path is in the wrong format. Example: " + COMMAND_EXAMPLE;
     

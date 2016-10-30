@@ -8,8 +8,8 @@ import seedu.agendum.commons.exceptions.IllegalValueException;
  */
 public class Name {
 
-    public static final String MESSAGE_NAME_CONSTRAINTS = "All task names are valid";
-    public static final String NAME_VALIDATION_REGEX = ".+";
+    private static final String MESSAGE_NAME_CONSTRAINTS = "All task names are valid";
+    private static final String NAME_VALIDATION_REGEX = ".+";
 
     public final String fullName;
 
@@ -30,7 +30,7 @@ public class Name {
     /**
      * Returns true if a given string is a valid task name.
      */
-    public static boolean isValidName(String test) {
+    private static boolean isValidName(String test) {
         return test.matches(NAME_VALIDATION_REGEX);
     }
 

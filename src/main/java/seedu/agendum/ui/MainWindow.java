@@ -27,8 +27,8 @@ public class MainWindow extends UiPart {
 
     private static final String ICON = "/images/agendum_icon.png";
     private static final String FXML = "MainWindow.fxml";
-    public static final int MIN_HEIGHT = 600;
-    public static final int MIN_WIDTH = 450;
+    private static final int MIN_HEIGHT = 600;
+    private static final int MIN_WIDTH = 450;
 
     private Logic logic;
     
@@ -68,7 +68,7 @@ public class MainWindow extends UiPart {
     @FXML
     private AnchorPane statusbarPlaceholder;
 
-    public MainWindow() {
+    private MainWindow() {
         super();
     }
 
@@ -150,15 +150,15 @@ public class MainWindow extends UiPart {
         return statusbarPlaceholder;
     }
     
-    public AnchorPane getAllTasksPlaceHolder() {
+    private AnchorPane getAllTasksPlaceHolder() {
         return allTasksPlaceHolder;
     }
     
-    public AnchorPane getCompletedTasksPlaceHolder() {
+    private AnchorPane getCompletedTasksPlaceHolder() {
         return completedTasksPlaceHolder;
     }
     
-    public AnchorPane getOtherTasksPlaceHolder() {
+    private AnchorPane getOtherTasksPlaceHolder() {
         return otherTasksPlaceHolder;
     }
 
@@ -173,7 +173,7 @@ public class MainWindow extends UiPart {
     /**
      * Sets the default size based on user preferences.
      */
-    protected void setWindowDefaultSize(UserPrefs prefs) {
+    private void setWindowDefaultSize(UserPrefs prefs) {
         primaryStage.setHeight(prefs.getGuiSettings().getWindowHeight());
         primaryStage.setWidth(prefs.getGuiSettings().getWindowWidth());
         if (prefs.getGuiSettings().getWindowCoordinates() != null) {

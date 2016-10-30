@@ -28,7 +28,7 @@ public class TaskCard extends UiPart {
     private ReadOnlyTask task;
     private String displayedIndex;
 
-    public TaskCard(){
+    private TaskCard(){
 
     }
 
@@ -70,7 +70,7 @@ public class TaskCard extends UiPart {
         
     }
     
-    public String formatTime() {
+    private String formatTime() {
         StringBuilder sb = new StringBuilder();
         Optional<LocalDateTime> start = task.getStartDateTime();
         Optional<LocalDateTime> end = task.getEndDateTime();

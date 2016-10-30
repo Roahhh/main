@@ -6,7 +6,7 @@ package seedu.agendum.logic.commands;
  */
 public class IncorrectCommand extends Command {
 
-    public final String feedbackToUser;
+    private final String feedbackToUser;
 
     public IncorrectCommand(String feedbackToUser){
         this.feedbackToUser = feedbackToUser;

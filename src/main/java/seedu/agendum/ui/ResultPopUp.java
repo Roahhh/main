@@ -73,12 +73,12 @@ public class ResultPopUp extends UiPart {
         delay.play();
     }
 
-    public void reFocusRoot() {
+    private void reFocusRoot() {
         dialogStage.setOpacity(0);
         root.requestFocus();
     }
     
-    public void show() {
+    private void show() {
         dialogStage.setOpacity(1.0);
         dialogStage.sizeToScene();
         dialogStage.show();

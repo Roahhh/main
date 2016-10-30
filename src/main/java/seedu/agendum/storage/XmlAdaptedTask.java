@@ -12,7 +12,7 @@ import java.util.Optional;
 /**
  * JAXB-friendly version of the Task.
  */
-public class XmlAdaptedTask {
+class XmlAdaptedTask {
 
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     @XmlElement(required = true)

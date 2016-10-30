@@ -9,7 +9,7 @@ import seedu.agendum.MainApp;
 /**
  * A utility class to load UiParts from FXML files.
  */
-public class UiPartLoader {
+class UiPartLoader {
     private final static String FXML_FILE_FOLDER = "/view/";
 
     public static <T extends UiPart> T loadUiPart(Stage primaryStage, T controllerSeed) {

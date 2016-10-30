@@ -147,11 +147,11 @@ public class TestTask implements ReadOnlyTask, Comparable<TestTask> {
         return compareName(other);
     }
 
-    public int compareCompletionStatus(TestTask other) {
+    private int compareCompletionStatus(TestTask other) {
         return Boolean.compare(this.isCompleted(), other.isCompleted());
     }
 
-    public int compareTime(TestTask other) {
+    private int compareTime(TestTask other) {
         if (this.hasTime() && other.hasTime()) {
             return this.getTaskTime().compareTo(other.getTaskTime());
         } else if (this.hasTime()) {
@@ -163,7 +163,7 @@ public class TestTask implements ReadOnlyTask, Comparable<TestTask> {
         }
     }
 
-    public int compareLastUpdatedTime(TestTask other) {
+    private int compareLastUpdatedTime(TestTask other) {
         // to fix erratic behavior for logic manager tests
         long seconds = ChronoUnit.SECONDS.between(this.getLastUpdatedTime(), other.getLastUpdatedTime());
         if (Math.abs(seconds) < 2) {
@@ -172,7 +172,7 @@ public class TestTask implements ReadOnlyTask, Comparable<TestTask> {
         return other.getLastUpdatedTime().compareTo(this.getLastUpdatedTime());
     }
 
-    public int compareName(TestTask other) {
+    private int compareName(TestTask other) {
         return this.getName().toString().compareTo(other.getName().toString());
     }
 

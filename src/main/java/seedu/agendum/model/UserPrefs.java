@@ -9,7 +9,7 @@ import java.util.Objects;
  */
 public class UserPrefs {
 
-    public GuiSettings guiSettings;
+    private GuiSettings guiSettings;
 
     public GuiSettings getGuiSettings() {
         return guiSettings == null ? new GuiSettings() : guiSettings;

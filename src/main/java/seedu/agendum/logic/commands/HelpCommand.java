@@ -11,8 +11,8 @@ public class HelpCommand extends Command {
 
  // COMMAND_WORD, COMMAND_FORMAT, COMMAND_DESCRIPTION are for display in help window
     public static final String COMMAND_WORD = "help";
-    public static final String COMMAND_FORMAT = "help";
-    public static final String COMMAND_DESCRIPTION = "view Agendum’s command summary";
+    private static final String COMMAND_FORMAT = "help";
+    private static final String COMMAND_DESCRIPTION = "view Agendum’s command summary";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Shows program usage instructions.\n"
             + "Example: " + COMMAND_WORD;
 

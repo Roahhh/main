@@ -29,19 +29,19 @@ public abstract class ToDoListGuiTest {
     @Rule
     public TestName name = new TestName();
 
-    TestApp testApp;
+    private TestApp testApp;
 
-    protected TypicalTestTasks td = new TypicalTestTasks();
+    TypicalTestTasks td = new TypicalTestTasks();
 
     /*
      *   Handles to GUI elements present at the start up are created in advance
      *   for easy access from child classes.
      */
-    protected MainGuiHandle mainGui;
-    protected MainMenuHandle mainMenu;
-    protected TaskListPanelHandle taskListPanel;
-    protected ResultDisplayHandle resultDisplay;
-    protected CommandBoxHandle commandBox;
+    private MainGuiHandle mainGui;
+    MainMenuHandle mainMenu;
+    TaskListPanelHandle taskListPanel;
+    private ResultDisplayHandle resultDisplay;
+    CommandBoxHandle commandBox;
     private Stage stage;
 
     @BeforeClass
@@ -75,7 +75,7 @@ public abstract class ToDoListGuiTest {
      * Override this in child classes to set the initial local data.
      * Return null to use the data in the file specified in {@link #getDataFileLocation()}
      */
-    protected ToDoList getInitialData() {
+    private ToDoList getInitialData() {
         ToDoList ab = TestUtil.generateEmptyToDoList();
         TypicalTestTasks.loadToDoListWithSampleData(ab);
         return ab;
@@ -84,7 +84,7 @@ public abstract class ToDoListGuiTest {
     /**
      * Override this in child classes to set the data file location.
      */
-    protected String getDataFileLocation() {
+    private String getDataFileLocation() {
         return TestApp.SAVE_LOCATION_FOR_TESTING;
     }
 
@@ -96,14 +96,14 @@ public abstract class ToDoListGuiTest {
     /**
      * Asserts the task shown in the card is same as the given task
      */
-    public void assertMatching(ReadOnlyTask task, TaskCardHandle card) {
+    void assertMatching(ReadOnlyTask task, TaskCardHandle card) {
         assertTrue(TestUtil.compareCardAndTask(card, task));
     }
 
     /**
      * Asserts the size of the task list is equal to the given number.
      */
-    protected void assertListSize(int size) {
+    void assertListSize(int size) {
         int numberOfPeople = taskListPanel.getNumberOfPeople();
         assertEquals(size, numberOfPeople);
     }
@@ -111,7 +111,7 @@ public abstract class ToDoListGuiTest {
     /**
      * Asserts the message shown in the Result Display area is same as the given string.
      */
-    protected void assertResultMessage(String expected) {
+    void assertResultMessage(String expected) {
         assertEquals(expected, resultDisplay.getText());
     }
 }

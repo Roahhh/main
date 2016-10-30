@@ -23,7 +23,7 @@ public class CompletedTasksPanel extends UiPart {
     @FXML
     private ListView<ReadOnlyTask> completedTasksListView;
 
-    public CompletedTasksPanel() {
+    private CompletedTasksPanel() {
         super();
     }
 
@@ -71,7 +71,7 @@ public class CompletedTasksPanel extends UiPart {
         });
     }
 
-    class completedTasksListViewCell extends ListCell<ReadOnlyTask> {
+    private class completedTasksListViewCell extends ListCell<ReadOnlyTask> {
 
         @Override
         protected void updateItem(ReadOnlyTask task, boolean empty) {

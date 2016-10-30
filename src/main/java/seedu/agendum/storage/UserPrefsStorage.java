@@ -9,7 +9,7 @@ import java.util.Optional;
 /**
  * Represents a storage for {@link seedu.agendum.model.UserPrefs}.
  */
-public interface UserPrefsStorage {
+interface UserPrefsStorage {
 
     /**
      * Returns UserPrefs data from storage.

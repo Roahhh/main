@@ -67,7 +67,7 @@ public class OtherTasksPanel extends UiPart {
         });
     }
 
-    class otherTasksListViewCell extends ListCell<ReadOnlyTask> {
+    private class otherTasksListViewCell extends ListCell<ReadOnlyTask> {
 
         @Override
         protected void updateItem(ReadOnlyTask task, boolean empty) {

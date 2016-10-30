@@ -9,7 +9,15 @@ import seedu.agendum.model.task.*;
  */
 public class TypicalTestTasks {
 
-    public static TestTask alice, benson, carl, daniel, elle, fiona, george, hoon, ida;
+    public static TestTask alice;
+    public static TestTask benson;
+    private static TestTask carl;
+    public static TestTask daniel;
+    private static TestTask elle;
+    private static TestTask fiona;
+    private static TestTask george;
+    public static TestTask hoon;
+    public static TestTask ida;
 
     public TypicalTestTasks() {
         try {
