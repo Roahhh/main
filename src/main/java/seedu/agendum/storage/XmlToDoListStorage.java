@@ -63,7 +63,7 @@ public class XmlToDoListStorage implements ToDoListStorage {
     }
 
     @Override
-    public Optional<ReadOnlyToDoList> readToDoList() throws DataConversionException {
+    public Optional<ReadOnlyToDoList> readToDoList() throws DataConversionException, IOException {
         return readToDoList(filePath);
     }
 
