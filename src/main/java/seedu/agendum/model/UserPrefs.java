@@ -1,11 +1,9 @@
 package seedu.agendum.model;
 
 import seedu.agendum.commons.core.GuiSettings;
-
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.util.Objects;
-
-import javafx.geometry.Rectangle2D;
-import javafx.stage.Screen;
 
 /**
  * Represents User's preferences.
@@ -24,9 +22,8 @@ public class UserPrefs {
 
     //@@author A0148031R
     public UserPrefs(){
-        Screen screen = Screen.getPrimary();
-        Rectangle2D bounds = screen.getVisualBounds();
-        this.setGuiSettings(bounds.getWidth(), bounds.getHeight(), 0, 0);
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setGuiSettings(screenSize.getWidth(), screenSize.getHeight(), 0, 0);
     }
 
     public void setGuiSettings(double width, double height, int x, int y) {
