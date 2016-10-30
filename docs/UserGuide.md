@@ -147,6 +147,8 @@ Result: Agendum will add a task "attend wedding dinner" to the "Do It Soon" pane
 It will have a start time 30 Oct 7pm and end time 30 Oct 9.30pm.
 ```
 
+> A task cannot have a deadline and a event time at the same time. A wrong start and end time might be saved.
+
 
 ##### Date Time Format
 How do you specify the `<deadline>`, `<start-time>` and `<end-time>`? Agendum supports a wide variety of date time formats. Combine any of the date format and time format below. Note that the date/time formats are not case sensitive.
@@ -161,7 +163,7 @@ Day of the week | Wed, Wednesday
 Relative date   | today, tmr, next wed
 
  > It is possible to specify the year before or after the month-day pair in the first 3 formats (e.g. 1/23/2016 or 2016 1 Oct)
- > The day of the week refers to the next week. For example, today is Sunday (30 Oct). Agendum will interpret Wednesday and Sunday as 2 Nov and 6 Nov respectively (a week from now).
+ > The day of the week refers to the following week. For example, today is Sunday (30 Oct). Agendum will interpret Wednesday and Sunday as 2 Nov and 6 Nov respectively (a week from now).
 
 *Time Format*
 Time Format           | Example(s)  
@@ -214,31 +216,39 @@ Agendum will promptly update the displayed <br>
 <img src="images/userguide/afterRenaming.png" width="500"><br>
 
 
-#### Updating the date/time of a task : `schedule`
+### (Re)scheduling a task : `schedule`
 
-Agendum recognizes that your schedule might change, and therefore allows you to reschedule your tasks easily.<br>
-If a task no longer has a deadline or specified time, you can remove the previous time restrictions by typing the following command:
+Agendum recognizes that your schedule might change, and therefore allows you to reschedule your tasks easily.
 
-Format: `schedule INDEX [NEW_DATE_TIME_RESTRICTIONS]`
+Here are the *acceptable format(s)*:
 
-> * Schedule the task at the specified `INDEX`.
-> * The index refers to the index number shown in the most recent listing.
-> * The index **must be a positive integer** 1, 2, 3, ...
-> * The time description must follow the format given in the add command examples
+* `schedule <id>` - re-schedule the task identified by <id>. It can now be done anytime and not by a deadline or within a specific time.
+* `schedule <id> by <deadline>` - set or update the deadline for the task identified. Note the keyword `by`.
+* `schedule <id> from <start-time> to <end-time>` - update the start/end time of the task identified by id. Note the keyword `from` and `to`.
 
-Examples:  
+> Again, <id> must be a positive number and in the most recent to-do list displayed.
+> <deadline>, <start-time> and <end-time> must follow the format previously defined in [Date Time Format](#date-time-format)
+> A task cannot have a deadline and a event time at the same time. A wrong start and end time might be saved.
 
-* `list` <br>
-  `schedule 4` <br>
-  Removes the deadline and start and end date/time for task 4 on the list.
+Here are some *examples*:<br>
+<img src="images/userguide/beforeScheduling.png" width="500"><br>
 
-* `list` <br>
-  `schedule 2 by Fri`<br>
-  Removes the deadline and start and end date/time for task 2 and resets the deadline to the coming Friday (If the current day is Friday, it would be the following Friday).
+```
+Description: I decide that I can go for a run at any time instead.
+> schedule 1
+Result: Agendum will start/end time of the task "go for a run" and it will
+move to the "Do It Anytime" panel
 
-* `list`<br>
-  `schedule 3 from 1 Oct 7pm to 1 Oct 9.30pm`<br>
-  Sets the start time of task 3 to 1 Oct 7pm and the end time to 1 Oct 9.30pm respectively
+Description: I want to submit by reflection earlier.
+> schedule 2 by tmr 2pm
+Result: Agendum will update the deadline of "submit personal reflection". It
+will then be sorted in the "Do It Soon" panel.
+
+Description: I decide to go for a run at a later time.
+> schedule 1 from 10pm to 11pm
+Result: Agendum will update the start time of "go for a run" to today 10pm and
+end time to today 11pm.
+```
 
 
 #### Marking a task as completed : `mark`
