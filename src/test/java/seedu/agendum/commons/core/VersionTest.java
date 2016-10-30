@@ -126,6 +126,7 @@ public class VersionTest {
         assertTrue(one.equals(another));
     }
     
+    //@@author A0148095X
     @Test
     public void versionComparableNotEqual() {
         Version original = new Version(0, 0, 0, false);
@@ -136,7 +137,8 @@ public class VersionTest {
         // Different object
         assertFalse(original.equals(new Object()));
     }
-
+    //@@author
+    
     private void verifyVersionParsedCorrectly(String versionString,
                                               int major, int minor, int patch, boolean isEarlyAccess) {
         assertEquals(new Version(major, minor, patch, isEarlyAccess), Version.fromString(versionString));
