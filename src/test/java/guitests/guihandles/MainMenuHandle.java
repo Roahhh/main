@@ -17,8 +17,9 @@ public class MainMenuHandle extends GuiHandle {
         super(guiRobot, primaryStage, TestApp.APP_TITLE);
     }
 
-    private void clickOn(String... menuText) {
+    private GuiHandle clickOn(String... menuText) {
         Arrays.stream(menuText).forEach((menuItem) -> guiRobot.clickOn(menuItem));
+        return this;
     }
 
     public HelpWindowHandle openHelpWindowUsingMenu() {

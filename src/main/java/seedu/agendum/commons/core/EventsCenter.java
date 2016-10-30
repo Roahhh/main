@@ -28,16 +28,18 @@ public class EventsCenter {
         eventBus = new EventBus();
     }
 
-    public void registerHandler(Object handler) {
+    public EventsCenter registerHandler(Object handler) {
         eventBus.register(handler);
+        return this;
     }
 
     /**
      * Posts an event to the event bus.
      */
-    public <E extends BaseEvent> void post(E event) {
+    public <E extends BaseEvent> EventsCenter post(E event) {
         logger.info("------[Event Posted] " + event.getClass().getCanonicalName() + ": " + event.toString());
         eventBus.post(event);
+        return this;
     }
 
 }
