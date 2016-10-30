@@ -167,7 +167,7 @@ How do you specify the `<deadline>`, `<start-time>` and `<end-time>`? Agendum su
  > The day of the week refers to the following week. For example, today is Sunday (30 Oct). Agendum will interpret Wednesday and Sunday as 2 Nov and 6 Nov respectively (a week from now).
 
 *Time Format*
-Time Format       | Example(s)  
+Time Format       | Example(s)                              |
 |-----------------|-----------------------------------------|
 | Hour            | 10, 22                                  |
 | Hour:Minute     | 10:30                                   |
@@ -227,8 +227,10 @@ Here are the *acceptable format(s)*:
 * `schedule <id> by <deadline>` - set or update the deadline for the task identified. Note the keyword `by`.
 * `schedule <id> from <start-time> to <end-time>` - update the start/end time of the task identified by id. Note the keyword `from` and `to`.
 
-> Again, <id> must be a positive number and in the most recent to-do list displayed.  
-> <deadline>, <start-time> and <end-time> must follow the format previously defined in [Date Time Format](#date-time-format)  
+> Again, `<id>` must be a positive number and in the most recent to-do list displayed.
+
+> `<deadline>`, `<start-time>` and `<end-time>` must follow the format previously defined in [Date Time Format](#date-time-format)
+
 > A task cannot have a deadline and a event time at the same time. A wrong start and end time might be saved.  
 
 Here are some *examples*:<br>
