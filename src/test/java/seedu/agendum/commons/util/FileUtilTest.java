@@ -73,7 +73,7 @@ public class FileUtilTest {
         File file = new File("test.file");
         FileUtil.createFile(file);
         FileUtil.deleteFile(file.getPath());
-        assertTrue(FileUtil.isFileExists(file));
+        assertFalse(FileUtil.isFileExists(file));
     }
     
     @Test
