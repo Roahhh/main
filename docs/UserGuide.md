@@ -154,25 +154,26 @@ It will have a start time 30 Oct 7pm and end time 30 Oct 9.30pm.
 How do you specify the `<deadline>`, `<start-time>` and `<end-time>`? Agendum supports a wide variety of date time formats. Combine any of the date format and time format below. Note that the date/time formats are not case sensitive.
 
 *Date Format*
-Date Format     | Example(s)  
-:--------------:| :--------
-Month/day       | 1/23
-Day Month       | 1 Oct
-Month Day       | Oct 1
-Day of the week | Wed, Wednesday
-Relative date   | today, tmr, next wed
+
+| Date Format     | Example(s)           |
+|-----------------|----------------------|
+| Month/day       | 1/23                 |
+| Day Month       | 1 Oct                |
+| Month Day       | Oct 1                |
+| Day of the week | Wed, Wednesday       |
+| Relative date   | today, tmr, next wed |
 
  > It is possible to specify the year before or after the month-day pair in the first 3 formats (e.g. 1/23/2016 or 2016 1 Oct)
  > The day of the week refers to the following week. For example, today is Sunday (30 Oct). Agendum will interpret Wednesday and Sunday as 2 Nov and 6 Nov respectively (a week from now).
 
 *Time Format*
-Time Format           | Example(s)  
-:--------------------:| :--------
-Hour                  | 10, 22
-Hour:Minute           | 10:30
-Hour.Minute           | 10.30
-HourMinute            | 2200
-Relative time         | this morning, this afternoon, tonight
+Time Format       | Example(s)  
+|-----------------|-----------------------------------------|
+| Hour            | 10, 22                                  |
+| Hour:Minute     | 10:30                                   |
+| Hour.Minute     | 10.30                                   |
+| HourMinute      | 2200                                    |
+| Relative time   | this morning, this afternoon, tonight   |
 
 > By default, we use the 24 hour time format but we do support the meridian format as well e.g. 10am, 10pm
 
@@ -188,7 +189,7 @@ with deadline the upcoming Wednesday and time now.
 
 > add attend wedding dinner from 10 Nov 8pm to 10 Nov 9pm
 Result: All the date and time are specified and there is no ambiguity at all.
-However, Agendum does allow you to skip typing the second date. This will work as well:
+However, with Agendum, you can skip typing the second date:
 > add attend wedding dinner from 10 Nov 8pm to 9pm
 ```
 
@@ -201,7 +202,7 @@ If you wish to update or enhance the description of a task, you can use the foll
 
 Here is the *format*:
 
-* `rename <id> <new-name>` - give a new name to the task identified by <id>. The <id> must be a positive number and in the most recent to-do list displayed.
+* `rename <id> <new-name>` - give a new name to the task identified by `<id>`. The `<id>` must be a positive number and in the most recent to-do list displayed.
 
 Here is an *example*:<br>
 <img src="images/userguide/beforeRenaming.png" width="500"><br>
@@ -226,12 +227,12 @@ Here are the *acceptable format(s)*:
 * `schedule <id> by <deadline>` - set or update the deadline for the task identified. Note the keyword `by`.
 * `schedule <id> from <start-time> to <end-time>` - update the start/end time of the task identified by id. Note the keyword `from` and `to`.
 
-> Again, <id> must be a positive number and in the most recent to-do list displayed.
-> <deadline>, <start-time> and <end-time> must follow the format previously defined in [Date Time Format](#date-time-format)
-> A task cannot have a deadline and a event time at the same time. A wrong start and end time might be saved.
+> Again, <id> must be a positive number and in the most recent to-do list displayed.  
+> <deadline>, <start-time> and <end-time> must follow the format previously defined in [Date Time Format](#date-time-format)  
+> A task cannot have a deadline and a event time at the same time. A wrong start and end time might be saved.  
 
 Here are some *examples*:<br>
-<img src="images/userguide/beforeScheduling.png" width="500"><br>
+<img src="images/userguide/beforeScheduling.png" width="300"><br>
 
 ```
 Description: I decide that I can go for a run at any time instead.
