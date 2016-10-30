@@ -29,7 +29,7 @@ public interface Storage extends ToDoListStorage, UserPrefsStorage {
     void setToDoListFilePath(String filePath);
 
     @Override
-    Optional<ReadOnlyToDoList> readToDoList() throws DataConversionException, IOException;
+    Optional<ReadOnlyToDoList> readToDoList() throws DataConversionException;
 
     @Override
     void saveToDoList(ReadOnlyToDoList toDoList) throws IOException;
