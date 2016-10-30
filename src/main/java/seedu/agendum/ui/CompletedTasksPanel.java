@@ -1,9 +1,6 @@
 package seedu.agendum.ui;
 
-import java.util.logging.Logger;
-
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -13,14 +10,12 @@ import javafx.scene.control.SplitPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import seedu.agendum.model.task.ReadOnlyTask;
-import seedu.agendum.commons.core.LogsCenter;
 
 //@@author A0148031R
 /**
  * Panel contains the list of completed tasks
  */
 public class CompletedTasksPanel extends UiPart {
-    private final Logger logger = LogsCenter.getLogger(CompletedTasksPanel.class);
     private static final String FXML = "CompletedTasksPanel.fxml";
     private AnchorPane panel;
     private AnchorPane placeHolderPane;
@@ -77,9 +72,6 @@ public class CompletedTasksPanel extends UiPart {
     }
 
     class completedTasksListViewCell extends ListCell<ReadOnlyTask> {
-
-        public completedTasksListViewCell() {
-        }
 
         @Override
         protected void updateItem(ReadOnlyTask task, boolean empty) {

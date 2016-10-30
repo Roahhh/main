@@ -8,7 +8,6 @@ import seedu.agendum.logic.commands.CommandResult;
 import seedu.agendum.logic.parser.Parser;
 import seedu.agendum.model.Model;
 import seedu.agendum.model.task.ReadOnlyTask;
-import seedu.agendum.storage.Storage;
 
 import java.util.logging.Logger;
 
@@ -21,7 +20,7 @@ public class LogicManager extends ComponentManager implements Logic {
     private final Model model;
     private final Parser parser;
 
-    public LogicManager(Model model, Storage storage) {
+    public LogicManager(Model model) {
         this.model = model;
         this.parser = new Parser();
     }

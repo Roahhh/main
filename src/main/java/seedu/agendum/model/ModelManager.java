@@ -57,7 +57,7 @@ public class ModelManager extends ComponentManager implements Model {
         this(new ToDoList(), new UserPrefs());
     }
 
-    public ModelManager(ReadOnlyToDoList initialData, UserPrefs userPrefs) {
+    public ModelManager(ReadOnlyToDoList initialData) {
         toDoList = new ToDoList(initialData);
         filteredTasks = new FilteredList<>(toDoList.getTasks());
         sortedTasks = filteredTasks.sorted();
@@ -166,6 +166,10 @@ public class ModelManager extends ComponentManager implements Model {
         previousLists.push(latestList);
     }
 
+    private void clearPreviousToDoLists() {
+        previousLists.clear();
+    }
+
 
     //=========== Storage Methods ==========================================================================
     
@@ -267,6 +271,8 @@ public class ModelManager extends ComponentManager implements Model {
     public void handleLoadDataCompleteEvent(LoadDataCompleteEvent event) {
         this.toDoList.resetData(event.data);
         indicateToDoListChanged();
+        clearPreviousToDoLists();
+        backupNewToDoList();
         logger.info("Loading completed - Todolist updated.");
     }
 }
