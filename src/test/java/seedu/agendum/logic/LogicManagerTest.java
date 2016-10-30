@@ -32,6 +32,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -1079,11 +1081,8 @@ public class LogicManagerTest {
          * Generate a sorted UnmodifiableObservableList from expectedShownList
          */
         private UnmodifiableObservableList<Task> generateSortedList(List<? extends ReadOnlyTask> expectedShownList) throws Exception {
-            List<Task> taskList = new ArrayList<>();
-            for (ReadOnlyTask anExpectedShownList : expectedShownList) {
-                taskList.add(new Task(anExpectedShownList));
-            }
-            ToDoList toDoList = generateToDoList(taskList); 
+            List<Task> taskList = expectedShownList.stream().map((Function<ReadOnlyTask, Task>) Task::new).collect(Collectors.toList());
+            ToDoList toDoList = generateToDoList(taskList);
             return new UnmodifiableObservableList<>(toDoList.getTasks().sorted());
         }
 
