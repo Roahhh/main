@@ -111,53 +111,69 @@ Here is a **summary of all the visual changes** you should see at every step:
 > * Words enclosed in angle brackets, e.g.`<name>` are the parameters. You can freely decide what to replace them by.
 > * Parameters with `...` after them can have multiple instances (separated by whitespace). For example, `<index>...` means that you can specify multiple indices such as `3 5 7`.
 
-#### Viewing help : `help`
-
-If you need some reminder or more information about the features available, you can use the `help` command.
-
-Format: `help`  
-> Help is also shown if an incorrect command is entered e.g. `run`
-
-
 #### Adding a task: `add`
 
-If you have a task to work on, add it to the Agendum!<br>
-You can add a task with no start time or end time by typing the following command
+If you have a task to work on, add it to the Agendum to start keeping track! <br>
 
-Format: `add TASK_NAME`
-> This will create a task without a start date/time or end date/time.
+Here are the *acceptable format(s)*:
 
-Examples:  
+* `add <name>` - adds a task which can be done anytime.
+* `add <name> by <deadline>` - adds a task which have to be done by the specified deadline. Note the keyword `by`.
+* `add <name> from <start-time> to <end-time>` - adds a event which will take place between start time and end time. Note the keyword `from` and `to`.
 
-* `add Go to Cold Storage`
-* `add Watch Star Wars`
-* `add Read The Mythical Man-Month`
+Here are some *examples*:
 
-You can add a task which must be done by a certain deadline. You can specify the deadline after the keyword `by`.
+```
+Description: I want to watch Star Wars but I don't have a preferred time.
+> add watch Star Wars
+Result: Agendum will add a task to the "Do It Anytime" panel.
 
-Format: `add TASK_NAME [by DATE_TIME]`
-> Date formats are not case-sensitive
+Description: I need to return my library books by the end of this week. There is a deadline!
+> add return library books by Friday 8pm
+Result: Agendum will add a task "return library books" to the "Do It Soon" panel. It will have a deadline set to the nearest upcoming Friday and with time 8pm.
 
-Examples:  
+Description: I have a wedding dinner which will take place on the night of 30 Oct.
+> add attend wedding dinner from 30 Oct 7pm to 9.30pm
+Result: Agendum will add a task "attend wedding dinner" to the "Do It Soon" panel. It will have a start time 30 Oct 7pm and end time 30 Oct 9.30pm.
+```
 
-* `add watch Star Wars by Fri`
-* `add watch Star Wars by 9pm`
-* `add watch Star Wars by next Wed`
-* `add watch Star Wars by tonight`
-* `add watch Star Wars by 10 Oct, 9.30pm`
+##### Date Time Format
+How do you specify the `<deadline>`, `<start-time>` and `<end-time>`? Agendum supports a wide variety of date time formats. Combine any of the date format and time format below. Note that the date/time formats are not case sensitive.
 
-If you need a task to be done within a specific date and time, you can specify the start and end time using `from` and `to`.
+*Date Format*
+Date Format     | Example(s)
+:--------------:| :--------
+Month/day       | 1/23
+Day Month       | 1 Oct
+Month Day       | Oct 1
+Day of the week | Wed, Wednesday
+Relative date   | today, tmr, next wed
 
-Format: `add TASK_NAME [from START_DATE_TIME to END_DATE_TIME] `
-> If you specify the time but no day or date is given, the date of creation will be used.
+ > It is possible to specify the year before or after the month-day pair in the first 3 formats (e.g. 1/23/2016 or 2016 1 Oct)
+ > The day of the week refers to the next week. For example, today is Sunday (30 Oct). Agendum will interpret Wednesday and Sunday as 2 Nov and 6 Nov respectively (a week from now).
 
-Examples:
+*Time Format*
+Time Format           | Example(s)
+:--------------------:| :--------
+Hour                  | 10, 22
+Hour:Minute           | 10:30
+Hour.Minute           | 10.30
+HourMinute            | 2200
+Relative time         | this morning, this afternoon, tonight
+> By default, we use the 24 hour time format but we do support the meridian format as well e.g. 10am, 10pm
 
-* `add movie marathon from today 12pm to friday 3pm`
-* `add project meeting from 10 oct 12pm to 10 oct 2pm`
-* `add clean my room from today 10pm to 12am`
+Here are some examples of the results if these formats are used in conjunction with the `add` command.  
+```
+> add submit homework by 9pm
+Result: The day is not specified. Agendum will create a task "submit homework" with deadline today (the date of creation) and time 9pm
 
-The event “project meeting” will start at 12pm on 10 October and end at 2pm on 10 October.
+> add use coupons by next Wed
+Result: The time is not specified. Agendum will create a task "use coupons" with deadline the upcoming week and time now.
+
+> add attend wedding dinner from 10 Nov 8pm to 10 Nov 9pm
+Result: All the date and time are specified and there is no ambiguity at all. However, Agendum does allow you to skip typing the second date. This will work well too:
+> add attend wedding dinner from 10 Nov 8pm to 9pm
+```
 
 
 [comment]: # (@@author A0133367E)
@@ -372,6 +388,15 @@ Assume that mark has been aliased with `m` and `mk`.
 Similarly, you can also use the following command:
 * `unalias mk`<br>
   `mk` can no longer be used to mark tasks; now you can only use the original command `mark` to mark a task as completed.
+
+
+#### Viewing help : `help`
+
+  If you need some reminder or more information about the features available, you can use the `help` command.
+
+  Format: `help`  
+  > Help is also shown if an incorrect command is entered e.g. `run`
+
 
 
 #### Specifying the data storage location : `store`
